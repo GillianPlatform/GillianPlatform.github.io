@@ -128,7 +128,22 @@ Programs are not just a map from procedure identifiers to procedures. There are 
 
 ## The Memory Interfaces
 
+Here is how Memory models are defined in the paper:
+> **Definition** *(Concrete Memory Model)*: A concrete memory model, $M \in \mathbb{M}$, is a triple $\langle |M|, A, \underline{\mathsf{ea}}\rangle$, consisting of a set of concrete memories, $|M| \ni \mu$, a set of actions $A \ni \alpha$, and the action execution function $\underline{\mathsf{ea}} : A \rightarrow |M| \rightarrow \mathcal{V} \rightarrow \wp(|M| \times \mathcal{V})$, pretty-printed $\mu.\alpha(v) \rightsquigarrow (\mu', v)$.
+>
+> **Definition** *(Symbolic Memory Model)*: A symbolic memory model, $\hat M \in \mathbb{M}$, is a triple $\langle |\hat M|, A, \hat{\underline{\mathsf{ea}}}\rangle$, consisting of a set of symbolic memories, $|\hat M| \ni \hat \mu$, a set of actions $A \ni \alpha$, and the action execution function $\hat{\underline{\mathsf{ea}}} : A \rightarrow |\hat M| \rightarrow \hat \mathcal{E} \rightarrow \Pi \rightarrow \wp(|\hat M| \times \hat \mathcal{E} \times \Pi)$, pretty-printed $\hat \mu.\alpha(\hat e) \rightarrow (\mu', \hat e', \pi ')$.
 
+In the implementation, Concrete Memory Models  and Symbolic Memory Models have an interface a bit more complex. The complete interface can be found in the files `GillianCore/engine/SymbolicSemantics/SMemory.ml` and `GillianCore/engine/ConcreteSemantics/CMemory.ml`.
+
+These interfaces do export:
+- `type t`, the type of memories, which correspond respectively to $|M|$ and $|\hat M|$
+- `val execute_action: string -> t -> vt list -> action_ret` for the concrete memory models, which corresponds to the theoretical definition apart from the fact that actions are represented by their `string` name and that concrete actions can return an error, which is used for automatic compositional testing (out of scope here)
+- `val execute_action: string -> t -> PFS.t -> TypeEnv.t -> vt list -> action_ret` for the symbolic memory models, which correspond to the theoretical definition apart from actions that are represented by their `string` names, the fact that the actions can return errors which are used for automatic compositional testing (out of scope here), and the path conditions ($\pi$) are split into two parts : `PFS.t` which are set of pure formulae and `TypeEnv.t` which are special kind of pure formulae corresponding to the type of values.
+
+These interfaces export more definitions.
+Since, for efficiency reasons, the type of memories can be mutable, the user must define an `init` function and a `copy` function. The user also has to define pretty printers for its state, which are used for the log files.
+
+Finally, there are a lot of definitions (`ga_to_...`, `is_overlaping_asrt`, `assertions`, `mem_constraints`, `type err_t`, etc.) that are used either for verification or automatic compositional testing and are not presented in the PLDI20 paper because they are out of scope.
 
 
 ## Allocators
