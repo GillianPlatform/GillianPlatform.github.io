@@ -208,8 +208,6 @@ esy
 esy x javert bulk-exec ../test262
 ```
 
-We then run all of the tests by executing the following commands from within the main Gillian folder:
-
 The testing should take approximately thirty minutes. The bulk tester will actively report progress, folder-by-folder, and signal any test failures encountered. In the end, a list of all failed tests (the eight given above) will be printed.
 
 1. If you would like to test a specific subfolder of the test suite, simply add it to the test path. For example, to run only the tests for `Array.prototype.reduce`, execute, from the main Gillian folder:
@@ -266,7 +264,7 @@ var n = symb_number(n); // Symbolic number
 var s = symb_string(s); // Symbolic string
 ```
 
-The single parameters provided to these functions indicate the name of the created symbol, or _logical variable_, that Cosette will further use in the reaasoning. Normally, we choose these to coincide with the JavaScript variables in which they are stored so that the outputs of the analysis are more readable.
+The single parameters provided to these functions indicate the name of the created symbol, or _logical variable_, that Cosette will use in the reasoning. Normally, we choose these to coincide with the JavaScript variables in which they are stored so that the outputs of the analysis are more readable.
 
 #### Assumptions and Assertions
 
@@ -347,7 +345,7 @@ var x = symb(x);
 Assume(not (typeOf x = Obj));
 ```
 
-where `typeOf` is the built-in GIL typing operator and `Obj` is the built-in GIL object type. In this way, it is guaranteed that `x` is not an object (but may still equal `null`).
+where `typeOf` is the built-in GIL typing operator and `Obj` is the built-in GIL object type. In this way, it is guaranteed that `x` is not an object (but still may be equal to `null`).
 
 ### Symbolic Testing of Buckets.js
 
@@ -517,7 +515,7 @@ In order to reproduce the linked-list bugs reported by [\[JaVerT 2.0\]](referenc
 ./testCosette.sh Examples/Cosette/Buckets/linkedlist/bug/linkedlist_bug_3.js
 ```
 
-All of the bugs are causes by the library treating non-integer indexing incorrectly; we explain the bug found by the first test in detail, the remaining two are analogous. For the first test, the failing model is as follows:
+All of the bugs are caused by the library treating non-integer indexing incorrectly; we explain the bug found by the first test in detail, the remaining two are analogous. For the first test, the failing model is as follows:
 
 ```
 Assert failed with argument
@@ -845,7 +843,7 @@ The differences are as follows:
   - `Goto lab` that jumps unconditionally to the label `lab`; and
   - `GuardedGoto(e, lab1, lab2)` that jumps to `lab1` if `e` evaluates to `true` or to `lab2` if it evaluates to `false`
   The `ifgoto` presented in the paper is equivalent to these two commands.
-- In the implementation, commands can be annotated with string labels (`string Cmd.t`) manually; in the paper, they are assigned integer indexes (`int Cmd.t`) automatically.
+- In the implementation, commands can be annotated with string labels (`string Cmd.t`); in the paper, they are assigned integer indexes (`int Cmd.t`).
   We write GIL programs with labeled commands for readability, and transpile to indexed commands for efficiency.
 - In addition to the `return` (`ReturnNormal`) command, there is also a `throw` (`ReturnError`) command.
   This is because GIL execution has three modes in the implementation: normal, error, and failure.
@@ -863,9 +861,7 @@ The differences are as follows:
 - The `uSym` and `iSym` commands are mainly theoretical devices that ensure soundness in the presence of fresh-value generation.
   In the implementation, we provide an allocation mechanism that allows the creators of Gillian instantations to generate fresh interpreted and uninterpreted symbols.
 
-#### Procedures and programs
-
-As explained earlier, there is no defined set `A` of actions, actions are denotted by their name, a string. Also, the procedures and programs contain much more information than what is in the paper.
+The procedures and programs also contain more information than given in the paper:
 
 ```ocaml
 type ('annot, 'label) proc = {
@@ -888,33 +884,60 @@ type ('annot, 'label) prog = {
 }
 ```
 
-Procedures have a name, a body and parameters as described in the paper. However, each command in the body is also annotated with an opaque value that can be decided by the user (it has the `'annot` polymorphic type). These annotations can be used to keep information during execution that helps understanding the result of an analysis. Every command is also attached to a label, that has polymorphic type `'label`. Most often, we use `string` labels for labeled programs and `int` labels for labeled programs as explained above. Finally, procedures can also have specifications that are used for verification but are out of scope for the PLDI2020 paper.
+Procedures have a name, a body and parameters as described in the paper. However, each command in the body is also annotated with an opaque value that can be decided by the user (it has the `'annot` polymorphic type). These annotations can be used, for example, to hold information that helps error reporting, such as the line number of the command of the target language to which a given GIL line corresponds. Every command can also be attached to a label, that has the polymorphic type `'label`. Most often, we use `string` labels for labeled programs and `int` labels for indexed programs, as explained above. Finally, procedures can also have specifications that are used for verification and automatic compositional testing (out of scope).
 
-Programs are not just a map from procedure identifiers to procedures. There are also:
-- `lemmas`, `predicates` and `specifications` that are used for verification (out of scope her)
-- `bi_specs` which are precomputed hints for automatic compositional testing
-- `macros` which are used to define syntactic sugar over lists of logic commands, useful for readability, and unfolded at execution time
-- A `predecessors` table used for the Phi Assignment
+Programs are not just a map from procedure identifiers to procedures, and additionally include, primarily, per-function verification-related information,
+as well as a list of `imports` that need to be included on execution, the list of all procedure identifiers, and a table of predecessors required for
+the PHI-assignment to work properly.
 
+### Allocators
 
-### The Memory Interfaces
+In the paper, allocators are defined near the end of page 3 (from line 320). They could be interpreted in terms of OCaml module signature as follows:
 
-Here is how Memory models are defined in the paper:
-> **Definition** *(Concrete Memory Model)*: A concrete memory model, $M \in \mathbb{M}$, is a triple $\langle |M|, A, \underline{\mathsf{ea}}\rangle$, consisting of a set of concrete memories, $|M| \ni \mu$, a set of actions $A \ni \alpha$, and the action execution function $\underline{\mathsf{ea}} : A \rightarrow |M| \rightarrow \mathcal{V} \rightarrow \wp(|M| \times \mathcal{V})$, pretty-printed $\mu.\alpha(v) \rightsquigarrow (\mu', v)$.
->
-> **Definition** *(Symbolic Memory Model)*: A symbolic memory model, $\hat M \in \mathbb{M}$, is a triple $\langle |\hat M|, A, \hat{\underline{\mathsf{ea}}}\rangle$, consisting of a set of symbolic memories, $|\hat M| \ni \hat \mu$, a set of actions $A \ni \alpha$, and the action execution function $\hat{\underline{\mathsf{ea}}} : A \rightarrow |\hat M| \rightarrow \hat \mathcal{E} \rightarrow \Pi \rightarrow \wp(|\hat M| \times \hat \mathcal{E} \times \Pi)$, pretty-printed $\hat \mu.\alpha(\hat e) \rightarrow (\mu', \hat e', \pi ')$.
+```ocaml
+module type Allocator = sig
+  type t    (** Type of allocation records    *)
+  type us_t (** Type of uninterpreted symbols *)
+  type is_t (** Type of interpreted symbols   *)
 
-In the implementation, Concrete Memory Models  and Symbolic Memory Models have an interface a bit more complex. The complete interface can be found in the files `GillianCore/engine/SymbolicSemantics/SMemory.ml` and `GillianCore/engine/ConcreteSemantics/CMemory.ml`.
+  val alloc_us : t -> int -> t * us_t
+  val alloc_is : t -> int -> t * is_t
+end
+```
 
-These interfaces do export:
-- `type t`, the type of memories, which correspond respectively to $|M|$ and $|\hat M|$
-- `val execute_action: string -> t -> vt list -> action_ret` for the concrete memory models, which corresponds to the theoretical definition apart from the fact that actions are represented by their `string` name and that concrete actions can return an error, which is used for automatic compositional testing (out of scope here)
-- `val execute_action: string -> t -> PFS.t -> TypeEnv.t -> vt list -> action_ret` for the symbolic memory models, which correspond to the theoretical definition apart from actions that are represented by their `string` names, the fact that the actions can return errors which are used for automatic compositional testing (out of scope here), and the path conditions ($\pi$) are split into two parts : `PFS.t` which are set of pure formulae and `TypeEnv.t` which are special kind of pure formulae corresponding to the type of values.
+For efficiency, however, we chose to have this implementation:
 
-These interfaces export more definitions.
-Since, for efficiency reasons, the type of memories can be mutable, the user must define an `init` function and a `copy` function. The user also has to define pretty printers for its state, which are used for the log files.
+```ocaml
+(* Allocator.ml *)
+module type S = sig
+  type t                   (** Type of value to allocate *)
 
-Finally, there are a lot of definitions (`ga_to_...`, `is_overlaping_asrt`, `assertions`, `mem_constraints`, `type err_t`, etc.) that are used either for verification or automatic compositional testing and are not presented in the PLDI20 paper because they are out of scope.
+  val alloc : unit -> t    (** Allocation function *)
+  val dealloc : t -> unit  (** Deallocation function *)
+  val eq : t -> t -> bool  (** Equality of values to allocate *)
+  val reset : unit -> unit (** Reset this allocator *)
+end
+```
+The `dealloc` function allows for de-allocation of values.
+The `reset` function is useful for bulk-testing; when running a new test, all allocators is reset.
+
+The abstract location allocator (in [`ALoc.ml`](https://github.com/GillianPlatform/Gillian/blob/master/GillianCore/GIL_Syntax/ALoc.ml)), which corresponds to uninterpreted symbols, is then initialised as follows:
+```ocaml
+include Allocators.Make_with_prefix
+          (Basic ())
+          (struct
+            let prefix = Names.aloc_
+          end)
+```
+
+Where `Make_with_prefix` is a functor that takes:
+
+- An abstract allocator `AL`, which produces values that can be stringified.
+- A string prefix
+
+and it returns an Allocator that allocates strings of the form `PREFIX_A` where `PREFIX` is the given prefix and `A` is the stringification of the value allocated by `AL`.
+
+In the `ALoc` case, as the `AL` parameter, we use `Basic ()`, which instantiates an abstract allocator module that internally allocates integers. We show how allocators can be used in practice shortly.
 
 ### The State Model interface
 
@@ -961,62 +984,26 @@ Once again, actions are designated by their string names, and actions can return
 
 Finally, there are a lot of different functions that do not correspond to any aspect of the state models presented in the paper such as `unify_assertion`, `produce_posts`, `apply_fixes`, etc. which are useful either for the verification mode or the automatic compositional testing mode of Gillian, and are out of scope for the Gillian PLDI2020 paper.
 
-### Allocators
+### The Memory Interfaces
 
-In the paper allocators have the following definition:
-
-> An allocator $AL \in \mathbb{A}\mathbb{L}$ is a triple $\langle|AL|, \mathsf Y, \mathsf{alloc}\rangle$, consisting of: **(1)** a set $|AL|\ni \xi$ of allocation records; **(2)** a set $Y$ of all values that are allowed to be allocated; and **(3)** an allocation function:
->$$
->\mathsf{alloc}: |AL| \rightarrow \mathbb{N} \rightarrow \wp(\mathsf Y) \rightharpoonup |AL|\times V
->$$
->pretty-printed as $\xi.\mathsf{alloc}(j)\rightharpoonup_{\mathsf Y}(\xi', y)$, which takes an allocation record $\xi$, a, allocation site $j$, and an allocation range $Y \subseteq \mathsf Y$, and returns a fresh value $y \in Y$, together with the appropriately updated allocation record $\xi'$.
+Here is how Memory models are defined in the paper:
+> **Definition** *(Concrete Memory Model)*: A concrete memory model, $M \in \mathbb{M}$, is a triple $\langle |M|, A, \underline{\mathsf{ea}}\rangle$, consisting of a set of concrete memories, $|M| \ni \mu$, a set of actions $A \ni \alpha$, and the action execution function $\underline{\mathsf{ea}} : A \rightarrow |M| \rightarrow \mathcal{V} \rightarrow \wp(|M| \times \mathcal{V})$, pretty-printed $\mu.\alpha(v) \rightsquigarrow (\mu', v)$.
 >
->Intuitively, an allocation record maintains information about already allocated values. This apporach is complementary to [the free set approach](https://doi.org/10.1007/978-3-540-78499-9_15), where information is maintained about values that can still be allocated. An allocation site $j$ is the program point associated with either the $\mathsf{uSym}_j$ or the $\mathsf{iSym}_j$ command.
+> **Definition** *(Symbolic Memory Model)*: A symbolic memory model, $\hat M \in \mathbb{M}$, is a triple $\langle |\hat M|, A, \hat{\underline{\mathsf{ea}}}\rangle$, consisting of a set of symbolic memories, $|\hat M| \ni \hat \mu$, a set of actions $A \ni \alpha$, and the action execution function $\hat{\underline{\mathsf{ea}}} : A \rightarrow |\hat M| \rightarrow \hat \mathcal{E} \rightarrow \Pi \rightarrow \wp(|\hat M| \times \hat \mathcal{E} \times \Pi)$, pretty-printed $\hat \mu.\alpha(\hat e) \rightarrow (\mu', \hat e', \pi ')$.
 
-This could be interpreted in terms of OCaml module signature as:
+In the implementation, Concrete Memory Models  and Symbolic Memory Models have an interface a bit more complex. The complete interface can be found in the files `GillianCore/engine/SymbolicSemantics/SMemory.ml` and `GillianCore/engine/ConcreteSemantics/CMemory.ml`.
 
-```ocaml
-module type Allocator = sig
-  type t    (** Type of allocation records     *)
-  type us_t (** Type of uninterpreted symbols **)
-  type is_t (**  Type of interpreted symbols   *)
+These interfaces do export:
+- `type t`, the type of memories, which correspond respectively to $|M|$ and $|\hat M|$
+- `val execute_action: string -> t -> vt list -> action_ret` for the concrete memory models, which corresponds to the theoretical definition apart from the fact that actions are represented by their `string` name and that concrete actions can return an error, which is used for automatic compositional testing (out of scope here)
+- `val execute_action: string -> t -> PFS.t -> TypeEnv.t -> vt list -> action_ret` for the symbolic memory models, which correspond to the theoretical definition apart from actions that are represented by their `string` names, the fact that the actions can return errors which are used for automatic compositional testing (out of scope here), and the path conditions ($\pi$) are split into two parts : `PFS.t` which are set of pure formulae and `TypeEnv.t` which are special kind of pure formulae corresponding to the type of values.
 
-  val alloc_us : t -> int -> t * us_t
-  val alloc_is : t -> int -> t * is_t
-end
-```
+These interfaces export more definitions.
+Since, for efficiency reasons, the type of memories can be mutable, the user must define an `init` function and a `copy` function. The user also has to define pretty printers for its state, which are used for the log files.
 
-However, for efficiency, we chose this implementation:
+Finally, there are a lot of definitions (`ga_to_...`, `is_overlaping_asrt`, `assertions`, `mem_constraints`, `type err_t`, etc.) that are used either for verification or automatic compositional testing and are not presented in the PLDI20 paper because they are out of scope.
 
-```ocaml
-(* Allocator.ml *)
-module type S = sig
-  type t                   (** Type of value to allocate *)
 
-  val alloc : unit -> t    (** Allocation function *)
-  val dealloc : t -> unit  (** Deallocation function *)
-  val eq : t -> t -> bool  (** Equality of values to allocate *)
-  val reset : unit -> unit (** Reset this allocator *)
-end
-```
-The `reset` function is useful for bulk-testing. When running a new test, every allocator is reset.
-
-The Abstract location allocator (in `ALoc.ml`), which corresponds to uninterpreted symbols, are then initiated like this:
-```ocaml
-include Allocators.Make_with_prefix
-          (Basic ())
-          (struct
-            let prefix = Names.aloc_
-          end)
-```
-
-Where `Make_with_prefix` is a functor that takes:
-- An abstract Allocator `AL` that produces values which can be stringified.
-- A string prefix
-
-and it returns an Allocator that allocates strings of the form `PREFIX_A` where `PREFIX` is the given prefix and `A` is a stringification of the allocated by `AL`.
-
-In this case, as the `AL` parameter, we use `Basic ()` which instantiates an abstract allocator module that internally just allocates integers.
 
 
 
