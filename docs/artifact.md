@@ -804,10 +804,219 @@ This shows how symbolic testing helps writing *more robust* tests.
 | **KLEE Time(s)** |  0.474  |  0.158  |    0.192     |       0.182        |    0.192    |      0.182      |    0.368     |     0.225      |   0.384    |     0.293     |      0.193      |     0.221      |  0.316   |   3.380   |
 
 
+## From Theory to Implementation
+
+In the paper, the formalisation of GIL and the associated meta-theory is streamlined for clarity.
+The implementation follows the same principles, but is, expectedly, more complex.
+Here, we outline the main differences.
 
 
+### GIL Syntax and Semantics
+
+The syntax of GIL is defined in the paper on page 2, in the display box spanning lines 166-172.
+
+We first focus on commands, which are defined in the implementation [in the `Cmd.ml` file](https://github.com/GillianPlatform/Gillian/blob/master/GillianCore/GIL_Syntax/Cmd.ml) as follows:
+
+```ocaml
+(* Cmd.ml *)
+type 'label t =
+  | Skip                                                                      (** Skip                              *)
+  | Assignment    of string * Expr.t                                          (** Assignment                        *)
+  | LAction       of string * string * Expr.t list                            (** Local Actions                     *)
+  | Logic         of LCmd.t                                                   (** GIL Logic commands                *)
+  | Goto          of 'label                                                   (** Unconditional goto                *)
+  | GuardedGoto   of Expr.t * 'label * 'label                                 (** Conditional goto                  *)
+  | Call          of
+      string * Expr.t * Expr.t list * 'label option * logic_bindings_t option (** Procedure call                    *)
+  | ECall         of string * Expr.t * Expr.t list * 'label option            (** External Procedure call           *)
+  | Apply         of string * Expr.t * 'label option                          (** Application-style procedure call  *)
+  | Arguments     of string                                                   (** Arguments of the current function *)
+  | PhiAssignment of (string * Expr.t list) list                              (** PHI assignment                    *)
+  | ReturnNormal                                                              (** Normal return                     *)
+  | ReturnError                                                               (** Error return                      *)
+  | Fail          of string * Expr.t list                                     (** Failure                           *)
+```
+
+The differences are as follows:
+
+- The `Skip` command does nothing. It is useful as a collection point for PHI-nodes, see below.
+- Action execution, `LAction (x, a, [e1, ..., en])` (corresponding to `x := a(e1, ..., en)`) takes multiple parameters instead of one, and actions themselves are represented as strings.
+- There are two `goto commands`:
+  - `Goto lab` that jumps unconditionally to the label `lab`; and
+  - `GuardedGoto(e, lab1, lab2)` that jumps to `lab1` if `e` evaluates to `true` or to `lab2` if it evaluates to `false`
+  The `ifgoto` presented in the paper is equivalent to these two commands.
+- In the implementation, commands can be annotated with string labels (`string Cmd.t`) manually; in the paper, they are assigned integer indexes (`int Cmd.t`) automatically.
+  We write GIL programs with labeled commands for readability, and transpile to indexed commands for efficiency.
+- In addition to the `return` (`ReturnNormal`) command, there is also a `throw` (`ReturnError`) command.
+  This is because GIL execution has three modes in the implementation: normal, error, and failure.
+  The error mode allows us to handle exceptions, but only clutters the meta-theory. For more details, see [JaVerT 2.0].
+- The procedure call `Call(x, e, [e1, ..., en], lab)` (corresponding to `x := e(e1, ..., en) with lab`) takes multiple parameters instead of one, and,
+  if the execution of the procedure terminates in error mode, the execution proceeds to the label `lab` automatically.
+  The optional logical bindings are out of scope for this paper.
+- We allow procedures to have a variable number of arguments using the `Apply` and `Arguments` commands.
+  The `Apply(x, e, lab)` command, corresponding to `x := apply(e)`, expects `e` to be a GIL list, whose first element is the procedure name, and the remaining elements are the parameters with which the procedure is to be called. The `Arguments` command returns the list of parameters with which the procedure was called.
+- The implementation also has an external call mechanism, `ECall`, that is currently used to model the `eval` statement in JavaScript, and could be used to model some system calls in Gillian-C. For more details, see [JaVerT 2.0].
+- We have the multi-variable phi-assignment, `PhiAssignment`, that allows us to write programs in Single Static Assignment (SSA). JS-2-JSIL, for example, outputs code in SSA.
+  For more details, see [JaVerT].
+- The `Fail` command (`fail [desc] (e1, ..., en)`) can return multiple values and also carries a string that may contain an error name or error message.
+- The `vanish` command of the paper has, incidentally, vanished. Instead, we have two higher-level commands, `assume` and `assert` in the [logic commands](https://github.com/GillianPlatform/Gillian/blob/master/GillianCore/GIL_Syntax/LCmd.ml), together with other logic commands that are out of scope of this paper. The `assume`/`assert` mechanism is equivalent to the `ifgoto-vanish` mechanism of the paper.
+- The `uSym` and `iSym` commands are mainly theoretical devices that ensure soundness in the presence of fresh-value generation.
+  In the implementation, we provide an allocation mechanism that allows the creators of Gillian instantations to generate fresh interpreted and uninterpreted symbols.
+
+#### Procedures and programs
+
+As explained earlier, there is no defined set `A` of actions, actions are denotted by their name, a string. Also, the procedures and programs contain much more information than what is in the paper.
+
+```ocaml
+type ('annot, 'label) proc = {
+  proc_name : string;
+  proc_body : ('annot * 'label option * 'label Cmd.t) array;
+  proc_params : string list;
+  proc_spec : Spec.t option;
+}
+
+type ('annot, 'label) prog = {
+  imports : string list;
+  lemmas : (string, Lemma.t) Hashtbl.t;
+  preds : (string, Pred.t) Hashtbl.t;
+  only_specs : (string, Spec.t) Hashtbl.t;
+  procs : (string, ('annot, 'label) Proc.t) Hashtbl.t;
+  macros : (string, Macro.t) Hashtbl.t;
+  bi_specs : (string, BiSpec.t) Hashtbl.t;
+  proc_names : string list;
+  predecessors : (string * int * int, int) Hashtbl.t;
+}
+```
+
+Procedures have a name, a body and parameters as described in the paper. However, each command in the body is also annotated with an opaque value that can be decided by the user (it has the `'annot` polymorphic type). These annotations can be used to keep information during execution that helps understanding the result of an analysis. Every command is also attached to a label, that has polymorphic type `'label`. Most often, we use `string` labels for labeled programs and `int` labels for labeled programs as explained above. Finally, procedures can also have specifications that are used for verification but are out of scope for the PLDI2020 paper.
+
+Programs are not just a map from procedure identifiers to procedures. There are also:
+- `lemmas`, `predicates` and `specifications` that are used for verification (out of scope her)
+- `bi_specs` which are precomputed hints for automatic compositional testing
+- `macros` which are used to define syntactic sugar over lists of logic commands, useful for readability, and unfolded at execution time
+- A `predecessors` table used for the Phi Assignment
 
 
+### The Memory Interfaces
+
+Here is how Memory models are defined in the paper:
+> **Definition** *(Concrete Memory Model)*: A concrete memory model, $M \in \mathbb{M}$, is a triple $\langle |M|, A, \underline{\mathsf{ea}}\rangle$, consisting of a set of concrete memories, $|M| \ni \mu$, a set of actions $A \ni \alpha$, and the action execution function $\underline{\mathsf{ea}} : A \rightarrow |M| \rightarrow \mathcal{V} \rightarrow \wp(|M| \times \mathcal{V})$, pretty-printed $\mu.\alpha(v) \rightsquigarrow (\mu', v)$.
+>
+> **Definition** *(Symbolic Memory Model)*: A symbolic memory model, $\hat M \in \mathbb{M}$, is a triple $\langle |\hat M|, A, \hat{\underline{\mathsf{ea}}}\rangle$, consisting of a set of symbolic memories, $|\hat M| \ni \hat \mu$, a set of actions $A \ni \alpha$, and the action execution function $\hat{\underline{\mathsf{ea}}} : A \rightarrow |\hat M| \rightarrow \hat \mathcal{E} \rightarrow \Pi \rightarrow \wp(|\hat M| \times \hat \mathcal{E} \times \Pi)$, pretty-printed $\hat \mu.\alpha(\hat e) \rightarrow (\mu', \hat e', \pi ')$.
+
+In the implementation, Concrete Memory Models  and Symbolic Memory Models have an interface a bit more complex. The complete interface can be found in the files `GillianCore/engine/SymbolicSemantics/SMemory.ml` and `GillianCore/engine/ConcreteSemantics/CMemory.ml`.
+
+These interfaces do export:
+- `type t`, the type of memories, which correspond respectively to $|M|$ and $|\hat M|$
+- `val execute_action: string -> t -> vt list -> action_ret` for the concrete memory models, which corresponds to the theoretical definition apart from the fact that actions are represented by their `string` name and that concrete actions can return an error, which is used for automatic compositional testing (out of scope here)
+- `val execute_action: string -> t -> PFS.t -> TypeEnv.t -> vt list -> action_ret` for the symbolic memory models, which correspond to the theoretical definition apart from actions that are represented by their `string` names, the fact that the actions can return errors which are used for automatic compositional testing (out of scope here), and the path conditions ($\pi$) are split into two parts : `PFS.t` which are set of pure formulae and `TypeEnv.t` which are special kind of pure formulae corresponding to the type of values.
+
+These interfaces export more definitions.
+Since, for efficiency reasons, the type of memories can be mutable, the user must define an `init` function and a `copy` function. The user also has to define pretty printers for its state, which are used for the log files.
+
+Finally, there are a lot of definitions (`ga_to_...`, `is_overlaping_asrt`, `assertions`, `mem_constraints`, `type err_t`, etc.) that are used either for verification or automatic compositional testing and are not presented in the PLDI20 paper because they are out of scope.
+
+### The State Model interface
+
+In the paper, the state model interface is defined as below:
+
+>**Definition** *(State Model)*: A state model $S \in \mathbb{S}$ is a quadruple $\langle|S|, \mathsf{V}, A, \mathsf{ea}\rangle$, consisting of: **(1)** a set of states on which GIL programs operate, $|S| \ni \sigma$; **(2)** a set of values stored in those states, $\mathsf{V} \ni v$; **(3)** a set of actions that can be performed on those states, $A \ni \alpha$; and **(4)** a function $\mathsf{ea}: a \rightarrow |S| \rightarrow \mathsf{V} \rightarrow \wp(|S| \times \mathsf{V})$ for execution actions on states. All GIL states must contain an internal representation of a *variable store*, denoted by $\rho$, assigning values to program variables.
+>
+> We write $\sigma.\alpha(v) \rightsquigarrow (\sigma', v')$ to mean $(\sigma', v') \in \mathsf{ea}(\alpha, \sigma, v)$, and refer to $\sigma'$ as the state output and to $v'$ as the value output of $\alpha$.
+
+It is also added that:
+
+> A state model $S = \langle |S|, \mathsf V, A, \mathsf{ea}\rangle$ is *proper* if and only if its set of actions, A, includes the following distinguished actions/families of actions:
+> - $\{ \mathsf{setVar}_x \}_{x \in \mathcal{X}}$ for updating the value of $x$ in the store of a given state, denoted by $\sigma.\mathsf{setVar}_x(v)$;
+> - $\mathsf{setStore}$, for replacing the entire store of a given state with a new store, denoted by $\sigma.\mathsf{setStore}(\rho)$;
+> - $\mathsf{getStore}$, for obtaining the store of the given state, denoted by $\sigma.\mathsf{getStore}()$;
+> - $\{ \mathsf{eval}_e \}_{e \in \mathcal{E}}$ for evaluationg the expression $e$ in a given state, denoted by $\sigma.\mathsf{eval}_e(-)$;
+> - $\mathsf{assume}$, for extending the given state with the information denoted by its argument value, denoted by $\sigma.\mathsf{assume}(v);
+> - $\mathsf{uSym}$ and $\mathsf{iSym}$, for generating new uninterpreted and interpreted symbols, respectively. From now on, we work with proper state models.
+
+In the implementation, the interface of state models, available in `GillianCore/engine/GeneralSemantics/State.ml` is a bit difference and more complex.
+
+First of all, the state interface defines "proper state models" in the first place. However, these state models do not define "families of actions". For example, `eval_expr` is one particular function exposed by the state interface, and has the following signature:
+```ocaml
+val eval_expr : t -> Expr.t -> vt
+```
+
+`setVar` is defined in terms of `setStore` and `getStore` directly by the interpreter:
+```ocaml
+let update_store (state : State.t) (x : string) (v : Val.t) : State.t =
+    let store = State.get_store state in
+    let _ = Store.put store x v in
+    let state' = State.set_store state store in
+    state'
+```
+Note that variables are designated by their string names. Also note the usage of `Store.put`: stores have their own interface in the implementation which greatly simplify their usage. Setting a variable in the store is simply getting the store of the state, setting the variable to the correct value in the store and putting that new obtained store back in the state.
+
+States can be mutable to improve the performances, and therefore there is an `init` and a `copy` function.
+
+The `execute_action` function defined in the state interface corresponds only to the lifting of user-defined memory-model actions, given that all necessary actions to have a proper state are defined as functions of their own.
+```ocaml
+val execute_action : string -> t -> vt list -> action_ret
+```
+Once again, actions are designated by their string names, and actions can return either a list of successful state or some errors that can be used for automatic compositional testing.
+
+Finally, there are a lot of different functions that do not correspond to any aspect of the state models presented in the paper such as `unify_assertion`, `produce_posts`, `apply_fixes`, etc. which are useful either for the verification mode or the automatic compositional testing mode of Gillian, and are out of scope for the Gillian PLDI2020 paper.
+
+### Allocators
+
+In the paper allocators have the following definition:
+
+> An allocator $AL \in \mathbb{A}\mathbb{L}$ is a triple $\langle|AL|, \mathsf Y, \mathsf{alloc}\rangle$, consisting of: **(1)** a set $|AL|\ni \xi$ of allocation records; **(2)** a set $Y$ of all values that are allowed to be allocated; and **(3)** an allocation function:
+>$$
+>\mathsf{alloc}: |AL| \rightarrow \mathbb{N} \rightarrow \wp(\mathsf Y) \rightharpoonup |AL|\times V
+>$$
+>pretty-printed as $\xi.\mathsf{alloc}(j)\rightharpoonup_{\mathsf Y}(\xi', y)$, which takes an allocation record $\xi$, a, allocation site $j$, and an allocation range $Y \subseteq \mathsf Y$, and returns a fresh value $y \in Y$, together with the appropriately updated allocation record $\xi'$.
+>
+>Intuitively, an allocation record maintains information about already allocated values. This apporach is complementary to [the free set approach](https://doi.org/10.1007/978-3-540-78499-9_15), where information is maintained about values that can still be allocated. An allocation site $j$ is the program point associated with either the $\mathsf{uSym}_j$ or the $\mathsf{iSym}_j$ command.
+
+This could be interpreted in terms of OCaml module signature as:
+
+```ocaml
+module type Allocator = sig
+  type t    (** Type of allocation records     *)
+  type us_t (** Type of uninterpreted symbols **)
+  type is_t (**  Type of interpreted symbols   *)
+
+  val alloc_us : t -> int -> t * us_t
+  val alloc_is : t -> int -> t * is_t
+end
+```
+
+However, for efficiency, we chose this implementation:
+
+```ocaml
+(* Allocator.ml *)
+module type S = sig
+  type t                   (** Type of value to allocate *)
+
+  val alloc : unit -> t    (** Allocation function *)
+  val dealloc : t -> unit  (** Deallocation function *)
+  val eq : t -> t -> bool  (** Equality of values to allocate *)
+  val reset : unit -> unit (** Reset this allocator *)
+end
+```
+The `reset` function is useful for bulk-testing. When running a new test, every allocator is reset.
+
+The Abstract location allocator (in `ALoc.ml`), which corresponds to uninterpreted symbols, are then initiated like this:
+```ocaml
+include Allocators.Make_with_prefix
+          (Basic ())
+          (struct
+            let prefix = Names.aloc_
+          end)
+```
+
+Where `Make_with_prefix` is a functor that takes:
+- An abstract Allocator `AL` that produces values which can be stringified.
+- A string prefix
+
+and it returns an Allocator that allocates strings of the form `PREFIX_A` where `PREFIX` is the given prefix and `A` is a stringification of the allocated by `AL`.
+
+In this case, as the `AL` parameter, we use `Basic ()` which instantiates an abstract allocator module that internally just allocates integers.
 
 
 
