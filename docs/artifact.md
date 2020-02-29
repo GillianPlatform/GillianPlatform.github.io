@@ -175,10 +175,10 @@ We re-filter Test262 to find the applicable tests and run them using JS-2-GIL an
 - **Total tests**: all tests.
 - **Non-strict tests** (filtered out): tests that should be run only in non-strict mode. They contain the `flags: [noStrict]` directive and are filtered out automatically by our bulk testing mechanism.
 - **Strict tests**: tests that should be run in strict mode.
-- **Non-strict features** (filtered out): tests that combine strict and non-strict mode, using either indirect eval or the non-strict `Function` constructor (91 tests, list available in the `non_strict_tests` variable of [`test262_filtering.ml`](https://github.com/GillianPlatform/Gillian/blob/master/Gillian-JS/lib/Test262/Test262_filtering.ml)).
-- **For unimplemented features** (filtered out): tests that test unimplemented features, such as the`JSON` library (1205 tests, list available in the `tests_for_unimplemented_features` variable of [`test262_filtering.ml`](https://github.com/GillianPlatform/Gillian/blob/master/Gillian-JS/lib/Test262/Test262_filtering.ml)). Note that the structural tests for some of these features still pass, as we have the appropriate stubs in the initial heap.
-- **Using unimplemented features** (filtered out): tests that use unimplemented features to test behaviours of implemented features, with the most prominent examples being the `Date` constructor and `RegExp` literals (29 tests, list available in the `tests_using_unimplemented_features` variable of [`test262_filtering.ml`](https://github.com/GillianPlatform/Gillian/blob/master/Gillian-JS/lib/Test262/Test262_filtering.ml)).
-- **ES6+** (filtered out): tests that use behaviours beyond ES5 (5 tests, list available in the `es6_tests` variable of [`test262_filtering.ml`](https://github.com/GillianPlatform/Gillian/blob/master/Gillian-JS/lib/Test262/Test262_filtering.ml)). For example, two language tests test for the ES6 completion of the `if` statement (returns `undefined` instead of the ES5 `empty`), one language test uses a function declaration in statement position (disallowed in ES5), and two built-in tests require a specific ordering of object keys (implementation-dependent in ES5).
+- **Non-strict features** (filtered out): tests that combine strict and non-strict mode, using either indirect eval or the non-strict `Function` constructor (91 tests, list available in the `non_strict_tests` variable of [`test262_filtering.ml`](https://github.com/GillianPlatform/Gillian/blob/PLDI20/Gillian-JS/lib/Test262/Test262_filtering.ml)).
+- **For unimplemented features** (filtered out): tests that test unimplemented features, such as the`JSON` library (1205 tests, list available in the `tests_for_unimplemented_features` variable of [`test262_filtering.ml`](https://github.com/GillianPlatform/Gillian/blob/PLDI20/Gillian-JS/lib/Test262/Test262_filtering.ml)). Note that the structural tests for some of these features still pass, as we have the appropriate stubs in the initial heap.
+- **Using unimplemented features** (filtered out): tests that use unimplemented features to test behaviours of implemented features, with the most prominent examples being the `Date` constructor and `RegExp` literals (29 tests, list available in the `tests_using_unimplemented_features` variable of [`test262_filtering.ml`](https://github.com/GillianPlatform/Gillian/blob/PLDI20/Gillian-JS/lib/Test262/Test262_filtering.ml)).
+- **ES6+** (filtered out): tests that use behaviours beyond ES5 (5 tests, list available in the `es6_tests` variable of [`test262_filtering.ml`](https://github.com/GillianPlatform/Gillian/blob/PLDI20/Gillian-JS/lib/Test262/Test262_filtering.ml)). For example, two language tests test for the ES6 completion of the `if` statement (returns `undefined` instead of the ES5 `empty`), one language test uses a function declaration in statement position (disallowed in ES5), and two built-in tests require a specific ordering of object keys (implementation-dependent in ES5).
 - **Applicable**: the number of tests applicable to JS-2-GIL.
 - **Passing**: the number of tests passing.
 - **Failing**: the number of tests failing.
@@ -216,7 +216,7 @@ The testing should take approximately thirty minutes. The bulk tester will activ
 esy x gillian-js test262 ../test262/test/built-ins/Array/prototype/reduce/
 ```
 
-4. If you would like to examine the filtered tests, you can find them in [`test262_filtering.ml`](https://github.com/GillianPlatform/Gillian/blob/master/Gillian-JS/lib/Test262/Test262_filtering.ml).
+4. If you would like to examine the filtered tests, you can find them in [`test262_filtering.ml`](https://github.com/GillianPlatform/Gillian/blob/PLDI20/Gillian-JS/lib/Test262/Test262_filtering.ml).
 
 #### Detailed Per-Folder Breakdown: Language
 
@@ -815,7 +815,7 @@ Here, we outline the main differences.
 
 The syntax of GIL is defined in the paper on page 2, in the display box spanning lines 166-172.
 
-We first focus on commands, which are defined in the implementation [in the `Cmd.ml` file](https://github.com/GillianPlatform/Gillian/blob/master/GillianCore/GIL_Syntax/Cmd.ml) as follows:
+We first focus on commands, which are defined in the implementation [in the `Cmd.ml` file](https://github.com/GillianPlatform/Gillian/blob/PLDI20/GillianCore/GIL_Syntax/Cmd.ml) as follows:
 
 ```ocaml
 (* Cmd.ml *)
@@ -859,9 +859,9 @@ The differences are as follows:
 - We have the multi-variable phi-assignment, `PhiAssignment`, that allows us to write programs in Single Static Assignment (SSA). JS-2-JSIL, for example, outputs code in SSA.
   For more details, see [JaVerT].
 - The `Fail` command (`fail [desc] (e1, ..., en)`) can return multiple values and also carries a string that may contain an error name or error message.
-- The `vanish` command of the paper has, incidentally, vanished. Instead, we have two higher-level commands, `assume` and `assert` in the [logic commands](https://github.com/GillianPlatform/Gillian/blob/master/GillianCore/GIL_Syntax/LCmd.ml), together with other logic commands that are out of scope of this paper. The `assume`/`assert` mechanism is equivalent to the `ifgoto-vanish/ifgoto-fail` mechanisms of the paper.
+- The `vanish` command of the paper has, incidentally, vanished. Instead, we have two higher-level commands, `assume` and `assert` in the [logic commands](https://github.com/GillianPlatform/Gillian/blob/PLDI20/GillianCore/GIL_Syntax/LCmd.ml), together with other logic commands that are out of scope of this paper. The `assume`/`assert` mechanism is equivalent to the `ifgoto-vanish/ifgoto-fail` mechanisms of the paper.
 - The `uSym` and `iSym` commands are mainly theoretical devices that ensure soundness in the presence of fresh-value generation.
-  In the implementation, we provide an allocation mechanism that allows the creators of Gillian instantations to generate fresh interpreted and uninterpreted symbols.
+  In the implementation, we provide an allocation mechanism that allows the creators of Gillian instantiations to generate fresh interpreted and uninterpreted symbols.
   They can then expose two dedicated actions corresponding to `uSym` and `iSym`.
 
 The procedures and programs also contain more information than given in the paper:
@@ -922,9 +922,9 @@ module type S = sig
 end
 ```
 The `dealloc` function allows for de-allocation of values.
-The `reset` function is useful for bulk-testing; when running a new test, all allocators is reset.
+The `reset` function is useful for bulk-testing; when running a new test, all allocators are reset.
 
-The abstract location allocator (in [`ALoc.ml`](https://github.com/GillianPlatform/Gillian/blob/master/GillianCore/GIL_Syntax/ALoc.ml)), which corresponds to uninterpreted symbols, is then initialised as follows:
+The abstract location allocator (in [`ALoc.ml`](https://github.com/GillianPlatform/Gillian/blob/PLDI20/GillianCore/GIL_Syntax/ALoc.ml)), which corresponds to uninterpreted symbols, is then initialised as follows:
 ```ocaml
 include Allocators.Make_with_prefix
           (Basic ())
@@ -945,7 +945,7 @@ In the `ALoc` case, as the `AL` parameter, we use `Basic ()`, which instantiates
 ### The State Model interface
 
 In the paper, the state model interface is defined in line 208 and proper state models are defined in line 248 in terms of actions they must implement.
-In the implementation, the interface of state models, available in [`State.ml`](https://github.com/GillianPlatform/Gillian/blob/master/GillianCore/engine/GeneralSemantics/State.ml) is slightly different and more complex. Most importantly, the actions are not infinite indexed families, and the index is normally the parameter of the action.
+In the implementation, the interface of state models, available in [`State.ml`](https://github.com/GillianPlatform/Gillian/blob/PLDI20/GillianCore/engine/GeneralSemantics/State.ml) is slightly different and more complex. Most importantly, the actions are not infinite indexed families, and the index is normally the parameter of the action.
 
 For example, the signature of expression evaluation, `eval_expr` is as follows:
 ```ocaml
@@ -977,7 +977,7 @@ Finally, the implemented state interface exposes many other functions important 
 
 The concrete and symbolic memory models are defined in the paper in lines 410 and 415, respectively.
 
-In the implementation, their interfaces, found in [`CMemory.ml`](https://github.com/GillianPlatform/Gillian/blob/master/GillianCore/engine/ConcreteSemantics/CMemory.ml) and [`SMemory.ml`](https://github.com/GillianPlatform/Gillian/blob/master/GillianCore/engine/SymbolicSemantics/SState.ml), expose additional functionalities.
+In the implementation, their interfaces, found in [`CMemory.ml`](https://github.com/GillianPlatform/Gillian/blob/PLDI20/GillianCore/engine/ConcreteSemantics/CMemory.ml) and [`SMemory.ml`](https://github.com/GillianPlatform/Gillian/blob/PLDI20/GillianCore/engine/SymbolicSemantics/SState.ml), expose additional functionalities.
 
 As the paper states, the interfaces expose the following:
 - the type `t`, the type of memories, which correspond, respectively, to *M* and *\hat M* in the paper.
