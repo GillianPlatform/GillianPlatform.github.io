@@ -1,5 +1,6 @@
 ---
 id: start
 title: Getting Started
-sidebar_label: Getting Started
 ---
+
+Todo, please come back soon :)
