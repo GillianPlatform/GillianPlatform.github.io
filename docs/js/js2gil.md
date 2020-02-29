@@ -21,7 +21,7 @@ The JS-2-GIL compiler can be split into two compilers: JS-2-JSIL, which compiles
 
 Previously, we have tested JS-2-JSIL against [this commit (from May 30th 2016)](https://github.com/tc39/test262/commit/91d06f) of Test262, the JavaScript official test suite. As this commit of Test262 targets ES6, we had to identify the subset of tests that are appropriate for JS-2-JSIL, as explained in detail in [\[JaVerT\]](references.md#javert-javascript-verification-toolchain), obtaining 8797 applicable tests, of which JS-2-JSIL passes 100%.
 
-We have initially tested JS-2-GIL successfully on the same 8797 tests and reported this in the submitted version of the paper. However, these tests were not systematically categorised and we were not able to automate the testing process to our satisfaction using the bulk testing mechanism of Gillian. For this reason, we have chosen to work with the latest version of Test262, forked [here](https://github.com/giltho/javert-test262), where each test comes with a precise description of its intended outcome. For example, a test that is supposed to fail at parsing time with a JavaScript native syntax error will contain the following in its header:
+We have initially tested JS-2-GIL successfully on the same 8797 tests and reported this in the submitted version of the paper. However, these tests were not systematically categorised and we were not able to automate the testing process to our satisfaction using the bulk testing mechanism of Gillian. For this reason, we have chosen to work with the latest version of Test262, forked [here](https://github.com/GillianPlatform/javert-test262), where each test comes with a precise description of its intended outcome. For example, a test that is supposed to fail at parsing time with a JavaScript native syntax error will contain the following in its header:
 
 ```
 negative:
@@ -55,10 +55,10 @@ We re-filter Test262 to find the applicable tests and run them using JS-2-GIL an
 - **Total tests**: all tests.
 - **Non-strict tests** (filtered out): tests that should be run only in non-strict mode. They contain the `flags: [noStrict]` directive and are filtered out automatically by our bulk testing mechanism.
 - **Strict tests**: tests that should be run in strict mode.
-- **Non-strict features** (filtered out): tests that combine strict and non-strict mode, using either indirect eval or the non-strict `Function` constructor (91 tests, list available in the `non_strict_tests` variable of [`test262_filtering.ml`](https://github.com/giltho/GillianDev/blob/master/Gillian-JS/lib/test262/test262_filtering.ml)).
-- **For unimplemented features** (filtered out): tests that test unimplemented features, such as the`JSON` library (1205 tests, list available in the `tests_for_unimplemented_features` variable of [`test262_filtering.ml`](https://github.com/giltho/GillianDev/blob/master/Gillian-JS/lib/test262/test262_filtering.ml)). Note that the structural tests for some of these features still pass, as we have the appropriate stubs in the initial heap.
-- **Using unimplemented features** (filtered out): tests that use unimplemented features to test behaviours of implemented features, with the most prominent examples being the `Date` constructor and `RegExp` literals (29 tests, list available in the `tests_using_unimplemented_features` variable of [`test262_filtering.ml`](https://github.com/giltho/GillianDev/blob/master/Gillian-JS/lib/test262/test262_filtering.ml)).
-- **ES6+** (filtered out): tests that use behaviours beyond ES5 (5 tests, list available in the `es6_tests` variable of [`test262_filtering.ml`](https://github.com/giltho/GillianDev/blob/master/Gillian-JS/lib/test262/test262_filtering.ml)). For example, two language tests test for the ES6 completion of the `if` statement (returns `undefined` instead of the ES5 `empty`), one language test uses a function declaration in statement position (disallowed in ES5), and two built-in tests require a specific ordering of object keys (implementation-dependent in ES5).
+- **Non-strict features** (filtered out): tests that combine strict and non-strict mode, using either indirect eval or the non-strict `Function` constructor (91 tests, list available in the `non_strict_tests` variable of [`test262_filtering.ml`](https://github.com/GillianPlatform/Gillian/blob/master/Gillian-JS/lib/Test262/Test262_filtering.ml)).
+- **For unimplemented features** (filtered out): tests that test unimplemented features, such as the`JSON` library (1205 tests, list available in the `tests_for_unimplemented_features` variable of [`test262_filtering.ml`](https://github.com/GillianPlatform/Gillian/blob/master/Gillian-JS/lib/Test262/Test262_filtering.ml)). Note that the structural tests for some of these features still pass, as we have the appropriate stubs in the initial heap.
+- **Using unimplemented features** (filtered out): tests that use unimplemented features to test behaviours of implemented features, with the most prominent examples being the `Date` constructor and `RegExp` literals (29 tests, list available in the `tests_using_unimplemented_features` variable of [`test262_filtering.ml`](https://github.com/GillianPlatform/Gillian/blob/master/Gillian-JS/lib/Test262/Test262_filtering.ml)).
+- **ES6+** (filtered out): tests that use behaviours beyond ES5 (5 tests, list available in the `es6_tests` variable of [`test262_filtering.ml`](https://github.com/GillianPlatform/Gillian/blob/master/Gillian-JS/lib/Test262/Test262_filtering.ml)). For example, two language tests test for the ES6 completion of the `if` statement (returns `undefined` instead of the ES5 `empty`), one language test uses a function declaration in statement position (disallowed in ES5), and two built-in tests require a specific ordering of object keys (implementation-dependent in ES5).
 - **Applicable**: the number of tests applicable to JS-2-GIL.
 - **Passing**: the number of tests passing.
 - **Failing**: the number of tests failing.
@@ -80,7 +80,7 @@ fail due to a discrepancy between how Unicode characters are treated in JavaScri
 
 ### Reproducing the Results
 
-1. Clone our [forked Test262 repository](https://github.com/giltho/javert-test262) to a folder on your machine. Inside that folder, you can find the Test262 tests in the `test` subfolder. In particular, `test/language` contains the core language tests, whereas `test/built-ins` contains the tests for the built-in libraries.
+1. Clone our [forked Test262 repository](https://github.com/GillianPlatform/javert-test262) to a folder on your machine. Inside that folder, you can find the Test262 tests in the `test` subfolder. In particular, `test/language` contains the core language tests, whereas `test/built-ins` contains the tests for the built-in libraries.
 2. To run all of the tests, execute the following command inside your Gillian folder:
 
 ```bash
@@ -92,7 +92,7 @@ For example, we normally clone Test262 in the same folder as the Gillian project
 
 ```bash
 cd ..
-git clone https://github.com/giltho/javert-test262.git test262
+git clone https://github.com/GillianPlatform/javert-test262.git test262
 cd Gillian
 esy
 esy x javert bulk-exec ../test262/test
@@ -106,7 +106,7 @@ The testing should take approximately thirty minutes. The bulk tester will activ
 esy x javert bulk-exec ../test262/test/built-ins/Array/prototype/reduce/
 ```
 
-4. If you would like to examine the filtered tests, you can find them in [`test262_filtering.ml`](https://github.com/giltho/GillianDev/blob/master/Gillian-JS/lib/test262/test262_filtering.ml).
+4. If you would like to examine the filtered tests, you can find them in [`test262_filtering.ml`](https://github.com/GillianPlatform/Gillian/blob/master/Gillian-JS/lib/Test262/Test262_filtering.ml).
 
 ### Detailed Per-Folder Breakdown: Language
 

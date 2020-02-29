@@ -26,7 +26,7 @@ module.exports = {
         { to: 'try', label: 'Try', position: 'right' },
         // {to: 'blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/giltho/GillianDev',
+          href: 'https://github.com/GillianPlatform/Gillian',
           label: 'GitHub',
           position: 'right',
         },
@@ -57,7 +57,7 @@ module.exports = {
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/giltho/GillianDev',
+              href: 'https://github.com/GillianPlatform/Gillian',
             },
             {
               label: 'references',

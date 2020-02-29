@@ -43,11 +43,11 @@ A serialized C integer is a list of the form `{{ "int", x }}` where `x` is a GIL
 As opposed to [Gillian-JS](../js/stest.md#assumptions-and-assertions), we use C expressions directly, and not custom expressions. This benefits is that one does not have to learn a new syntax for writing tests. However, this causes the execution to branch a lot for. `ASSUME` will then cut any branch that we do not want. In Gillian-JS, given the complex control flow of JavaScript, there is a lot more branching happening, which can become quite difficult to handle. Also, in JavaScript, the very complex semantics of expressions can lead to behaviours that are not desired by the used, and providing a simpler expression syntax is more straightforward.
 
 
-## Symbolic Testing of Collection-C
+## Symbolic Testing of Collections-C
 
 ### Test results
 
-We symbolically test [Collection-C](https://github.com/srdja/Collections-C), a real-world C data-structure library for C.
+We symbolically test [Collections-C](https://github.com/srdja/Collections-C), a real-world C data-structure library for C.
 The results are presented in the table below, with each row containing:
 
 - The name of the folder being tested, which also indicates the data structure in question
@@ -71,7 +71,7 @@ The results are presented in the table below, with each row containing:
 
 ### Fixes
 
-Symbolically testing Collection-C let to the following bug-fixing pull requests. They fix previously unknown bugs and usage of undefined behaviours:
+Symbolically testing Collections-C let to the following bug-fixing pull requests. They fix previously unknown bugs and usage of undefined behaviours:
 - [Fix buffer overflow](https://github.com/srdja/Collections-C/pull/119) (bug)
 - [Remove the usage of cc_comp_ptr](https://github.com/srdja/Collections-C/pull/122) (undefined behaviour)
 - [Test coincidentally passing while they should not](https://github.com/srdja/Collections-C/pull/123) (bugs and undefined behaviours)
@@ -81,13 +81,13 @@ Symbolically testing Collection-C let to the following bug-fixing pull requests.
 
 
 ### Reproducing the Results
-For license reason, we do not include the Collection-C code in the Gillian repository.
-There is an [external repository](https://github.com/giltho/collection-c-for-gillian) that contains the Collection-C code adapted to testing in Gillian-C and Klee.
+For license reason, we do not include the Collections-C code in the Gillian repository.
+There is an [external repository](https://github.com/GillianPlatform/collections-c-for-gillian) that contains the Collections-C code adapted to testing in Gillian-C and Klee.
 
 In order to clone it, simply run, from the Gillian folder:
 ```bash
 cd ..
-git clone git@github.com:giltho/collection-c-for-gillian.git collection-c
+git clone https://github.com/GillianPlatform/collections-c-for-gillian.git collection-
 cd Gillian
 ```
 
@@ -100,7 +100,7 @@ There are two ways of launching the tests:
 From the Gillian folder run:
 
 ```bash
-esy x gillian-c bulk-wpst ../collection-c/for-gillian
+esy x gillian-c bulk-wpst ../collections-c/for-gillian
 ```
 
 You will see every test suites executing one by one. Two tests will fail, this is intended. They represent two of the bugs we've found and are explained [here](#bug-tests).
@@ -110,12 +110,12 @@ You will see every test suites executing one by one. Two tests will fail, this i
 
 From the Gillian folder, for each folder you want to test, use:
 ```bash
-Gillian-C/scripts/testFolder.sh ../collection-c/for-gillian/folder
+Gillian-C/scripts/testFolder.sh ../collections-c/for-gillian/folder
 ```
 
 For example, to run the test suite related to singly-linked lists, run:
 ```bash
-Gillian-C/scripts/testFolder.sh ../collection-c/for-gillian/slist
+Gillian-C/scripts/testFolder.sh ../collections-c/for-gillian/slist
 ```
 
 
@@ -151,7 +151,7 @@ However, here, the equality between every element of `list1` and `str_i` is test
 
 This shows how symbolic testing helps writing *more robust* tests.
 
-### Detailed Per-Folder Breakdown: Collection-C
+### Detailed Per-Folder Breakdown: Collections-C
 
 |     **array**     |  add  | addAt2 | contains | deepCopy | getAt | indexOf | iterAdd | iterRemove | iterReplace | reduce | remove | removeAll | removeAt | reverse | shallowCopy | subarray | zipIterAdd | zipIterNext | zipIterRemove | zipIterReplace | **Total** |
 | :---------------: | :---: | :----: | :------: | :------: | :---: | :-----: | :-----: | :--------: | :---------: | :----: | :----: | :-------: | :------: | :-----: | :---------: | :------: | :--------: | :---------: | :-----------: | :------------: | :-------: |
