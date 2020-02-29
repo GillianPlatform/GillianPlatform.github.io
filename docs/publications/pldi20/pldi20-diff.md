@@ -195,7 +195,7 @@ val execute_action : string -> t -> vt list -> action_ret
 ```
 Once again, actions are designated by their string names, and actions can return either a list of successful state or some errors that can be used for automatic compositional testing.
 
-Finally, there are a lot of different functions that do not correspond to any aspect of the state models presented in the paper such as `unify_assertion`, `produce_posts`, `apply_fixes`, etc. which are useful either for the verification mode or the automatic compositional testing more of Gillian, and are out of scope for the Gillian PLDI2020 paper.
+Finally, there are a lot of different functions that do not correspond to any aspect of the state models presented in the paper such as `unify_assertion`, `produce_posts`, `apply_fixes`, etc. which are useful either for the verification mode or the automatic compositional testing mode of Gillian, and are out of scope for the Gillian PLDI2020 paper.
 
 ## Allocators
 
