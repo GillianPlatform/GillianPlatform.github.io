@@ -42,10 +42,8 @@ Open the terminal by pressing CTRL+ALT+T or by clicking on `Show Applications` i
 To rebuild Gillian, execute the following commands:
 
 1. `rm -rf _build/ _esy/`                        (removes previous build information)
-2. `esy`                                         (compiles Gillian as a library)
-3. `esy init:env`                                (initialises Gillian-JS and Gillian-C)
-4. `cd Gillian-JS/environment; ./remake.sh`      (compiles the JS-relevant binaries)
-5. `cd ../../Gillian-C/environment; ./remake.sh` (compiles the C-relevant binaries)
+2. `esy`                                         (has to be run from the root folder, compiles the project)
+3. `esy init:env`                                (initialises testing folders for Gillian-JS and Gillian-C)
 
 This should take between one and two minutes in total.
 
@@ -53,7 +51,9 @@ This should take between one and two minutes in total.
 
 From the main Gillian folder, execute
 
-`esy x gillian-js test262 ../test262/test/built-ins/Number/`
+```bash
+esy x gillian-js test262 ../test262/test/built-ins/Number/
+```
 
 At the end of the output, you should see the following lines:
 
@@ -75,7 +75,7 @@ From the main Gillian folder, execute
 1. `cd Gillian-JS/environment/`                              (this is where all Gillian-JS symbolic testing should happen)
 2. `./testCosetteFolder.sh Examples/Cosette/Buckets/bstree/` (runs the symbolic tests for the binary search trees of Buckets.js)
 
-The testing should also take ~20 seconds. This time may vary, as the testing is performed using multiple threads. Eleven tests should be tested, starting from `Examples/Cosette/Buckets/bstree/bstree10.js` and finishing with `Examples/Cosette/Buckets/bstree/bstree9.js`. After each test, the test time will be printed. There should be no other output.
+The testing should also take ~20 seconds. This time may vary, as the testing is performed using multiple threads. Eleven tests should be executed, starting from `Examples/Cosette/Buckets/bstree/bstree10.js` and finishing with `Examples/Cosette/Buckets/bstree/bstree9.js`. After each test, the test time will be printed. There should be no other output.
 
 ### Symbolically testing a part of Collections-C using Gillian-C
 
@@ -200,24 +200,15 @@ fail due to a discrepancy between how Unicode characters are treated in JavaScri
 
 #### Reproducing the Results
 
-1. Clone our [forked Test262 repository](https://github.com/GillianPlatform/javert-test262) to a folder on your machine. Inside that folder, you can find the Test262 tests in the `test` subfolder. In particular, `test/language` contains the core language tests, whereas `test/built-ins` contains the tests for the built-in libraries.
+1. Our [forked Test262 repository](https://github.com/GillianPlatform/javert-test262) is already cloned on the machine under the path `~/test262`. Inside that folder, you can find the Test262 tests in the `test` subfolder. In particular, `test/language` contains the core language tests, whereas `test/built-ins` contains the tests for the built-in libraries.
 2. To run all of the tests, execute the following command inside your Gillian folder:
 
 ```bash
 esy
-esy x javert bulk-exec [relative path to your Test262 folder]/test
+esy x javert bulk-exec ../test262
 ```
-
-For example, we normally clone Test262 in the same folder as the Gillian project and change its folder name from `javert-test262` to `test262`:
-
-`git clone https://github.com/GillianPlatform/javert-test262.git test262`
 
 We then run all of the tests by executing the following commands from within the main Gillian folder:
-
-```bash
-esy
-esy x gillian-js test262 ../test262/test
-```
 
 The testing should take approximately thirty minutes. The bulk tester will actively report progress, folder-by-folder, and signal any test failures encountered. In the end, a list of all failed tests (the eight given above) will be printed.
 
@@ -719,7 +710,7 @@ Gillian-C/scripts/testFolder.sh ../collections-c/for-gillian/slist count
 ##### Notes
 
 1. The times obtained in the VM should be representative if run on a machine with a comparable specification (Intel Core i7-4980HQ CPU 2.80 GHz, DDR3 RAM 16GB, 256GB SSD) with no other applications running. Some (proportional) discrepancy is to be expected.
-2. The times obtained when counting executed commands will be slower, due to the fact that the tests will be run in single-threaded mode.
+2. The times obtained when counting executed commands or using `bulk-wpst` will be slower, due to the fact that the tests will be run in single-threaded mode.
 
 #### The array_test_remove.c buffer overflow bug
 
@@ -742,11 +733,11 @@ CHECK_EQUAL_C_INT(2, index);
 
 However, note that both tests are executed on `list1`! What happened then is that `list_index_of` was not finding `"i"` in `list1` because it wasn't there, and therefore did not modify `index`. Since the first check was correct, the value of `index` was still `2` and the test passed anyway.
 
-Our symbolic tests however, uses symbolic 1-character strings, and assumes **the bare minimum about the input values** to make them pass, in order to explore as many possible paths as possible.
+Our symbolic tests however, use symbolic 1-character strings, and assumes **the bare minimum about the input values** to make them pass, in order to explore as many possible paths as possible.
 
 Here, we replaced every one-character strings `"X"` with one-character symbolic string `str_X`. For the test to pass, it should be *enough* for `str_h` to be different from every element in `list1` and for `str_i` to be different from every element in `list2`, and this is exactly what we assumed. However, we never assumed that `str_i` has to be different from every element in `list1` because this is not necessary for the test to pass.
 
-However, here, the equality between every element of `list1` and `str_i` is tested. There is no indication as to the result of this test, and so the execution branches. Therefore, there is a path created where `list_index_of(list1, str_i, zero_if_ptr_eq, &index)` will assign `0` to index, and the test will fail.
+However, here, the equality between every element of `list1` and `str_i` is tested. There is no indication as to the result of this equality, and so the execution branches. Therefore, there is a path created where `list_index_of(list1, str_i, zero_if_ptr_eq, &index)` will assign `0` to index, and the test will fail.
 
 This shows how symbolic testing helps writing *more robust* tests.
 
