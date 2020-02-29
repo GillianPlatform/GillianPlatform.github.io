@@ -37,7 +37,7 @@ They are set by default, and if you do not want to change them, you can just sta
 
 Open the terminal by pressing CTRL+ALT+T or by clicking on `Show Applications` in the bottom left corner, typing in `Terminal`, and clicking on the terminal icon. Once in the terminal, type `cd Gillian` to get to the main Gillian folder (`~/Gillian`).
 
-### Rebuild Gillian
+### Rebuilding Gillian
 
 To rebuild Gillian, execute the following commands:
 
@@ -49,7 +49,7 @@ To rebuild Gillian, execute the following commands:
 
 This should take between one and two minutes in total.
 
-### Test Gillian-JS against a bit of the Test262 official JavaScript test suite
+### Testing Gillian-JS against a bit of the Test262 official JavaScript test suite
 
 From the main Gillian folder, execute
 
@@ -68,7 +68,7 @@ ALL FAILURES:
 ../test262/test/built-ins/Number/S9.3.1_A2.js
 ```
 
-### Symbolically test a part of Buckets.js using Gillian-JS
+### Symbolically testing a part of Buckets.js using Gillian-JS
 
 From the main Gillian folder, execute
 
@@ -77,7 +77,7 @@ From the main Gillian folder, execute
 
 The testing should also take ~20 seconds. This time may vary, as the testing is performed using multiple threads. Eleven tests should be tested, starting from `Examples/Cosette/Buckets/bstree/bstree10.js` and finishing with `Examples/Cosette/Buckets/bstree/bstree9.js`. After each test, the test time will be printed. There should be no other output.
 
-### Symbolically test a part of Collections-C using Gillian-C
+### Symbolically testing a part of Collections-C using Gillian-C
 
 From the main Gillian folder, execute
 
@@ -141,7 +141,7 @@ The JS-2-GIL compiler can be split into two compilers: JS-2-JSIL, which compiles
 
 Previously, we have tested JS-2-JSIL against [this commit (from May 30th 2016)](https://github.com/tc39/test262/commit/91d06f) of Test262, the JavaScript official test suite. As this commit of Test262 targets ES6, we had to identify the subset of tests that are appropriate for JS-2-JSIL, as explained in detail in [JaVerT], obtaining 8797 applicable tests, of which JS-2-JSIL passes 100%.
 
-We have initially tested JS-2-GIL successfully on the same 8797 tests and reported this in the submitted version of the paper. However, these tests were not systematically categorised and we were not able to automate the testing process to our satisfaction using the bulk testing mechanism of Gillian. For this reason, we have chosen to work with the latest version of Test262, forked [here](https://github.com/giltho/javert-test262), where each test comes with a precise description of its intended outcome. For example, a test that is supposed to fail at parsing time with a JavaScript native syntax error will contain the following in its header:
+We have initially tested JS-2-GIL successfully on the same 8797 tests and reported this in the submitted version of the paper. However, these tests were not systematically categorised and we were not able to automate the testing process to our satisfaction using the bulk testing mechanism of Gillian. For this reason, we have chosen to work with the latest version of Test262, forked [here](https://github.com/GillianPlatform/javert-test262), where each test comes with a precise description of its intended outcome. For example, a test that is supposed to fail at parsing time with a JavaScript native syntax error will contain the following in its header:
 
 ```
 negative:
@@ -200,7 +200,7 @@ fail due to a discrepancy between how Unicode characters are treated in JavaScri
 
 #### Reproducing the Results
 
-1. Clone our [forked Test262 repository](https://github.com/giltho/javert-test262) to a folder on your machine. Inside that folder, you can find the Test262 tests in the `test` subfolder. In particular, `test/language` contains the core language tests, whereas `test/built-ins` contains the tests for the built-in libraries.
+1. Clone our [forked Test262 repository](https://github.com/GillianPlatform/javert-test262) to a folder on your machine. Inside that folder, you can find the Test262 tests in the `test` subfolder. In particular, `test/language` contains the core language tests, whereas `test/built-ins` contains the tests for the built-in libraries.
 2. To run all of the tests, execute the following command inside your Gillian folder:
 
 ```bash
@@ -210,7 +210,7 @@ esy x javert bulk-exec [relative path to your Test262 folder]/test
 
 For example, we normally clone Test262 in the same folder as the Gillian project and change its folder name from `javert-test262` to `test262`:
 
-`git clone https://github.com/giltho/javert-test262.git test262`
+`git clone https://github.com/GillianPlatform/javert-test262.git test262`
 
 We then run all of the tests by executing the following commands from within the main Gillian folder:
 
@@ -339,7 +339,7 @@ which means that the assertion does not hold if `n1 = 0` and `n2 = 1`. Here, var
 
 #### Semantics of Operators
 
-Importantly, the semantics of all of the operators is deliberately **NOT** as in JavaScript. For example, comparison and numeric operators do not perform any implicit type coercions. If you want to use JavaScript comparison/numeric operators, say `<=`, you can proceed as follows:
+Importantly, the semantics of all of the operators in assumptions and assertions is deliberately **NOT** as in JavaScript. For example, comparison and numeric operators do not perform any implicit type coercions. If you want to use JavaScript comparison/numeric operators, say `<=`, you can proceed as follows:
 
 ```javascript
 var res_leq_n1 = n1 <= res;
@@ -586,8 +586,231 @@ Folders marked with the (:x:PLDI20) annotation are out of scope for this submiss
   - `runtime`: Implementation of the internals and part of the C standard lib in GIL.
   - `scripts`: Various scripts for setting up the environment and executing analyses.
 
+### Writing Symbolic Tests
 
+The whole-program symbolic testing aspect of Gillian-C is very similar to that of [KLEE](https://klee.github.io).
 
+#### Declaring Symbolic Variables
+
+In order to declare symbolic variables, we hijack the `__builtin_annot_intval` function of CompCert. A symbolic integer, for example, is declared in the following way:
+
+```c
+int a = __builtin_annot_intval("symb_int", a)
+```
+
+As Gillian-C is at an early stage, it is not yet possible to declare variables of symbolic size in memory. It is, however, possible to declare a symbolic string of fixed size by declaring all of its components one-by-one. For example, this is how you can define a one-element string:
+```c
+int a = __builtin_annot_intval("symb_int", a);
+char c_a = (char) a;
+char str_a[] = { c_a, '\0' };
+```
+
+#### Assumptions and Assertions
+
+For any `C` boolean expression `e`, it is possible to state assumptions and assertions of the form:
+
+```c
+ASSUME(e);
+ASSERT(e);
+```
+
+#### Semantics of Operators
+
+In Gillian-C, unlike in Gillian-JS, the semantics of all of the operators in assumptions and assertions is that of C. What happens internally is that, first, the expression `e` is compiled to a sequence of commands (as C expressions can have side-effects but GIL expressions cannot).
+The resulting GIL expression will then contain a <q>serialised C integer</q> (as `C` booleans are actually integers that have value 0 or 1).
+A C integer is serialised in GIL as a two-element list of the form `{{ "int", x }}` where `x` is a GIL number.
+`ASSUME` then calls the GIL state function `assume` in the form `assume(e = {{ "int", 1 }})`, which effectively means, given the semantics of GIL: <q>branch on the obtained boolean expression equalling `true` and cut the branch in which it is not</q>.
+`ASSERT` works analogously, in that it calls the GIL state function `assert` instead of `assume`.
+
+### Symbolic Testing of Collections-C
+
+#### Test results
+
+We symbolically test [Collections-C](https://github.com/srdja/Collections-C), a real-world C data-structure library for C.
+The results are presented in the table below, with each row containing:
+
+- The name of the folder being tested, which also indicates the data structure in question
+- The number of tests
+- The total number of GIL commands executed during these tests
+- The total testing time in Gillian-C (in seconds)
+- The total testing time in KLEE (in seconds)
+
+|                  | **Tests** | **GIL Commands** | **Time(s)** | **KLEE Time(s)** |
+|:----------------:|:---------:|:----------------:|:-----------:|:----------------:|
+|    **array**     |    22     |     123,377      |    4.979    |      5.062       |
+|    **deque**     |    34     |     186,627      |    5.383    |      5.515       |
+|     **list**     |    37     |     478,773      |    7.420    |      6.875       |
+|    **pqueue**    |     2     |      15,726      |    0.568    |      0.246       |
+|    **queue**     |     4     |      39,478      |    0.474    |      0.463       |
+| **ring\_buffer** |     3     |      27,284      |    0.236    |      0.319       |
+|    **slist**     |    38     |     415,305      |    7.308    |      6.732       |
+|    **stack**     |     2     |      5,211       |    0.216    |      0.208       |
+|   **treeset**    |     6     |     108,583      |    1.800    |      2.430       |
+|  **treetable**   |    13     |     162,608      |    3.396    |      3.380       |
+|    **Total**     |    161    |    1,562,972     |   31.780    |      31.229      |
+
+A detailed breakdown of the testing results is given below.
+
+<!-- prettier-ignore-start -->
+:::warning
+The times given in the paper were incorrectly measured, both for Gillian-C and for KLEE.
+For Gillian-C, our multi-threading mechanism was reporting completion time incorrectly, before all spawned threads terminated.
+We have fixed this, and also improved the performance of our Gillian/Gillian-C symbolic engine.
+For KLEE, we have only counted the user time reported by the `time` command.
+We have consulted the KLEE development team in order to measure the times appropriately.
+All KLEE times were obtained by running KLEE in a docker image on the same machine on which we tested Gillian-JS/Gillian-C, with no other applications open.
+
+Additionally, we have simplified some of the tests (the coverage remains the same), resulting in a fewer number of executed GIL commands.
+:::
+<!-- prettier-ignore-end -->
+
+#### Resulting Fixes
+
+The symbolic testing of Collections-C led to the following bug-fixing pull requests.
+They fix previously unknown bugs and usage of undefined behaviours:
+- [Fix buffer overflow](https://github.com/srdja/Collections-C/pull/119) (bug)
+- [Remove the usage of cc_comp_ptr](https://github.com/srdja/Collections-C/pull/122) (undefined behaviour)
+- [Test coincidentally passing while they should not](https://github.com/srdja/Collections-C/pull/123) (bugs and undefined behaviours)
+- [Fix overallocation](https://github.com/srdja/Collections-C/pull/125) (bug)
+- [Fix hashing function](https://github.com/srdja/Collections-C/pull/126) (performance-reducing bug)
+
+#### Reproducing the Results
+For licensing reasons, we cannot include the Collections-C code in the Gillian repository.
+There is an [external repository](https://github.com/GillianPlatform/collections-c-for-gillian) that contains the Collections-C code adapted to testing in Gillian-C and KLEE.
+In order to clone it, simply run, from the main Gillian folder:
+```bash
+cd ..
+git clone https://github.com/GillianPlatform/collections-c-for-gillian.git collections-c
+cd Gillian
+```
+
+There are two ways of launching the tests:
+- Using the `bulk-wpst` command of Gillian-C which has a nicer output (using Rely), which only reports success/failure.
+- Using a bash script that will call `gillian-c wpst` as many times as there are files to test, but supports multi-threading and command counting.
+
+##### Using `bulk-wpst`
+
+From the Gillian folder run:
+
+```bash
+esy x gillian-c bulk-wpst ../collections-c/for-gillian
+```
+
+You will see all of the test suites executing one by one. Two tests will fail, this is intended. They correspond to two of the bugs we have found and which are explained below.
+
+##### Using the `bash` script
+
+From the main Gillian folder, for each folder you would like to test, execute:
+```bash
+Gillian-C/scripts/testFolder.sh ../collections-c/for-gillian/[folder]
+```
+
+For example, to run the test suite related to singly-linked lists, execute:
+```bash
+Gillian-C/scripts/testFolder.sh ../collections-c/for-gillian/slist
+```
+
+As for Buckets.js, you can obtain the number of executed GIL commands for Collections-C by appending the `count` parameter to the testing command. For example, to count the number of executed commands for the singly-linked-list test suite, execute:
+
+```bash
+Gillian-C/scripts/testFolder.sh ../collections-c/for-gillian/slist count
+```
+
+##### Notes
+
+1. The times obtained in the VM should be representative if run on a machine with a comparable specification (Intel Core i7-4980HQ CPU 2.80 GHz, DDR3 RAM 16GB, 256GB SSD) with no other applications running. Some (proportional) discrepancy is to be expected.
+2. The times obtained when counting executed commands will be slower, due to the fact that the tests will be run in single-threaded mode.
+
+#### The array_test_remove.c buffer overflow bug
+
+This test corresponds to [this](https://github.com/srdja/Collections-C/pull/119) pull request.
+It is particularly interesting, as the original concrete test suite does not catch it, even with the appropriate values. Instead, it overflows, but does not fail. This is, therefore, a *security issue*. On the other hand, our symbolic memory model does not allow for buffer overflow, and the bug was caught.
+
+#### The list_test_zipIterAdd.c flawed test
+
+This test is also interesting, but for different reasons: the code that it is testing (the `list_zip_iter_add` function) does not contain any bugs, it is the test that is buggy, but it still passes.
+
+In particular, the test adds two elements (`"h"` and `"i"`) in two separate lists at index 2. It then tests that the elements actually appeared at the second index of their respective lists, in the following way:
+
+```c
+list_index_of(list1, "h", zero_if_ptr_eq, &index);
+CHECK_EQUAL_C_INT(2, index);
+
+list_index_of(list1, "i", zero_if_ptr_eq, &index);
+CHECK_EQUAL_C_INT(2, index);
+```
+
+However, note that both tests are executed on `list1`! What happened then is that `list_index_of` was not finding `"i"` in `list1` because it wasn't there, and therefore did not modify `index`. Since the first check was correct, the value of `index` was still `2` and the test passed anyway.
+
+Our symbolic tests however, uses symbolic 1-character strings, and assumes **the bare minimum about the input values** to make them pass, in order to explore as many possible paths as possible.
+
+Here, we replaced every one-character strings `"X"` with one-character symbolic string `str_X`. For the test to pass, it should be *enough* for `str_h` to be different from every element in `list1` and for `str_i` to be different from every element in `list2`, and this is exactly what we assumed. However, we never assumed that `str_i` has to be different from every element in `list1` because this is not necessary for the test to pass.
+
+However, here, the equality between every element of `list1` and `str_i` is tested. There is no indication as to the result of this test, and so the execution branches. Therefore, there is a path created where `list_index_of(list1, str_i, zero_if_ptr_eq, &index)` will assign `0` to index, and the test will fail.
+
+This shows how symbolic testing helps writing *more robust* tests.
+
+#### Detailed Per-Folder Breakdown: Collections-C
+
+|    **array**    | **add** | **addAt2** | **contains** | **deepCopy** | **getAt** | **indexOf** | **iterAdd** | **iterRemove** | **iterReplace** | **reduce** | **remove** | **removeAll** | **removeAt** | **replaceAt** | **reverse** | **shallowCopy** | **subarray** | **zipIterAdd** | **zipIterNext** | **zipIterRemove** | **zipIterReplace** | **Total** |
+:---------------:|:-------:|:----------:|:------------:|:------------:|:---------:|:-----------:|:-----------:|:--------------:|:---------------:|:----------:|:----------:|:-------------:|:------------:|:-------------:|:-----------:|:---------------:|:------------:|:--------------:|:---------------:|:-----------------:|:------------------:|:--------:|
+|**GIL Commands** |  1,779  |   1,198    |    4,122     |    3,104     |   1,794   |    1,953    |    4,419    |     3,452      |      4,158      |   3,195    |   22,373   |     6,686     |    2,011     |     1,721     |    2,033    |      2,500      |    3,021     |     16,832     |     14,301      |       8,660       |       14,065       |  123,377|
+|    Time (s)     |  0.064  |   0.070    |    0.232     |    0.070     |   0.070   |    0.073    |    0.175    |     0.147      |      0.195      |   0.083    |   0.648    |     0.644     |    0.068     |     0.089     |    0.077    |      0.085      |    0.082     |     0.801      |      0.226      |       0.291       |       0.789        |   4.979|
+|**KLEE Time(s)** |  0.066  |   0.095    |    0.183     |    0.104     |   0.099   |    0.092    |    0.178    |     0.152      |      0.162      |   0.094    |   0.373    |     0.293     |    0.116     |     0.114     |    0.094    |      0.115      |    0.097     |     0.961      |      0.186      |       0.437       |       1.051        |   5.062|
+
+|    **deque**     | **addAt1** | **addAt2** | **addAt3** | **addAt4** | **addAt5** | **addFirst** | **addLast** | **bufferExpansion** | **capacity** | **contains** | **copyDeep** | **copyShallow** | **filter1** | **filter2** | **filter3** | **filterMut1** | **filterMut2** | **filterMut3** | **getAt** | **getFirst** | **getLast** | **iterAdd** | **iterNext** | **iterRemove** | **removeAll** | **removeFirst** | **removeLast** | **reverse** | **size** | **trimCapacity** | **zipIterAdd** | **zipIterNext** | **zipIterRemove** | **zipIterReplace** | **Total** |
+|:----------------:|:----------:|:----------:|:----------:|:----------:|:----------:|:------------:|:-----------:|:-------------------:|:------------:|:------------:|:------------:|:---------------:|:-----------:|:-----------:|:-----------:|:--------------:|:--------------:|:--------------:|:---------:|:------------:|:-----------:|:-----------:|:------------:|:--------------:|:-------------:|:---------------:|:--------------:|:-----------:|:--------:|:----------------:|:--------------:|:---------------:|:-----------------:|:------------------:|:---------:|
+| **GIL Commands** |   3,216    |   3,284    |   3,466    |   3,293    |   3,291    |    2,112     |    2,062    |        3,592        |    3,406     |    6,055     |    3,947     |      2,867      |    6,316    |    6,314    |    5,646    |     6,274      |     6,121      |     6,311      |   2,032   |    1,885     |    1,921    |    6,781    |    6,710     |     6,863      |     2,054     |      2,486      |     2,549      |    2,587    |  2,091   |      2,444       |     17,745     |     21,656      |      15,485       |       13,765       |  186,627  |
+|   **Time(s)**    |   0.083    |   0.091    |   0.096    |   0.089    |   0.089    |    0.093     |    0.094    |        0.096        |    0.093     |    0.100     |    0.096     |      0.108      |    0.303    |    0.296    |    0.266    |     0.276      |     0.284      |     0.273      |  0..092   |    0.097     |    0.097    |    0.234    |    0.237     |     0.216      |     0.077     |      0.096      |     0.090      |    0.094    |  0.094   |      0.093       |     0.262      |      0.352      |       0.261       |       0.257        |   5.383   |
+| **KLEE Time(s)** |   0.116    |   0.104    |   0.113    |   0.116    |   0.125    |    0.118     |    0.117    |        0.132        |    0.111     |    0.123     |    0.127     |      0.116      |    0.152    |    0.651    |    0.169    |     0.135      |     0.143      |     0.143      |   0.100   |    0.101     |    0.134    |    0.208    |    0.174     |     0.181      |     0.111     |      0.086      |     0.114      |    0.106    |  0.109   |      0.133       |     0.300      |      0.259      |       0.307       |       0.281        |   5.515   |
+
+|     **list**     | **add** | **addAll** | **addAllAt** | **addAt** | **addFirst** | **addLast** | **contains** | **copyDeep** | **copyShallow** | **filter1** | **filter2** | **getAt** | **getLast** | **indexOf** | **iterAdd** | **iterDescAdd** | **iterDescRemove** | **iterRemove** | **mutFilter1** | **mutFilter2** | **new** | **remove** | **removeAll** | **removeAt** | **removeFirst** | **removeLast** | **replaceAt** | **reverse** | **splice** | **spliceAt** | **sublist** | **toArray** | **zipIterAdd** | **zipIterNext** | **zipIterRemove** | **zipIterReplace** | **Total** |
+|:----------------:|:-------:|:----------:|:------------:|:---------:|:------------:|:-----------:|:------------:|:------------:|:---------------:|:-----------:|:-----------:|:---------:|:-----------:|:-----------:|:-----------:|:---------------:|:------------------:|:--------------:|:--------------:|:--------------:|:-------:|:----------:|:-------------:|:------------:|:---------------:|:--------------:|:-------------:|:-----------:|:----------:|:------------:|:-----------:|:-----------:|:--------------:|:---------------:|:-----------------:|:------------------:|:---------:|
+| **GIL Commands** |  5,011  |   12,107   |    13,006    |   9,751   |    5,578     |    5,578    |    8,713     |    14,109    |     13,415      |    9,884    |   10,313    |   8,485   |    8,273    |    5,849    |   13,998    |     12,907      |       10,595       |     10,292     |     8,672      |     8,976      |  1,602  |   9,380    |     8,513     |    9,287     |      8,321      |     8,331      |     8,958     |   10,145    |   9,693    |    9,619     |   11,586    |   10,425    |     70,782     |     64,043      |      23,793       |       18,783       |  478,773  |
+|   **Time(s)**    |  0.103  |   0.111    |    0.109     |   0.100   |    0.110     |    0.110    |    0.365     |    0.108     |      0.119      |    0.203    |    0.250    |   0.104   |    0.102    |    0.245    |    0.262    |      0.225      |       0.237        |     0.186      |     0.193      |     0.242      |  0.078  |   0.124    |     0.109     |    0.105     |      0.093      |     0.110      |     0.110     |    0.105    |   0.106    |    0.112     |    0.111    |    0.106    |     1.033      |      0.262      |       0.763       |       0.609        |   7.420   |
+| **KLEE Time(s)** |  0.117  |   0.128    |    0.110     |   0.130   |    0.099     |    0.105    |    0.256     |    0.129     |      0.146      |    0.178    |    0.175    |   0.118   |    0.139    |    0.200    |    0.234    |      0.133      |       0.211        |     0.174      |     0.176      |     0.169      |  0.100  |   0.175    |     0.123     |    0.120     |      0.118      |     0.104      |     0.114     |    0.126    |   0.125    |    0.146     |    0.120    |    0.109    |     0.998      |      0.208      |       0.575       |       0.487        |   6.875   |
+
+|    **pqueue**    | **enqueue** | **pop** | **Total** |
+|:----------------:|:-----------:|:-------:|:---------:|
+| **GIL Commands** |   10,684    |  5,042  |  15,726   |
+|   **Time(s)**    |    0.278    |  0.290  |   0.568   |
+| **KLEE Time(s)** |    0.118    |  0.128  |   0.246   |
+
+|    **queue**     | **enqueue** | **iter** | **poll** | **zipIterNext** | **Total** |
+|:----------------:|:-----------:|:--------:|:--------:|:---------------:|:---------:|
+| **GIL Commands** |    4,268    |  5,736   |  4,799   |     24,675      |  39,478   |
+|   **Time(s)**    |    0.075    |  0.082   |  0.081   |      0.236      |   0.474   |
+| **KLEE Time(s)** |    0.104    |  0.087   |  0.102   |      0.169      |   0.463   |
+
+| **ring\_buffer** | **capacity** | **enqueue** | **dequeue** | **Total** |
+|:----------------:|:------------:|:-----------:|:-----------:|:---------:|
+| **GIL Commands** |    8,361     |   10,495    |    8,428    |  27,284   |
+|   **Time(s)**    |    0.084     |    0.077    |    0.075    |   0.236   |
+| **KLEE Time(s)** |    0.105     |    0.103    |    0.111    |   0.319   |
+
+|    **slist**     | **add** | **addAll** | **addAllAt** | **addAt** | **addFirst** | **addLast** | **contains** | **copyDeep** | **copyShallow** | **filter1** | **filter2** | **filter3** | **filterMut1** | **filterMut2** | **filterMut3** | **get** | **getFirst** | **getLast** | **indexOf** | **iterAdd** | **iterRemove** | **new** | **remove** | **removeAll** | **removeAt** | **removeFirst** | **removeLast** | **replaceAt** | **reverse** | **splice** | **spliceAt** | **sublist** | **toArray** | **zipIterAdd** | **zipIterNext** | **zipIterRemove** | **zipIterReplace** | **Total** |
+|:----------------:|:-------:|:----------:|:------------:|:---------:|:------------:|:-----------:|:------------:|:------------:|:---------------:|:-----------:|:-----------:|:-----------:|:--------------:|:--------------:|:--------------:|:-------:|:------------:|:-----------:|:-----------:|:-----------:|:--------------:|:-------:|:----------:|:-------------:|:------------:|:---------------:|:--------------:|:-------------:|:-----------:|:----------:|:------------:|:-----------:|:-----------:|:--------------:|:---------------:|:-----------------:|:------------------:|:---------:|
+| **GIL Commands** |  3,842  |   7,733    |    8,882     |   8,283   |    4,085     |    4,085    |    5,664     |    10,221    |      9,743      |    7,106    |    8,597    |   10,889    |     6,587      |     7,467      |     6,554      |  5,765  |    5,585     |    5,585    |    3,918    |   11,395    |     8,028      |  2,272  |   6,899    |     5,925     |    6,836     |      5,809      |     6,166      |     6,294     |    7,097    |   6,401    |    6,638     |    8,270    |    7,124    |     98,888     |     36,774      |      39,558       |       14,340       |  415,305  |
+|   **Time(s)**    |  0.112  |   0.118    |    0.117     |   0.118   |    0.110     |    0.112    |    0.114     |    0.120     |      0.117      |    0.227    |    0.283    |    0.291    |     0.231      |     0.284      |     0.285      |  0.115  |    0.114     |    0.112    |    0.109    |    0.297    |     0.221      |  0.110  |   0.205    |     0.113     |    0.115     |      0.114      |     0.115      |     0.112     |    0.117    |   0.115    |    0.114     |    0.116    |    0.114    |     0.830      |      0.281      |       0.617       |       0.513        |   7.308   |
+| **KLEE Time(s)** |  0.118  |   0.133    |    0.126     |   0.132   |    0.127     |    0.109    |    0.125     |    0.126     |      0.132      |    0.184    |    0.151    |    0.163    |     0.138      |     0.152      |     0.131      |  0.119  |    0.113     |    0.122    |    0.097    |    0.125    |     0.179      |  0.110  |   0.154    |     0.107     |    0.131     |      0.138      |     0.115      |     0.148     |    0.130    |   0.117    |    0.116     |    0.109    |    0.128    |     1.169      |      0.195      |       0.659       |       0.406        |   6.732   |
+
+|    **stack**     | **pop** | **push** | **Total** |
+|:----------------:|:-------:|:--------:|:---------:|
+| **GIL Commands** |  2,539  |  2,672   |   5,211   |
+|   **Time(s)**    |  0.109  |  0.107   |   0.216   |
+| **KLEE Time(s)** |  0.105  |  0.103   |   0.208   |
+
+|   **treeset**    | **add** | **iterNext** | **iterRemove** | **remove** | **removeAll** | **size** | **Total** |
+|:----------------:|:-------:|:------------:|:--------------:|:----------:|:-------------:|:--------:|:---------:|
+| **GIL Commands** | 18,586  |    9,195     |     31,648     |   19,323   |    18,625     |  11,206  |  108,583  |
+|   **Time(s)**    |  0.287  |    0.347     |     0.293      |   0.290    |     0.292     |  0.291   |   1.800   |
+| **KLEE Time(s)** |  0.458  |    0.462     |     0.402      |   0.434    |     0.349     |  0.325   |   2.430   |
+
+|  **treetable**   | **add** | **get** | **getFirst** | **getGreaterThan** | **getLast** | **getLessThan** | **iterNext** | **iterRemove** | **remove** | **removeAll** | **removeFirst** | **removeLast** | **size** | **Total** |
+|:----------------:|:-------:|:-------:|:------------:|:------------------:|:-----------:|:---------------:|:------------:|:--------------:|:----------:|:-------------:|:---------------:|:--------------:|:--------:|:---------:|
+| **GIL Commands** | 29,759  |  9,511  |    5,800     |       6,228        |    5,734    |      6,193      |    9,252     |     7,876      |   25,949   |    27,219     |      6,481      |     7,291      |  15,315  |  162,608  |
+|   **Time(s)**    |  0.356  |  0.205  |    0.231     |       0.229        |    0.236    |      0.225      |    0.331     |     0.248      |   0.280    |     0.283     |      0.224      |     0.274      |  0.274   |   3.396   |
+| **KLEE Time(s)** |  0.474  |  0.158  |    0.192     |       0.182        |    0.192    |      0.182      |    0.368     |     0.225      |   0.384    |     0.293     |      0.193      |     0.221      |  0.316   |   3.380   |
 
 
 
