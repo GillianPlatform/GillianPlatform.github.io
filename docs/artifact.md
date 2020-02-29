@@ -971,28 +971,24 @@ val execute_action : string -> t -> vt list -> action_ret
 ```
 Note that, as above, actions are represented as strings. Action execution returns either a list of successful outcomes (pairs of states and lists of returned values) or error information, in case of failure. This error information is useful for automatic compositional testing.
 
-Finally, the implemented state interface in the implementation exposes exposes many other functions important for the analysis. Some of them are used by the symbolic testing, but would only clutter the presentation, such as `assume_t` or `get_lvars`; others, such as `unify_assertion`, `produce_posts`, and `apply_fixes`, are useful either for the verification mode or the automatic compositional testing mode of Gillian, and are out of scope for this paper.
+Finally, the implemented state interface exposes many other functions important for the analysis. Some of them are used by the symbolic testing, but would only clutter the presentation, such as `assume_t` or `get_lvars`; others, such as `unify_assertion`, `produce_posts`, and `apply_fixes`, are useful either for the verification mode or the automatic compositional testing mode of Gillian, and are out of scope for this paper.
 
 ### The Memory Interfaces
 
-Here is how Memory models are defined in the paper:
-> **Definition** *(Concrete Memory Model)*: A concrete memory model, $M \in \mathbb{M}$, is a triple $\langle |M|, A, \underline{\mathsf{ea}}\rangle$, consisting of a set of concrete memories, $|M| \ni \mu$, a set of actions $A \ni \alpha$, and the action execution function $\underline{\mathsf{ea}} : A \rightarrow |M| \rightarrow \mathcal{V} \rightarrow \wp(|M| \times \mathcal{V})$, pretty-printed $\mu.\alpha(v) \rightsquigarrow (\mu', v)$.
->
-> **Definition** *(Symbolic Memory Model)*: A symbolic memory model, $\hat M \in \mathbb{M}$, is a triple $\langle |\hat M|, A, \hat{\underline{\mathsf{ea}}}\rangle$, consisting of a set of symbolic memories, $|\hat M| \ni \hat \mu$, a set of actions $A \ni \alpha$, and the action execution function $\hat{\underline{\mathsf{ea}}} : A \rightarrow |\hat M| \rightarrow \hat \mathcal{E} \rightarrow \Pi \rightarrow \wp(|\hat M| \times \hat \mathcal{E} \times \Pi)$, pretty-printed $\hat \mu.\alpha(\hat e) \rightarrow (\mu', \hat e', \pi ')$.
+The concrete and symbolic memory models are defined in the paper in lines 410 and 415, respectively.
 
-In the implementation, Concrete Memory Models  and Symbolic Memory Models have an interface a bit more complex. The complete interface can be found in the files `GillianCore/engine/SymbolicSemantics/SMemory.ml` and `GillianCore/engine/ConcreteSemantics/CMemory.ml`.
+In the implementation, their interfaces, found in [`CMemory.ml`](https://github.com/GillianPlatform/Gillian/blob/master/GillianCore/engine/ConcreteSemantics/CMemory.ml) and [`SMemory.ml`](https://github.com/GillianPlatform/Gillian/blob/master/GillianCore/engine/SymbolicSemantics/SState.ml), expose additional functionalities.
 
-These interfaces do export:
-- `type t`, the type of memories, which correspond respectively to $|M|$ and $|\hat M|$
-- `val execute_action: string -> t -> vt list -> action_ret` for the concrete memory models, which corresponds to the theoretical definition apart from the fact that actions are represented by their `string` name and that concrete actions can return an error, which is used for automatic compositional testing (out of scope here)
-- `val execute_action: string -> t -> PFS.t -> TypeEnv.t -> vt list -> action_ret` for the symbolic memory models, which correspond to the theoretical definition apart from actions that are represented by their `string` names, the fact that the actions can return errors which are used for automatic compositional testing (out of scope here), and the path conditions ($\pi$) are split into two parts : `PFS.t` which are set of pure formulae and `TypeEnv.t` which are special kind of pure formulae corresponding to the type of values.
-
-These interfaces export more definitions.
-Since, for efficiency reasons, the type of memories can be mutable, the user must define an `init` function and a `copy` function. The user also has to define pretty printers for its state, which are used for the log files.
-
-Finally, there are a lot of definitions (`ga_to_...`, `is_overlaping_asrt`, `assertions`, `mem_constraints`, `type err_t`, etc.) that are used either for verification or automatic compositional testing and are not presented in the PLDI20 paper because they are out of scope.
+As the paper states, the interfaces expose the following:
+- the type `t`, the type of memories, which correspond, respectively, to *M* and *\hat M* in the paper.
+- the function `execute_action: string -> t -> vt list -> action_ret` for the concrete memory models, which corresponds to the theoretical definition apart from the fact that actions are represented as strings and that concrete actions can return an error, then reported or used for automatic compositional testing (out of scope)
+- the function `val execute_action: string -> t -> PFS.t -> TypeEnv.t -> vt list -> action_ret` for the symbolic memory models, which correspond to the theoretical definition apart from the fact that actions that are represented as strings, that they can return errors, and that the path conditions are split into two parts: pure formulae, `PFS.t`; and typing environments, `TypeEnv.t`.
 
 
+Additionally, since the memories may be mutable (for efficiency), the users must also define an `init` function and a `copy` function.
+For debugging purpose, they are also required to provide pretty-printers for their memory.
+
+Finally, there are a lot of definitions (`ga_to_...`, `is_overlaping_asrt`, `assertions`, `mem_constraints`, `type err_t`, etc.) that are used either for verification or automatic compositional testing and are out of scope of this paper.
 
 
 
