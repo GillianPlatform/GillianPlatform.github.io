@@ -115,7 +115,7 @@ If you are evaluating Gillian as an artifact, please build the image yourself fr
 :::
 <!-- prettier-ignore-end -->
 
-#### Building the image yourself
+#### Building the image yourself from a specific commit
 
 You need git to clone the Gillian repository :
 
@@ -132,15 +132,11 @@ docker build -t gillian .
 
 This will take a while, because it will install esy, copying the repo and build everything.
 
-#### Pulling the image from Docker Hub
-
-Simply run
+#### Downloading only the docker file 
 
 ```bash
-docker pull gillian:[tag]
+curl --create-dirs  --output /tmp/GillianDocker/Dockerfile https://raw.githubusercontent.com/GillianPlatform/Gillian/master/.docker/Dockerfile && docker build -t gillian /tmp/GillianDocker 
 ```
-
-with `[tag]` replaced with the appropriate tag. If you do not know, use `latest` (`gillian:latest`).
 
 ### Running the container.
 
