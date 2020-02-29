@@ -37,7 +37,7 @@ They are set by default, and if you do not want to change them, you can just sta
 
 Open the terminal by pressing CTRL+ALT+T or by clicking on `Show Applications` in the bottom left corner, typing in `Terminal`, and clicking on the terminal icon. Once in the terminal, type `cd Gillian` to get to the main Gillian folder (`~/Gillian`).
 
-### Rebuild Gillian
+### Rebuilding Gillian
 
 To rebuild Gillian, execute the following commands:
 
@@ -49,7 +49,7 @@ To rebuild Gillian, execute the following commands:
 
 This should take between one and two minutes in total.
 
-### Test Gillian-JS against a bit of the Test262 official JavaScript test suite
+### Testing Gillian-JS against a bit of the Test262 official JavaScript test suite
 
 From the main Gillian folder, execute
 
@@ -68,7 +68,7 @@ ALL FAILURES:
 ../test262/test/built-ins/Number/S9.3.1_A2.js
 ```
 
-### Symbolically test a part of Buckets.js using Gillian-JS
+### Symbolically testing a part of Buckets.js using Gillian-JS
 
 From the main Gillian folder, execute
 
@@ -77,7 +77,7 @@ From the main Gillian folder, execute
 
 The testing should also take ~20 seconds. This time may vary, as the testing is performed using multiple threads. Eleven tests should be tested, starting from `Examples/Cosette/Buckets/bstree/bstree10.js` and finishing with `Examples/Cosette/Buckets/bstree/bstree9.js`. After each test, the test time will be printed. There should be no other output.
 
-### Symbolically test a part of Collections-C using Gillian-C
+### Symbolically testing a part of Collections-C using Gillian-C
 
 From the main Gillian folder, execute
 
