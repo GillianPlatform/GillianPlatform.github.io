@@ -24,8 +24,15 @@ Here is how the paper defines the GIL syntax:
 >\mathsf p \in \mathcal{P}rog_A & : & \mathcal{F} \rightharpoonup \mathcal{P}roc_A
 >\end{array}
 >$$
+>GIL values, $v \in \mathcal{V}$, include numbers, strings, booleans, uninterpreted symbols, types, procedure identifiers, and lists of values. Types are standard: they include, for example, the types of numbers, strings, booleans, and lists.
+>
+>GIL expressions, $e \in \mathcal{E}$, include values, program variables $x$, and various unary and binary operators.
+>
+>GIL commands include, first of all, the standard variable assignment, conditional goto, and dynamic procedure call. We assume single-parameter procedures in the meta-theory; in the implementation, we allow for multiple parameters. Next, the $\mathsf{return}$ command terminates the execution of the current procedure; $\mathsf{fail}$ terminates the execution of the entire program with an error; and $\mathsf{vanish}$ silently terminates program execution without generating a result. Finally, we have three GIL-specific commands: action execution, $x := \alpha(e)$, which executes the action $\alpha \in A$ with the argument obtained by evaluating $e$; and two analysis-related commands, $x := \mathsf{uSym}_j$ and $x := \mathsf{iSym}_j$ , which use Gillian’s built-in symbol generator to generate fresh symbols, similarly to the $\mathsf{gensym}$ command of Lisp and Racket. We call the symbols created using $\mathsf{uSim}_j$ uninterpreted, and the symbols created using $\mathsf{iSym}_j$ interpreted symbols. The difference between them is in the way in which they are used in the symbolic analysis: intuitively, we use uninterpreted symbols to represent instantiation-specific constants or unique memory constituents; and interpreted symbols to represent logical variables, as in standard symbolic execution literature.
+>
+>A GIL procedure, $proc \in \mathcal{P}roc_A$ is of the form $\mathsf{proc}\ f(x)\{c\}$, where $f$ is its identifier, $x$ is its formal parameter, and its body $c$ is a sequence of GIL commands. A GIL program, $p \in \mathcal{P}rog_A$, is a finite partial function, mapping procedure identifiers to their corresponding procedures.
 
-The actual implentation of GIL slightly differs from this.
+The actual implementation of GIL slightly differs from this.
 
 ### Commands
 
