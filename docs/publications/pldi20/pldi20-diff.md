@@ -106,13 +106,13 @@ type ('annot, 'label) proc = {
 
 type ('annot, 'label) prog = {
   imports : string list;
-  (* lemmas : (string, Lemma.t) Hashtbl.t; *)
-  (* preds : (string, Pred.t) Hashtbl.t; *)
-  (* only_specs : (string, Spec.t) Hashtbl.t; *)
-  (* procs : (string, ('annot, 'label) Proc.t) Hashtbl.t; *)
+  lemmas : (string, Lemma.t) Hashtbl.t;
+  preds : (string, Pred.t) Hashtbl.t;
+  only_specs : (string, Spec.t) Hashtbl.t;
+  procs : (string, ('annot, 'label) Proc.t) Hashtbl.t;
   macros : (string, Macro.t) Hashtbl.t;
-  (* bi_specs : (string, BiSpec.t) Hashtbl.t; *)
-  (* proc_names : string list; *)
+  bi_specs : (string, BiSpec.t) Hashtbl.t;
+  proc_names : string list;
   predecessors : (string * int * int, int) Hashtbl.t;
 }
 ```
