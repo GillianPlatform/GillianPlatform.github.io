@@ -650,6 +650,8 @@ We have consulted the KLEE development team in order to measure the times approp
 All KLEE times were obtained by running KLEE in a docker image on the same machine on which we tested Gillian-JS/Gillian-C, with no other applications open.
 
 Additionally, we have simplified some of the tests (the coverage remains the same), resulting in a fewer number of executed GIL commands.
+
+These new results are still consistent with the main claim of the paper: the performance of Gillian-C is comparable to that of KLEE.
 :::
 <!-- prettier-ignore-end -->
 
@@ -857,9 +859,10 @@ The differences are as follows:
 - We have the multi-variable phi-assignment, `PhiAssignment`, that allows us to write programs in Single Static Assignment (SSA). JS-2-JSIL, for example, outputs code in SSA.
   For more details, see [JaVerT].
 - The `Fail` command (`fail [desc] (e1, ..., en)`) can return multiple values and also carries a string that may contain an error name or error message.
-- The `vanish` command of the paper has, incidentally, vanished. Instead, we have two higher-level commands, `assume` and `assert` in the [logic commands](https://github.com/GillianPlatform/Gillian/blob/master/GillianCore/GIL_Syntax/LCmd.ml), together with other logic commands that are out of scope of this paper. The `assume`/`assert` mechanism is equivalent to the `ifgoto-vanish` mechanism of the paper.
+- The `vanish` command of the paper has, incidentally, vanished. Instead, we have two higher-level commands, `assume` and `assert` in the [logic commands](https://github.com/GillianPlatform/Gillian/blob/master/GillianCore/GIL_Syntax/LCmd.ml), together with other logic commands that are out of scope of this paper. The `assume`/`assert` mechanism is equivalent to the `ifgoto-vanish/ifgoto-fail` mechanisms of the paper.
 - The `uSym` and `iSym` commands are mainly theoretical devices that ensure soundness in the presence of fresh-value generation.
   In the implementation, we provide an allocation mechanism that allows the creators of Gillian instantations to generate fresh interpreted and uninterpreted symbols.
+  They can then expose two dedicated actions corresponding to `uSym` and `iSym`.
 
 The procedures and programs also contain more information than given in the paper:
 
@@ -886,7 +889,7 @@ type ('annot, 'label) prog = {
 
 Procedures have a name, a body and parameters as described in the paper. However, each command in the body is also annotated with an opaque value that can be decided by the user (it has the `'annot` polymorphic type). These annotations can be used, for example, to hold information that helps error reporting, such as the line number of the command of the target language to which a given GIL line corresponds. Every command can also be attached to a label, that has the polymorphic type `'label`. Most often, we use `string` labels for labeled programs and `int` labels for indexed programs, as explained above. Finally, procedures can also have specifications that are used for verification and automatic compositional testing (out of scope).
 
-Programs are not just a map from procedure identifiers to procedures, and additionally include, primarily, per-function verification-related information,
+Programs are not just maps from procedure identifiers to procedures, and additionally include, primarily, per-function verification-related information,
 as well as a list of `imports` that need to be included on execution, the list of all procedure identifiers, and a table of predecessors required for
 the PHI-assignment to work properly.
 
@@ -941,30 +944,14 @@ In the `ALoc` case, as the `AL` parameter, we use `Basic ()`, which instantiates
 
 ### The State Model interface
 
-In the paper, the state model interface is defined as below:
+In the paper, the state model interface is defined in line 208 and proper state models are defined in line 248 in terms of actions they must implement.
+In the implementation, the interface of state models, available in [`State.ml`](https://github.com/GillianPlatform/Gillian/blob/master/GillianCore/engine/GeneralSemantics/State.ml) is slightly different and more complex. Most importantly, the actions are not infinite indexed families, and the index is normally the parameter of the action.
 
->**Definition** *(State Model)*: A state model $S \in \mathbb{S}$ is a quadruple $\langle|S|, \mathsf{V}, A, \mathsf{ea}\rangle$, consisting of: **(1)** a set of states on which GIL programs operate, $|S| \ni \sigma$; **(2)** a set of values stored in those states, $\mathsf{V} \ni v$; **(3)** a set of actions that can be performed on those states, $A \ni \alpha$; and **(4)** a function $\mathsf{ea}: a \rightarrow |S| \rightarrow \mathsf{V} \rightarrow \wp(|S| \times \mathsf{V})$ for execution actions on states. All GIL states must contain an internal representation of a *variable store*, denoted by $\rho$, assigning values to program variables.
->
-> We write $\sigma.\alpha(v) \rightsquigarrow (\sigma', v')$ to mean $(\sigma', v') \in \mathsf{ea}(\alpha, \sigma, v)$, and refer to $\sigma'$ as the state output and to $v'$ as the value output of $\alpha$.
-
-It is also added that:
-
-> A state model $S = \langle |S|, \mathsf V, A, \mathsf{ea}\rangle$ is *proper* if and only if its set of actions, A, includes the following distinguished actions/families of actions:
-> - $\{ \mathsf{setVar}_x \}_{x \in \mathcal{X}}$ for updating the value of $x$ in the store of a given state, denoted by $\sigma.\mathsf{setVar}_x(v)$;
-> - $\mathsf{setStore}$, for replacing the entire store of a given state with a new store, denoted by $\sigma.\mathsf{setStore}(\rho)$;
-> - $\mathsf{getStore}$, for obtaining the store of the given state, denoted by $\sigma.\mathsf{getStore}()$;
-> - $\{ \mathsf{eval}_e \}_{e \in \mathcal{E}}$ for evaluationg the expression $e$ in a given state, denoted by $\sigma.\mathsf{eval}_e(-)$;
-> - $\mathsf{assume}$, for extending the given state with the information denoted by its argument value, denoted by $\sigma.\mathsf{assume}(v);
-> - $\mathsf{uSym}$ and $\mathsf{iSym}$, for generating new uninterpreted and interpreted symbols, respectively. From now on, we work with proper state models.
-
-In the implementation, the interface of state models, available in `GillianCore/engine/GeneralSemantics/State.ml` is a bit difference and more complex.
-
-First of all, the state interface defines "proper state models" in the first place. However, these state models do not define "families of actions". For example, `eval_expr` is one particular function exposed by the state interface, and has the following signature:
+For example, the signature of expression evaluation, `eval_expr` is as follows:
 ```ocaml
 val eval_expr : t -> Expr.t -> vt
 ```
-
-`setVar` is defined in terms of `setStore` and `getStore` directly by the interpreter:
+Also, `setVar` is defined in terms of `setStore` and `getStore` directly by the interpreter:
 ```ocaml
 let update_store (state : State.t) (x : string) (v : Val.t) : State.t =
     let store = State.get_store state in
@@ -972,17 +959,19 @@ let update_store (state : State.t) (x : string) (v : Val.t) : State.t =
     let state' = State.set_store state store in
     state'
 ```
-Note that variables are designated by their string names. Also note the usage of `Store.put`: stores have their own interface in the implementation which greatly simplify their usage. Setting a variable in the store is simply getting the store of the state, setting the variable to the correct value in the store and putting that new obtained store back in the state.
+Note that variables are treated as strings. Also note the usage of `Store.put`: stores have their own interface in the implementation, simplifying their usage.
 
-States can be mutable to improve the performances, and therefore there is an `init` and a `copy` function.
-
-The `execute_action` function defined in the state interface corresponds only to the lifting of user-defined memory-model actions, given that all necessary actions to have a proper state are defined as functions of their own.
+The `execute_action` function defined in the state interface corresponds to the lifting of user-defined memory-model actions, as in line 212.
 ```ocaml
 val execute_action : string -> t -> vt list -> action_ret
-```
-Once again, actions are designated by their string names, and actions can return either a list of successful state or some errors that can be used for automatic compositional testing.
 
-Finally, there are a lot of different functions that do not correspond to any aspect of the state models presented in the paper such as `unify_assertion`, `produce_posts`, `apply_fixes`, etc. which are useful either for the verification mode or the automatic compositional testing mode of Gillian, and are out of scope for the Gillian PLDI2020 paper.
+ type action_ret =
+  | ASucc of (t * vt list)
+  | AFail of err_t list
+```
+Note that, as above, actions are represented as strings. Action execution returns either a list of successful outcomes (pairs of states and lists of returned values) or error information, in case of failure. This error information is useful for automatic compositional testing.
+
+Finally, the implemented state interface in the implementation exposes exposes many other functions important for the analysis. Some of them are used by the symbolic testing, but would only clutter the presentation, such as `assume_t` or `get_lvars`; others, such as `unify_assertion`, `produce_posts`, and `apply_fixes`, are useful either for the verification mode or the automatic compositional testing mode of Gillian, and are out of scope for this paper.
 
 ### The Memory Interfaces
 
