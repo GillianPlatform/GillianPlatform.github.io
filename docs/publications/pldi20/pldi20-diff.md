@@ -18,7 +18,7 @@ Here is how the paper defines the GIL syntax:
 >\begin{array}{lcl}
 >v \in \mathcal{V} & \triangleq & n \in \mathcal{N} \mid s \in \mathcal{S} \mid b \in \mathcal{B} \mid l, \varsigma \in \mathcal{U} \mid \tau \in \mathcal{T} \mid f \in \mathcal{F} \mid \bar v \\
 >e \in \mathcal{E} & \triangleq & v \mid x \in \mathcal{X} \mid \ominus e \mid e_1 \oplus e_2\\
->c \in \mathcal{C}_A & \triangleq & x := e \mid \mathsf{ifgoto} e i \mid x := e(e') \mid \mathsf{return}\ e \mid \mathsf{fail}\ e \\
+>c \in \mathcal{C}_A & \triangleq & x := e \mid \mathsf{ifgoto}\ e\ i \mid x := e(e') \mid \mathsf{return}\ e \mid \mathsf{fail}\ e \\
 >                    &            & \mid \mathsf{vanish} \mid x := \alpha(e) \mid x := \mathsf{uSym}_j \mid x := \mathsf{iSym}_j \\
 >proc \in \mathcal{P}roc_A & \triangleq & \mathsf{proc}\ f(x)\{\bar c\}\\
 >\mathsf p \in \mathcal{P}rog_A & : & \mathcal{F} \rightharpoonup \mathcal{P}roc_A
@@ -120,6 +120,7 @@ Programs are not just a map from procedure identifiers to procedures. There are 
 
 
 ## The Memory Interfaces
+
 
 
 
