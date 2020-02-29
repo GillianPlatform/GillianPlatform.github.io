@@ -651,7 +651,7 @@ All KLEE times were obtained by running KLEE in a docker image on the same machi
 
 Additionally, we have simplified some of the tests (the coverage remains the same), resulting in a fewer number of executed GIL commands.
 
-These new results are still consistent with the main claim of the paper: the performance of Gillian-C is comparable to that of KLEE.
+These new results are still consistent with our claims in the paper: the performance of Gillian-C is comparable to that of KLEE.
 :::
 <!-- prettier-ignore-end -->
 
@@ -989,9 +989,6 @@ Additionally, since the memories may be mutable (for efficiency), the users must
 For debugging purpose, they are also required to provide pretty-printers for their memory.
 
 Finally, there are a lot of definitions (`ga_to_...`, `is_overlaping_asrt`, `assertions`, `mem_constraints`, `type err_t`, etc.) that are used either for verification or automatic compositional testing and are out of scope of this paper.
-
-
-
 
 
 
