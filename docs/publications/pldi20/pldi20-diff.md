@@ -3,6 +3,13 @@ id: pldi20-diff
 title: "Differences between Paper and Implementation"
 ---
 
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css"
+  integrity="sha384-BdGj8xC2eZkQaxoQ8nSLefg4AV4/AwB3Fj+8SUSo7pnKP6Eoy18liIKTPn9oBYNG"
+  crossOrigin="anonymous"
+/>
+
 :::info
 The information contained in the section is valid for the version Gillian that is tagged `pldi-20`. The implementation may change in the future and implementation might get further away or closer to what the paper says in the future.
 :::
@@ -54,8 +61,8 @@ type 'label t =
   | Arguments     of string                                                   (** Arguments of the current function *)
   | PhiAssignment of (string * Expr.t list) list                              (** PHI assignment                    *)
   | ReturnNormal                                                              (** Normal return                     *)
-  | ReturnError                                                               (** Error return        *)
-  | Fail          of string * Expr.t list                                     (** Failure             *)
+  | ReturnError                                                               (** Error return                      *)
+  | Fail          of string * Expr.t list                                     (** Failure                           *)
 ```
 
 
@@ -117,7 +124,7 @@ type ('annot, 'label) prog = {
 }
 ```
 
-Procedures have a name, a body and parameters as described in the paper. However, each command in the body is also annotated with something that is can be decided by the used (it has the `'annot` polymorphic type. These annotations can be used to understand keep information during execution that helps understanding the result of an analysis. Every command is also attached to a label, that has polymorphic type `'label`. Most often, we use `string` labels for labeled programs and `int` labels for labeled programs as explained above. Finally, procedures can also have specifications that are used for verification but are out of scope for the PLDI2020 paper.
+Procedures have a name, a body and parameters as described in the paper. However, each command in the body is also annotated with an opaque value that can be decided by the user (it has the `'annot` polymorphic type). These annotations can be used to keep information during execution that helps understanding the result of an analysis. Every command is also attached to a label, that has polymorphic type `'label`. Most often, we use `string` labels for labeled programs and `int` labels for labeled programs as explained above. Finally, procedures can also have specifications that are used for verification but are out of scope for the PLDI2020 paper.
 
 Programs are not just a map from procedure identifiers to procedures. There are also:
 - `lemmas`, `predicates` and `specifications` that are used for verification (out of scope her)
@@ -145,16 +152,52 @@ Since, for efficiency reasons, the type of memories can be mutable, the user mus
 
 Finally, there are a lot of definitions (`ga_to_...`, `is_overlaping_asrt`, `assertions`, `mem_constraints`, `type err_t`, etc.) that are used either for verification or automatic compositional testing and are not presented in the PLDI20 paper because they are out of scope.
 
+## The State Model interface
+
+In the paper, the state model interface is defined as below:
+
+>**Definition** *(State Model)*: A state model $S \in \mathbb{S}$ is a quadruple $\langle|S|, \mathsf{V}, A, \mathsf{ea}\rangle$, consisting of: **(1)** a set of states on which GIL programs operate, $|S| \ni \sigma$; **(2)** a set of values stored in those states, $\mathsf{V} \ni v$; **(3)** a set of actions that can be performed on those states, $A \ni \alpha$; and **(4)** a function $\mathsf{ea}: a \rightarrow |S| \rightarrow \mathsf{V} \rightarrow \wp(|S| \times \mathsf{V})$ for execution actions on states. All GIL states must contain an internal representation of a *variable store*, denoted by $\rho$, assigning values to program variables.
+>
+> We write $\sigma.\alpha(v) \rightsquigarrow (\sigma', v')$ to mean $(\sigma', v') \in \mathsf{ea}(\alpha, \sigma, v)$, and refer to $\sigma'$ as the state output and to $v'$ as the value output of $\alpha$.
+
+It is also added that:
+
+> A state model $S = \langle |S|, \mathsf V, A, \mathsf{ea}\rangle$ is *proper* if and only if its set of actions, A, includes the following distinguished actions/families of actions:
+> - $\{ \mathsf{setVar}_x \}_{x \in \mathcal{X}}$ for updating the value of $x$ in the store of a given state, denoted by $\sigma.\mathsf{setVar}_x(v)$;
+> - $\mathsf{setStore}$, for replacing the entire store of a given state with a new store, denoted by $\sigma.\mathsf{setStore}(\rho)$;
+> - $\mathsf{getStore}$, for obtaining the store of the given state, denoted by $\sigma.\mathsf{getStore}()$;
+> - $\{ \mathsf{eval}_e \}_{e \in \mathcal{E}}$ for evaluationg the expression $e$ in a given state, denoted by $\sigma.\mathsf{eval}_e(-)$;
+> - $\mathsf{assume}$, for extending the given state with the information denoted by its argument value, denoted by $\sigma.\mathsf{assume}(v);
+> - $\mathsf{uSym}$ and $\mathsf{iSym}$, for generating new uninterpreted and interpreted symbols, respectively. From now on, we work with proper state models.
+
+In the implementation, the interface of state models, available in `GillianCore/engine/GeneralSemantics/State.ml` is a bit difference and more complex.
+
+First of all, the state interface defines "proper state models" in the first place. However, these state models do not define "families of actions". For example, `eval_expr` is one particular function exposed by the state interface, and has the following signature:
+```ocaml
+val eval_expr : t -> Expr.t -> vt
+```
+
+`setVar` is defined in terms of `setStore` and `getStore` directly by the interpreter:
+```ocaml
+let update_store (state : State.t) (x : string) (v : Val.t) : State.t =
+    let store = State.get_store state in
+    let _ = Store.put store x v in
+    let state' = State.set_store state store in
+    state'
+```
+Note that variables are designated by their string names. Also note the usage of `Store.put`: stores have their own interface in the implementation which greatly simplify their usage. Setting a variable in the store is simply getting the store of the state, setting the variable to the correct value in the store and putting that new obtained store back in the state.
+
+States can be mutable to improve the performances, and therefore there is an `init` and a `copy` function.
+
+The `execute_action` function defined in the state interface corresponds only to the lifting of user-defined memory-model actions, given that all necessary actions to have a proper state are defined as functions of their own.
+```ocaml
+val execute_action : string -> t -> vt list -> action_ret
+```
+Once again, actions are designated by their string names, and actions can return either a list of successful state or some errors that can be used for automatic compositional testing.
+
+Finally, there are a lot of different functions that do not correspond to any aspect of the state models presented in the paper such as `unify_assertion`, `produce_posts`, `apply_fixes`, etc. which are useful either for the verification mode or the automatic compositional testing more of Gillian, and are out of scope for the Gillian PLDI2020 paper.
 
 ## Allocators
-
-
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css"
-  integrity="sha384-BdGj8xC2eZkQaxoQ8nSLefg4AV4/AwB3Fj+8SUSo7pnKP6Eoy18liIKTPn9oBYNG"
-  crossOrigin="anonymous"
-/>
 
 In the paper allocators have the following definition:
 
