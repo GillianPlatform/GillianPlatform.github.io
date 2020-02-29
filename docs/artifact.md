@@ -15,9 +15,9 @@ sidebar_label: PLDI-2020-Artifact
 
 ## Downloading and starting up the VM
 
-We provide the artifact in the form of a VirtualBox `.ova` file, which can be downloaded from [https://imperialcollegelondon.app.box.com/v/gillian-pldi-20](here). Its MD5 hash is [TODO].
+We provide the artifact in the form of a VirtualBox `.ova` file, which can be downloaded from [here](https://imperialcollegelondon.app.box.com/v/gillian-pldi-20). Its MD5 hash is `5fa97885f75dec9b33cb21ee788a0d48`.
 
-The VM was created using VirtualBox (Version 6.0.18 r136238 (Qt5.6.3), downloadable from [https://www.virtualbox.org/wiki/Download_Old_Builds_6_0](here).
+The VM was created using VirtualBox (Version 6.0.18 r136238 (Qt5.6.3), downloadable from [here](https://www.virtualbox.org/wiki/Download_Old_Builds_6_0).
 You can import the VM by clicking on `File` and then on `Import Appliance`. There, navigate to and select the `.ova` file that you downloaded.
 
 The operating system of the VM is Ubuntu 19.10 Eoan Ermine and the VM already has Guest Additions installed. The settings of the VM can be changed by right-clicking on it in the VM list and then left-clicking on `Settings` in the drop-down menu that appears. The relevant settings are:
