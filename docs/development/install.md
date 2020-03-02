@@ -87,7 +87,7 @@ If you are evaluating Gillian as an artifact, please use the source code provide
 In your terminal, go into your desired folder and run:
 
 ```bash
-git clone [insert url] Gillian
+git clone https://github.com/GillianPlatform/Gillian.git Gillian
 cd Gillian
 ```
 
@@ -120,7 +120,7 @@ If you are evaluating Gillian as an artifact, please build the image yourself fr
 You need git to clone the Gillian repository :
 
 ```bash
-git clone [insert url] Gillian
+git clone https://github.com/GillianPlatform/Gillian.git Gillian
 cd Gillian/.docker
 ```
 
