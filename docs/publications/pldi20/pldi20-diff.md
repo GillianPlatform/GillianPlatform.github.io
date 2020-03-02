@@ -14,7 +14,9 @@ title: "Differences between Paper and Implementation"
 The information contained in the section is valid for the version Gillian that is tagged `pldi-20`. The implementation may change in the future and implementation might get further away or closer to what the paper says in the future.
 :::
 
-This page describes how **Petar** will write this sentence himself.
+In the paper, the formalisation of GIL and the associated meta-theory is streamlined for clarity.
+The implementation follows the same principles, but is, expectedly, more complex.
+Here, we outline the main differences.
 
 
 ## The GIL Syntax
@@ -97,7 +99,7 @@ The implementation also has an external call mechanism (`ECall`) that is used to
 
 There are `Logic` commands, such as `Assume` or `Assert`. But there are also more kinds of logic commands that are used for the verification mode of Gillian.
 
-Finally the paper describes three more kinds of commands that are not in the implementation. The first one is `vanish` that is trivially replaced by `Assume False` in the implementation. Then there is `uSym` and `iSym` the **Petar** will explain much better than I do.
+Finally the paper describes three more kinds of commands that are not in the implementation. The first one is `vanish` that is trivially replaced by `Assume False` in the implementation. Then, ther are the `uSym` and `iSym` commands which are mainly theoretical devices that ensure soundness in the presence of fresh-value generation. In the implementation, we provide an allocation mechanism that allows the creators of Gillian instantiations to generate fresh interpreted and uninterpreted symbols.
 
 ### Procedures and programs
 
@@ -194,8 +196,6 @@ The `execute_action` function defined in the state interface corresponds only to
 val execute_action : string -> t -> vt list -> action_ret
 ```
 Once again, actions are designated by their string names, and actions can return either a list of successful state or some errors that can be used for automatic compositional testing.
-
-There is also something to say about `iSym` and `uSym` that **Petar** will love to say himself.
 
 Finally, there are a lot of different functions that do not correspond to any aspect of the state models presented in the paper such as `unify_assertion`, `produce_posts`, `apply_fixes`, etc. which are useful either for the verification mode or the automatic compositional testing mode of Gillian, and are out of scope for the Gillian PLDI2020 paper.
 
