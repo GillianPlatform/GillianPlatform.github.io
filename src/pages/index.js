@@ -8,35 +8,34 @@ import styles from './styles.module.css';
 
 const features = [
   {
-    title: <>GIL: A parametrised intermediate language</>,
+    title: <>GIL: General Intermediate Language</>,
     imageUrl: 'img/undraw_fitting_piece.svg',
     description: (
       <>
-        Gillian uses an intermediate language for verification called GIL. It is
-        parametric on <code>actions</code> of which the semantics is not
-        predifined by the framework.
+        Gillian uses an intermediate language called GIL. GIL is
+        a simple goto language parametric on the <code>basic actions</code>
+        of the memory model of the target language.
       </>
     ),
   },
   {
-    title: <>Focus on What Matters</>,
+    title: <>Focus on what matters</>,
     imageUrl: 'img/undraw_annotation.svg',
     description: (
       <>
-        We've worked hard on making Gillian as easy to use as possible. It comes
-        with a shiny API that lets you describe your memory model and get a
-        powerful tool with an elegant CLI for free.
+        Give Gillian a compiler from your target language (TL) to GIL and an
+        OCaml implementation of the TL symbolic memory model, and obtain
+        several powerful symbolic analysis tools in return.
       </>
     ),
   },
   {
-    title: <>Fully parametric meta-theoretical results</>,
+    title: <>Minimal proof effort</>,
     imageUrl: 'img/undraw_proof.svg',
     description: (
       <>
-        Gillian comes with fully parametric meta-theoretical results. We try to
-        alleviate your work as much as possible: only prove what you implement,
-        nothing more.
+        Gillian comes with parametric correctness results, meaning that
+        you only need to prove correct what you implement, nothing more.
       </>
     ),
   },

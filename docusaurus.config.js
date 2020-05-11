@@ -3,7 +3,7 @@ const rehypeKatex = require('rehype-katex');
 
 module.exports = {
   title: 'Gillian',
-  tagline: 'Compositional Symbolic Analysis for All',
+  tagline: 'A Multi-Language Platform for Compositional Symbolic Analysis',
   url: 'https://GillianPlatform.github.io',
   baseUrl: '/',
   favicon: 'img/favicon.ico',
