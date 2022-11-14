@@ -1,11 +1,14 @@
----
-id: intro
-title: 'Gillian-JS: Introduction'
----
+# Gillian-JS
 
 <!-- prettier-ignore-start -->
 :::important
 Everything this section is true at the time of artifact submission for PLDI 2020 on 28th February 2020.
+:::
+<!-- prettier-ignore-end -->
+
+<!-- prettier-ignore-start -->
+:::warning
+In the current state of the repository, Gillian-JS is broken and awaits fixing.
 :::
 <!-- prettier-ignore-end -->
 

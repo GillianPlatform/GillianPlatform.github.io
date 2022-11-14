@@ -1,7 +1,8 @@
 ---
-id: install
-title: Setting up for development
+sidebar_position: 1
 ---
+
+# Setting up for development
 
 This section details how to set up Gillian in order to develop on it. It is useful for:
 
@@ -132,10 +133,10 @@ docker build -t gillian .
 
 This will take a while, because it will install esy, copying the repo and build everything.
 
-#### Downloading only the docker file 
+#### Downloading only the docker file
 
 ```bash
-curl --create-dirs  --output /tmp/GillianDocker/Dockerfile https://raw.githubusercontent.com/GillianPlatform/Gillian/master/.docker/Dockerfile && docker build -t gillian /tmp/GillianDocker 
+curl --create-dirs  --output /tmp/GillianDocker/Dockerfile https://raw.githubusercontent.com/GillianPlatform/Gillian/master/.docker/Dockerfile && docker build -t gillian /tmp/GillianDocker
 ```
 
 ### Running the container.

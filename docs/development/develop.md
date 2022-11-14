@@ -1,7 +1,8 @@
 ---
-id: developing
-title: Developing Gillian
+sidebar_position: 2
 ---
+
+# Developing Gillian
 
 This page describes our workflow when developing Gillian, if you are interested in contributing, or if you want to play with the source code.
 
@@ -38,7 +39,6 @@ Due to a bug in the current version of esy, the `esy` command has to be called f
 :::
 <!-- prettier-ignore-end -->
 
-
 ### Generating the documentation
 
 To generate the API documentation of Gillian, run:
@@ -46,9 +46,11 @@ To generate the API documentation of Gillian, run:
 ```shell
 esy dune build @doc
 ```
+
 Then, open the following file with your prefered browser: `_build/default/_doc/_html/index.html`.
 
 On macOS, this can be done by running:
+
 ```
 open _build/default/_doc/_html/index.html
 ```

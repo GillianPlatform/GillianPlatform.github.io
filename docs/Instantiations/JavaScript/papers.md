@@ -1,7 +1,8 @@
 ---
-id: references
-title: 'Gillian-JS: References'
+sidebar_position: 4
 ---
+
+# Publications
 
 ## JaVerT: JavaScript Verification Toolchain
 

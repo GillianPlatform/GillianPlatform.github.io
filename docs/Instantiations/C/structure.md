@@ -1,7 +1,8 @@
 ---
-id: structure
-title: 'Gillian-C: Folder Structure'
+sidebar_position: 2
 ---
+
+# Folder Structure
 
 <!-- prettier-ignore-start -->
 :::info

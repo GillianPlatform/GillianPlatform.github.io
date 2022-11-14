@@ -1,7 +1,4 @@
----
-id: intro
-title: 'Gillian-C: Introduction'
----
+# Gillian-C
 
 <!-- prettier-ignore-start -->
 :::important

@@ -1,7 +1,8 @@
 ---
-id: structure
-title: 'Gillian-JS: Folder Structure'
+sidebar_position: 1
 ---
+
+# Folder Structure
 
 <!-- prettier-ignore-start -->
 :::info

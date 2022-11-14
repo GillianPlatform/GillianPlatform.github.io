@@ -1,16 +1,15 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react";
 
-export default ({ publi }) => {
-
+export default ({ publi }: Publication) => {
   return (
     <Fragment>
       <h3>Authors</h3>
       <ul>
-        {publi.authors.map(x => (
+        {publi.authors.map((x) => (
           <li key={x}>{x}</li>
         ))}
       </ul>
-      <h3 sidebar_label="Abstract">Abstract</h3>
+      <h3>Abstract</h3>
       <p>{publi.abstract}</p>
       <h3>Venue</h3>
       <p>{publi.venue}</p>
