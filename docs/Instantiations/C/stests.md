@@ -42,7 +42,7 @@ A serialized C integer is a list of the form `{{ "int", x }}` where `x` is a GIL
 `ASSUME` will call the internal GIL `assume` in the form `assume(e = {{ "int", 1 }})` which means <q>check that the obtained boolean expression is True</q>, otherwise, cut the branch.
 `ASSERT` does the same as assume but calls the internal GIL `assert` instead.
 
-As opposed to [Gillian-JS](../js/stest#assumptions-and-assertions), we use C expressions directly, and not custom expressions. This benefits is that one does not have to learn a new syntax for writing tests. However, this causes the execution to branch a lot for. `ASSUME` will then cut any branch that we do not want. In Gillian-JS, given the complex control flow of JavaScript, there is a lot more branching happening, which can become quite difficult to handle. Also, in JavaScript, the very complex semantics of expressions can lead to behaviours that are not desired by the used, and providing a simpler expression syntax is more straightforward.
+As opposed to [Gillian-JS](../JavaScript/stest#assumptions-and-assertions), we use C expressions directly, and not custom expressions. This benefits is that one does not have to learn a new syntax for writing tests. However, this causes the execution to branch a lot for. `ASSUME` will then cut any branch that we do not want. In Gillian-JS, given the complex control flow of JavaScript, there is a lot more branching happening, which can become quite difficult to handle. Also, in JavaScript, the very complex semantics of expressions can lead to behaviours that are not desired by the used, and providing a simpler expression syntax is more straightforward.
 
 ## Symbolic Testing of Collections-C
 

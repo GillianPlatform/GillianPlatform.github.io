@@ -18,7 +18,7 @@ Additionally, indirect `eval` is not supported, as it is meant to be executed as
 
 ## Correctness of JS-2-GIL
 
-The JS-2-GIL compiler can be split into two compilers: JS-2-JSIL, which compiles JavaScript to JSIL, the intermediate representation that we have used in [[JaVerT]](papers#javert-javascript-verification-toolchain)/[\[Cosette\]](references.md#cosette-symbolic-execution-for-javascript)/[\[JaVerT 2.0\]](papers#javert20-compositional-symbolic-execution-for-javascript); and JSIL-2-GIL, the compiler from JSIL to GIL, the intermediate representation of Gillian.
+The JS-2-GIL compiler can be split into two compilers: JS-2-JSIL, which compiles JavaScript to JSIL, the intermediate representation that we have used in [[JaVerT]](papers#javert-javascript-verification-toolchain)/[\[Cosette\]](./papers#cosette-symbolic-execution-for-javascript)/[\[JaVerT 2.0\]](papers#javert20-compositional-symbolic-execution-for-javascript); and JSIL-2-GIL, the compiler from JSIL to GIL, the intermediate representation of Gillian.
 
 Previously, we have tested JS-2-JSIL against [this commit (from May 30th 2016)](https://github.com/tc39/test262/commit/91d06f) of Test262, the JavaScript official test suite. As this commit of Test262 targets ES6, we had to identify the subset of tests that are appropriate for JS-2-JSIL, as explained in detail in [\[JaVerT\]](papers#javert-javascript-verification-toolchain), obtaining 8797 applicable tests, of which JS-2-JSIL passes 100%.
 

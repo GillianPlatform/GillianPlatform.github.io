@@ -13,8 +13,8 @@ This section details how to set up Gillian in order to develop on it. It is usef
 The Gillian development repository contains :
 
 - The GillianCore folder, which is actually the Gillian Library.
-- [Gillian-JS](../js/intro)
-- [Gillian-C](../c/intro)
+- [Gillian-JS](../Instantiations/JavaScript/)
+- [Gillian-C](../Instantiations/C/)
 - WISL, a small language for teaching and research.
 
 ## What type of installation should I chose ?
