@@ -1,0 +1,542 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Gillian, Part II" href="gillian-part-2.html" /><link rel="prev" title="Gillian, Part I" href="gillian-part-1.html" />
+
+    <!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
+        <title>Differences between Paper and Implementation - Gillian HEAD (44d881f ) (2023/01/31 21:28) documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/fixes.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #ffffff;
+  --color-code-foreground: black;
+  --color-brand-primary: #b5393a;
+  --color-brand-content: #437d89;
+  --color-code-background: hsl(210deg, 2%, 68%, 0.0625);
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #e9494b;
+  --color-brand-content: #5dacbc;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #e9494b;
+  --color-brand-content: #5dacbc;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Gillian HEAD
+ (44d881f
+) (2023/01/31 21:28) documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/img/logo_light.svg" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/img/logo_dark.svg" alt="Dark Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop.html">Developing Gillian</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Instantiations</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../c/index.html">Gillian-C</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../c/folder-structure.html">Folder Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c/symbolic-testing.html">Symbolic Testing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../js/index.html">Gillian-JS</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../js/folder-structure.html">Folder Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../js/js2gil.html">JS-2-GIL and Test262</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../js/symbolic-testing.html">Symbolic Testing</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About Gillian</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Publications</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="javert.html">JaVerT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cosette.html">Cosette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javert-2.html">JaVerT 2.0</a></li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="gillian-part-1.html">Gillian, Part I</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Differences between Paper and Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gillian-part-2.html">Gillian, Part II</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">Copyright and License</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="differences-between-paper-and-implementation">
+<h1>Differences between Paper and Implementation<a class="headerlink" href="#differences-between-paper-and-implementation" title="Permalink to this heading">#</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The information contained in the section is valid for the version Gillian that is tagged <code class="docutils literal notranslate"><span class="pre">pldi-20</span></code>. The implementation may change in the future and implementation might get further away or closer to what the paper says in the future.</p>
+</div>
+<p>In the paper, the formalisation of GIL and the associated meta-theory is streamlined for clarity. The implementation follows the same principles, but is, expectedly, more complex. Here, we outline the main differences.</p>
+<section id="the-gil-syntax">
+<h2>The GIL Syntax<a class="headerlink" href="#the-gil-syntax" title="Permalink to this heading">#</a></h2>
+<p>Here is how the paper defines the GIL syntax:</p>
+<blockquote>
+<div><div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{lcl}
+ v \in \mathcal{V} &amp; \triangleq &amp; n \in \mathcal{N} \mid s \in \mathcal{S} \mid b \in \mathcal{B} \mid l, \varsigma \in \mathcal{U} \mid \tau \in \mathcal{T} \mid f \in \mathcal{F} \mid \bar v \\
+ e \in \mathcal{E} &amp; \triangleq &amp; v \mid x \in \mathcal{X} \mid \ominus e \mid e_1 \oplus e_2\\
+ c \in \mathcal{C}_A &amp; \triangleq &amp; x := e \mid \mathsf{ifgoto}\ e\ i \mid x := e(e') \mid \mathsf{return}\ e \mid \mathsf{fail}\ e \\
+                   &amp;            &amp; \mid \mathsf{vanish} \mid x := \alpha(e) \mid x := \mathsf{uSym}_j \mid x := \mathsf{iSym}_j \\
+proc \in \mathcal{P}roc_A &amp; \triangleq &amp; \mathsf{proc}\ f(x)\{\bar c\}\\
+\mathsf p \in \mathcal{P}rog_A &amp; : &amp; \mathcal{F} \rightharpoonup \mathcal{P}roc_A
+\end{array}\end{split}\]</div>
+</div>
+<p>GIL values, <span class="math notranslate nohighlight">\(v \in \mathcal{V}\)</span>, include numbers, strings, booleans, uninterpreted symbols, types, procedure identifiers, and lists of values. Types are standard: they include, for example, the types of numbers, strings, booleans, and lists.</p>
+<p>GIL expressions, <span class="math notranslate nohighlight">\(e \in \mathcal{E}\)</span>, include values, program variables <span class="math notranslate nohighlight">\(x\)</span>, and various unary and binary operators.</p>
+<p>GIL commands include, first of all, the standard variable assignment, conditional goto, and dynamic procedure call. We assume single-parameter procedures in the meta-theory; in the implementation, we allow for multiple parameters. Next, the <span class="math notranslate nohighlight">\(\mathsf{return}\)</span> command terminates the execution of the current procedure; <span class="math notranslate nohighlight">\(\mathsf{fail}\)</span> terminates the execution of the entire program with an error; and <span class="math notranslate nohighlight">\(\mathsf{vanish}\)</span> silently terminates program execution without generating a result. Finally, we have three GIL-specific commands: action execution, <span class="math notranslate nohighlight">\(x := \alpha(e)\)</span>, which executes the action <span class="math notranslate nohighlight">\(\alpha \in A\)</span> with the argument obtained by evaluating <span class="math notranslate nohighlight">\(e\)</span>; and two analysis-related commands, <span class="math notranslate nohighlight">\(x := \mathsf{uSym}_j\)</span> and <span class="math notranslate nohighlight">\(x := \mathsf{iSym}_j\)</span> , which use Gillian’s built-in symbol generator to generate fresh symbols, similarly to the <span class="math notranslate nohighlight">\(\mathsf{gensym}\)</span> command of Lisp and Racket. We call the symbols created using <span class="math notranslate nohighlight">\(\mathsf{uSim}_j\)</span> uninterpreted, and the symbols created using <span class="math notranslate nohighlight">\(\mathsf{iSym}_j\)</span> interpreted symbols. The difference between them is in the way in which they are used in the symbolic analysis: intuitively, we use uninterpreted symbols to represent instantiation-specific constants or unique memory constituents; and interpreted symbols to represent logical variables, as in standard symbolic execution literature.</p>
+<p>A GIL procedure, <span class="math notranslate nohighlight">\(proc \in \mathcal{P}roc_A\)</span> is of the form <span class="math notranslate nohighlight">\(\mathsf{proc}\ f(x)\{c\}\)</span>, where <span class="math notranslate nohighlight">\(f\)</span> is its identifier, <span class="math notranslate nohighlight">\(x\)</span> is its formal parameter, and its body <span class="math notranslate nohighlight">\(c\)</span> is a sequence of GIL commands. A GIL program, <span class="math notranslate nohighlight">\(p \in \mathcal{P}rog_A\)</span>, is a finite partial function, mapping procedure identifiers to their corresponding procedures.</p>
+</div></blockquote>
+<p>The actual implementation of GIL slightly differs from this.</p>
+<section id="commands">
+<h3>Commands<a class="headerlink" href="#commands" title="Permalink to this heading">#</a></h3>
+<p>Let us start by focusing on commands, here is how commands are defined in the implementation:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Cmd.ml *)</span>
+<span class="k">type</span> <span class="k">&#39;</span><span class="n">label</span> <span class="n">t</span> <span class="o">=</span>
+  <span class="o">|</span> <span class="nc">Skip</span>                                                                      <span class="c">(** Skip                              *)</span>
+  <span class="o">|</span> <span class="nc">Assignment</span>    <span class="k">of</span> <span class="kt">string</span> <span class="o">*</span> <span class="nn">Expr</span><span class="p">.</span><span class="n">t</span>                                          <span class="c">(** Assignment                        *)</span>
+  <span class="o">|</span> <span class="nc">LAction</span>       <span class="k">of</span> <span class="kt">string</span> <span class="o">*</span> <span class="kt">string</span> <span class="o">*</span> <span class="nn">Expr</span><span class="p">.</span><span class="n">t</span> <span class="kt">list</span>                            <span class="c">(** Local Actions                     *)</span>
+  <span class="o">|</span> <span class="nc">Logic</span>         <span class="k">of</span> <span class="nn">LCmd</span><span class="p">.</span><span class="n">t</span>                                                   <span class="c">(** GIL Logic commands                *)</span>
+  <span class="o">|</span> <span class="nc">Goto</span>          <span class="k">of</span> <span class="k">&#39;</span><span class="n">label</span>                                                   <span class="c">(** Unconditional goto                *)</span>
+  <span class="o">|</span> <span class="nc">GuardedGoto</span>   <span class="k">of</span> <span class="nn">Expr</span><span class="p">.</span><span class="n">t</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">label</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">label</span>                                 <span class="c">(** Conditional goto                  *)</span>
+  <span class="o">|</span> <span class="nc">Call</span>          <span class="k">of</span>
+      <span class="kt">string</span> <span class="o">*</span> <span class="nn">Expr</span><span class="p">.</span><span class="n">t</span> <span class="o">*</span> <span class="nn">Expr</span><span class="p">.</span><span class="n">t</span> <span class="kt">list</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">label</span> <span class="n">option</span> <span class="o">*</span> <span class="n">logic_bindings_t</span> <span class="n">option</span> <span class="c">(** Procedure call                    *)</span>
+  <span class="o">|</span> <span class="nc">ECall</span>         <span class="k">of</span> <span class="kt">string</span> <span class="o">*</span> <span class="nn">Expr</span><span class="p">.</span><span class="n">t</span> <span class="o">*</span> <span class="nn">Expr</span><span class="p">.</span><span class="n">t</span> <span class="kt">list</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">label</span> <span class="n">option</span>            <span class="c">(** External Procedure call           *)</span>
+  <span class="o">|</span> <span class="nc">Apply</span>         <span class="k">of</span> <span class="kt">string</span> <span class="o">*</span> <span class="nn">Expr</span><span class="p">.</span><span class="n">t</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">label</span> <span class="n">option</span>                          <span class="c">(** Application-style procedure call  *)</span>
+  <span class="o">|</span> <span class="nc">Arguments</span>     <span class="k">of</span> <span class="kt">string</span>                                                   <span class="c">(** Arguments of the current function *)</span>
+  <span class="o">|</span> <span class="nc">PhiAssignment</span> <span class="k">of</span> <span class="o">(</span><span class="kt">string</span> <span class="o">*</span> <span class="nn">Expr</span><span class="p">.</span><span class="n">t</span> <span class="kt">list</span><span class="o">)</span> <span class="kt">list</span>                              <span class="c">(** PHI assignment                    *)</span>
+  <span class="o">|</span> <span class="nc">ReturnNormal</span>                                                              <span class="c">(** Normal return                     *)</span>
+  <span class="o">|</span> <span class="nc">ReturnError</span>                                                               <span class="c">(** Error return                      *)</span>
+  <span class="o">|</span> <span class="nc">Fail</span>          <span class="k">of</span> <span class="kt">string</span> <span class="o">*</span> <span class="nn">Expr</span><span class="p">.</span><span class="n">t</span> <span class="kt">list</span>                                     <span class="c">(** Failure                           *)</span>
+</pre></div>
+</div>
+<p>The assignment is as described in the paper. There is an additional <code class="docutils literal notranslate"><span class="pre">Skip</span></code> command, that does nothing.</p>
+<p>In action call, <code class="docutils literal notranslate"><span class="pre">LAction(x,</span> <span class="pre">a,</span> <span class="pre">el)</span></code>, <code class="docutils literal notranslate"><span class="pre">x</span></code> is the variable name the result is going to be assigned to, <code class="docutils literal notranslate"><span class="pre">a</span></code> is the name of the action and <code class="docutils literal notranslate"><span class="pre">el</span></code> is a <em>list</em> of parameters. Like function calls, the paper presents a simplified version where actions can only take one parameter. Moreover, there is not <code class="docutils literal notranslate"><span class="pre">action</span></code> type, but actions are denoted by their name which is a string.</p>
+<p>Instead of an <code class="docutils literal notranslate"><span class="pre">ifgoto</span> <span class="pre">e</span> <span class="pre">i</span></code> command there are two commands :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">goto</span> <span class="pre">lab</span></code> that jumps to label <code class="docutils literal notranslate"><span class="pre">lab</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goto</span> <span class="pre">[e]</span> <span class="pre">lab1</span> <span class="pre">lab2</span></code> that jumps either to <code class="docutils literal notranslate"><span class="pre">lab1</span></code> or to <code class="docutils literal notranslate"><span class="pre">lab2</span></code> depending on the boolean <code class="docutils literal notranslate"><span class="pre">e</span></code> evaluates to
+Note that using <code class="docutils literal notranslate"><span class="pre">ifgoto</span></code> or these two kinds of gotos is equivalent. Moreover, in the implementation, the type of labels is polymorphic. <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">Cmd.t</span></code> corresponds to “labeled commands”, meaning one can annotate commands with string labels. <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">Cmd.t</span></code> corresponds to “indexed commands”, meaning <code class="docutils literal notranslate"><span class="pre">goto</span> <span class="pre">j</span></code> jumps the the <code class="docutils literal notranslate"><span class="pre">j</span></code>-th command of the current procedure. We write GIL programs with labeled commands for readability, and translate to indexed commands for efficiency.</p></li>
+</ul>
+<p>There is an additional <code class="docutils literal notranslate"><span class="pre">Argument</span></code> command that returns the list of arguments given to the current procedure, and a <code class="docutils literal notranslate"><span class="pre">PhiAssignment</span></code> that can be used for Static Single Assignment style programming.</p>
+<p>The implementation of GIL comes with a better treatment of errors. There are two return commands:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ReturnNormal</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ReturnError</span></code>
+In both cases, the value returned is the one contained in the special <code class="docutils literal notranslate"><span class="pre">&quot;ret&quot;</span></code> variable. Both command return as explained in the paper, in an intuitive way, but they set the return mode either in <code class="docutils literal notranslate"><span class="pre">Normal</span></code> mode or in <code class="docutils literal notranslate"><span class="pre">Error</span></code> mode. If the function returns in <code class="docutils literal notranslate"><span class="pre">Normal</span></code> mode, the program execution continues normally, otherwise, it depends on how the function was called.</p></li>
+</ul>
+<p>Let us take a closer look at the <code class="docutils literal notranslate"><span class="pre">Call</span></code> command, and describe the 5 arguments of <code class="docutils literal notranslate"><span class="pre">Call(x,</span> <span class="pre">f,</span> <span class="pre">el,</span> <span class="pre">lab_opt,</span> <span class="pre">bindings)</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> is the name of the variable in which the result will be stored</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code> is the expression that should resolve to the procedure identifier (a string)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">el</span></code> is the list of expressions passed as arguments to the procedure</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lab_opt</span></code> is an optional label to which the execution will jump if the called procedure returns in <code class="docutils literal notranslate"><span class="pre">Error</span></code> mode.</p></li>
+<li><p>Some logic bindings that are useful for verification, but out of scope for the PLDI-2020 paper</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">Fail</span></code> is very similar to the <code class="docutils literal notranslate"><span class="pre">fail</span></code> command described in the paper: it terminates the execution of the entire program in failure mode. However, it takes an additional parameter to the “failing value”, which is a string that contains an error name or error message.</p>
+<p>The implementation also has an external call mechanism (<code class="docutils literal notranslate"><span class="pre">ECall</span></code>) that is used to model <code class="docutils literal notranslate"><span class="pre">eval</span></code> in JavaScript, and could be used to model some system calls in Gillian-C.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Apply</span></code> is an application-style procedure calls. It takes only one expression as parameter, which should evaluate to the list of argument that will be passed to the procedure.</p>
+<p>There are <code class="docutils literal notranslate"><span class="pre">Logic</span></code> commands, such as <code class="docutils literal notranslate"><span class="pre">Assume</span></code> or <code class="docutils literal notranslate"><span class="pre">Assert</span></code>. But there are also more kinds of logic commands that are used for the verification mode of Gillian.</p>
+<p>Finally the paper describes three more kinds of commands that are not in the implementation. The first one is <code class="docutils literal notranslate"><span class="pre">vanish</span></code> that is trivially replaced by <code class="docutils literal notranslate"><span class="pre">Assume</span> <span class="pre">False</span></code> in the implementation. Then, ther are the <code class="docutils literal notranslate"><span class="pre">uSym</span></code> and <code class="docutils literal notranslate"><span class="pre">iSym</span></code> commands which are mainly theoretical devices that ensure soundness in the presence of fresh-value generation. In the implementation, we provide an allocation mechanism that allows the creators of Gillian instantiations to generate fresh interpreted and uninterpreted symbols.</p>
+</section>
+<section id="procedures-and-programs">
+<h3>Procedures and programs<a class="headerlink" href="#procedures-and-programs" title="Permalink to this heading">#</a></h3>
+<p>As explained earlier, there is no defined set <code class="docutils literal notranslate"><span class="pre">A</span></code> of actions, actions are denotted by their name, a string. Also, the procedures and programs contain much more information than what is in the paper.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="o">(</span><span class="k">&#39;</span><span class="n">annot</span><span class="o">,</span> <span class="k">&#39;</span><span class="n">label</span><span class="o">)</span> <span class="n">proc</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="n">proc_name</span> <span class="o">:</span> <span class="kt">string</span><span class="o">;</span>
+  <span class="n">proc_body</span> <span class="o">:</span> <span class="o">(</span><span class="k">&#39;</span><span class="n">annot</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">label</span> <span class="n">option</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">label</span> <span class="nn">Cmd</span><span class="p">.</span><span class="n">t</span><span class="o">)</span> <span class="kt">array</span><span class="o">;</span>
+  <span class="n">proc_params</span> <span class="o">:</span> <span class="kt">string</span> <span class="kt">list</span><span class="o">;</span>
+  <span class="n">proc_spec</span> <span class="o">:</span> <span class="nn">Spec</span><span class="p">.</span><span class="n">t</span> <span class="n">option</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="k">type</span> <span class="o">(</span><span class="k">&#39;</span><span class="n">annot</span><span class="o">,</span> <span class="k">&#39;</span><span class="n">label</span><span class="o">)</span> <span class="n">prog</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="n">imports</span> <span class="o">:</span> <span class="kt">string</span> <span class="kt">list</span><span class="o">;</span>
+  <span class="n">lemmas</span> <span class="o">:</span> <span class="o">(</span><span class="kt">string</span><span class="o">,</span> <span class="nn">Lemma</span><span class="p">.</span><span class="n">t</span><span class="o">)</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">t</span><span class="o">;</span>
+  <span class="n">preds</span> <span class="o">:</span> <span class="o">(</span><span class="kt">string</span><span class="o">,</span> <span class="nn">Pred</span><span class="p">.</span><span class="n">t</span><span class="o">)</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">t</span><span class="o">;</span>
+  <span class="n">only_specs</span> <span class="o">:</span> <span class="o">(</span><span class="kt">string</span><span class="o">,</span> <span class="nn">Spec</span><span class="p">.</span><span class="n">t</span><span class="o">)</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">t</span><span class="o">;</span>
+  <span class="n">procs</span> <span class="o">:</span> <span class="o">(</span><span class="kt">string</span><span class="o">,</span> <span class="o">(</span><span class="k">&#39;</span><span class="n">annot</span><span class="o">,</span> <span class="k">&#39;</span><span class="n">label</span><span class="o">)</span> <span class="nn">Proc</span><span class="p">.</span><span class="n">t</span><span class="o">)</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">t</span><span class="o">;</span>
+  <span class="n">macros</span> <span class="o">:</span> <span class="o">(</span><span class="kt">string</span><span class="o">,</span> <span class="nn">Macro</span><span class="p">.</span><span class="n">t</span><span class="o">)</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">t</span><span class="o">;</span>
+  <span class="n">bi_specs</span> <span class="o">:</span> <span class="o">(</span><span class="kt">string</span><span class="o">,</span> <span class="nn">BiSpec</span><span class="p">.</span><span class="n">t</span><span class="o">)</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">t</span><span class="o">;</span>
+  <span class="n">proc_names</span> <span class="o">:</span> <span class="kt">string</span> <span class="kt">list</span><span class="o">;</span>
+  <span class="n">predecessors</span> <span class="o">:</span> <span class="o">(</span><span class="kt">string</span> <span class="o">*</span> <span class="kt">int</span> <span class="o">*</span> <span class="kt">int</span><span class="o">,</span> <span class="kt">int</span><span class="o">)</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">t</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Procedures have a name, a body and parameters as described in the paper. However, each command in the body is also annotated with an opaque value that can be decided by the user (it has the <code class="docutils literal notranslate"><span class="pre">'annot</span></code> polymorphic type). These annotations can be used to keep information during execution that helps understanding the result of an analysis. Every command is also attached to a label, that has polymorphic type <code class="docutils literal notranslate"><span class="pre">'label</span></code>. Most often, we use <code class="docutils literal notranslate"><span class="pre">string</span></code> labels for labeled programs and <code class="docutils literal notranslate"><span class="pre">int</span></code> labels for labeled programs as explained above. Finally, procedures can also have specifications that are used for verification but are out of scope for the PLDI2020 paper.</p>
+<p>Programs are not just a map from procedure identifiers to procedures. There are also:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">lemmas</span></code>, <code class="docutils literal notranslate"><span class="pre">predicates</span></code> and <code class="docutils literal notranslate"><span class="pre">specifications</span></code> that are used for verification (out of scope her)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bi_specs</span></code> which are precomputed hints for automatic compositional testing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">macros</span></code> which are used to define syntactic sugar over lists of logic commands, useful for readability, and unfolded at execution time</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">predecessors</span></code> table used for the Phi Assignment</p></li>
+</ul>
+</section>
+</section>
+<section id="the-memory-interfaces">
+<h2>The Memory Interfaces<a class="headerlink" href="#the-memory-interfaces" title="Permalink to this heading">#</a></h2>
+<p>Here is how Memory models are defined in the paper:</p>
+<blockquote>
+<div><p><strong>Definition</strong> <em>(Concrete Memory Model)</em>: A concrete memory model, <span class="math notranslate nohighlight">\(M \in \mathbb{M}\)</span>, is a triple <span class="math notranslate nohighlight">\(\langle |M|, A, \underline{\mathsf{ea}}\rangle\)</span>, consisting of a set of concrete memories, <span class="math notranslate nohighlight">\(|M| \ni \mu\)</span>, a set of actions <span class="math notranslate nohighlight">\(A \ni \alpha\)</span>, and the action execution function <span class="math notranslate nohighlight">\(\underline{\mathsf{ea}} : A \rightarrow |M| \rightarrow \mathcal{V} \rightarrow \wp(|M| \times \mathcal{V})\)</span>, pretty-printed <span class="math notranslate nohighlight">\(\mu.\alpha(v) \rightsquigarrow (\mu', v)\)</span>.</p>
+<p><strong>Definition</strong> <em>(Symbolic Memory Model)</em>: A symbolic memory model, <span class="math notranslate nohighlight">\(\hat M \in \mathbb{M}\)</span>, is a triple <span class="math notranslate nohighlight">\(\langle |\hat M|, A, \hat{\underline{\mathsf{ea}}}\rangle\)</span>, consisting of a set of symbolic memories, <span class="math notranslate nohighlight">\(|\hat M| \ni \hat \mu\)</span>, a set of actions <span class="math notranslate nohighlight">\(A \ni \alpha\)</span>, and the action execution function <span class="math notranslate nohighlight">\(\underline{\mathsf{ea}} : A \rightarrow |M| \rightarrow \mathcal{V} \rightarrow \wp(|M| \times \mathcal{V})\)</span>, pretty-printed <span class="math notranslate nohighlight">\(\mu.\alpha(v) \rightsquigarrow (\mu', v)\)</span>, pretty-printed <span class="math notranslate nohighlight">\(\hat \mu.\alpha(\hat e) \rightarrow (\mu', \hat e', \pi ')\)</span>.</p>
+</div></blockquote>
+<p>In the implementation, Concrete Memory Models and Symbolic Memory Models have an interface a bit more complex. The complete interface can be found in the files <code class="docutils literal notranslate"><span class="pre">GillianCore/engine/SymbolicSemantics/SMemory.ml</span></code> and <code class="docutils literal notranslate"><span class="pre">GillianCore/engine/ConcreteSemantics/CMemory.ml</span></code>.</p>
+<p>These interfaces do export:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">t</span></code>, the type of memories, which correspond respectively to <span class="math notranslate nohighlight">\(|M|\)</span> and <span class="math notranslate nohighlight">\(|\hat M|\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">val</span> <span class="pre">execute_action:</span> <span class="pre">string</span> <span class="pre">-&gt;</span> <span class="pre">t</span> <span class="pre">-&gt;</span> <span class="pre">vt</span> <span class="pre">list</span> <span class="pre">-&gt;</span> <span class="pre">action_ret</span></code> for the concrete memory models, which corresponds to the theoretical definition apart from the fact that actions are represented by their <code class="docutils literal notranslate"><span class="pre">string</span></code> name and that concrete actions can return an error, which is used for automatic compositional testing (out of scope here)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">val</span> <span class="pre">execute_action:</span> <span class="pre">string</span> <span class="pre">-&gt;</span> <span class="pre">t</span> <span class="pre">-&gt;</span> <span class="pre">PFS.t</span> <span class="pre">-&gt;</span> <span class="pre">TypeEnv.t</span> <span class="pre">-&gt;</span> <span class="pre">vt</span> <span class="pre">list</span> <span class="pre">-&gt;</span> <span class="pre">action_ret</span></code> for the symbolic memory models, which correspond to the theoretical definition apart from actions that are represented by their <code class="docutils literal notranslate"><span class="pre">string</span></code> names, the fact that the actions can return errors which are used for automatic compositional testing (out of scope here), and the path conditions (<span class="math notranslate nohighlight">\(\pi\)</span>) are split into two parts : <code class="docutils literal notranslate"><span class="pre">PFS.t</span></code> which are set of pure formulae and <code class="docutils literal notranslate"><span class="pre">TypeEnv.t</span></code> which are special kind of pure formulae corresponding to the type of values.</p></li>
+</ul>
+<p>These interfaces export more definitions.
+Since, for efficiency reasons, the type of memories can be mutable, the user must define an <code class="docutils literal notranslate"><span class="pre">init</span></code> function and a <code class="docutils literal notranslate"><span class="pre">copy</span></code> function. The user also has to define pretty printers for its state, which are used for the log files.</p>
+<p>Finally, there are a lot of definitions (<code class="docutils literal notranslate"><span class="pre">ga_to_...</span></code>, <code class="docutils literal notranslate"><span class="pre">is_overlaping_asrt</span></code>, <code class="docutils literal notranslate"><span class="pre">assertions</span></code>, <code class="docutils literal notranslate"><span class="pre">mem_constraints</span></code>, <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">err_t</span></code>, etc.) that are used either for verification or automatic compositional testing and are not presented in the PLDI20 paper because they are out of scope.</p>
+</section>
+<section id="the-state-model-interface">
+<h2>The State Model interface<a class="headerlink" href="#the-state-model-interface" title="Permalink to this heading">#</a></h2>
+<p>In the paper, the state model interface is defined as below:</p>
+<blockquote>
+<div><p><strong>Definition</strong> <em>(State Model)</em>: A state model <span class="math notranslate nohighlight">\(S \in \mathbb{S}\)</span> is a quadruple <span class="math notranslate nohighlight">\(\langle|S|, \mathsf{V}, A, \mathsf{ea}\rangle\)</span>, consisting of: <strong>(1)</strong> a set of states on which GIL programs operate, <span class="math notranslate nohighlight">\(|S| \ni \sigma\)</span>; <strong>(2)</strong> a set of values stored in those states, <span class="math notranslate nohighlight">\(\mathsf{V} \ni v\)</span>; <strong>(3)</strong> a set of actions that can be performed on those states, <span class="math notranslate nohighlight">\(A \ni \alpha\)</span>; and <strong>(4)</strong> a function <span class="math notranslate nohighlight">\(\mathsf{ea}: a \rightarrow |S| \rightarrow \mathsf{V} \rightarrow \wp(|S| \times \mathsf{V})\)</span> for execution actions on states. All GIL states must contain an internal representation of a <em>variable store</em>, denoted by <span class="math notranslate nohighlight">\(\rho\)</span>, assigning values to program variables.</p>
+<p>We write <span class="math notranslate nohighlight">\(\sigma.\alpha(v) \rightsquigarrow (\sigma', v')\)</span> to mean <span class="math notranslate nohighlight">\((\sigma', v') \in \mathsf{ea}(\alpha, \sigma, v)\)</span>, and refer to <span class="math notranslate nohighlight">\(\sigma'\)</span> as the state output and to <span class="math notranslate nohighlight">\(v'\)</span> as the value output of <span class="math notranslate nohighlight">\(\alpha\)</span>.</p>
+</div></blockquote>
+<p>It is also added that:</p>
+<blockquote>
+<div><p>A state model <span class="math notranslate nohighlight">\(S = \langle |S|, \mathsf V, A, \mathsf{ea}\rangle\)</span> is <em>proper</em> if and only if its set of actions, A, includes the following distinguished actions/families of actions:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\{ \mathsf{setVar}_x \}_{x \in \mathcal{X}}\)</span> for updating the value of <span class="math notranslate nohighlight">\(x\)</span> in the store of a given state, denoted by <span class="math notranslate nohighlight">\(\sigma.\mathsf{setVar}_x(v)\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathsf{setStore}\)</span>, for replacing the entire store of a given state with a new store, denoted by <span class="math notranslate nohighlight">\(\sigma.\mathsf{setStore}(\rho)\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathsf{getStore}\)</span>, for obtaining the store of the given state, denoted by <span class="math notranslate nohighlight">\(\sigma.\mathsf{getStore}()\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\{ \mathsf{eval}_e \}_{e \in \mathcal{E}}\)</span> for evaluationg the expression <span class="math notranslate nohighlight">\(e\)</span> in a given state, denoted by <span class="math notranslate nohighlight">\(\sigma.\mathsf{eval}_e(-)\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathsf{assume}\)</span>, for extending the given state with the information denoted by its argument value, denoted by <span class="math notranslate nohighlight">\(\sigma.\mathsf{assume}(v)\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathsf{uSym}\)</span> and <span class="math notranslate nohighlight">\(\mathsf{iSym}\)</span>, for generating new uninterpreted and interpreted symbols, respectively. From now on, we work with proper state models.</p></li>
+</ul>
+</div></blockquote>
+<p>In the implementation, the interface of state models, available in <code class="docutils literal notranslate"><span class="pre">GillianCore/engine/GeneralSemantics/State.ml</span></code> is a bit difference and more complex.</p>
+<p>First of all, the state interface defines “proper state models” in the first place. However, these state models do not define “families of actions”. For example, <code class="docutils literal notranslate"><span class="pre">eval_expr</span></code> is one particular function exposed by the state interface, and has the following signature:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">eval_expr</span> <span class="o">:</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="nn">Expr</span><span class="p">.</span><span class="n">t</span> <span class="o">-&gt;</span> <span class="n">vt</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">setVar</span></code> is defined in terms of <code class="docutils literal notranslate"><span class="pre">setStore</span></code> and <code class="docutils literal notranslate"><span class="pre">getStore</span></code> directly by the interpreter:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">update_store</span> <span class="o">(</span><span class="n">state</span> <span class="o">:</span> <span class="nn">State</span><span class="p">.</span><span class="n">t</span><span class="o">)</span> <span class="o">(</span><span class="n">x</span> <span class="o">:</span> <span class="kt">string</span><span class="o">)</span> <span class="o">(</span><span class="n">v</span> <span class="o">:</span> <span class="nn">Val</span><span class="p">.</span><span class="n">t</span><span class="o">)</span> <span class="o">:</span> <span class="nn">State</span><span class="p">.</span><span class="n">t</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">store</span> <span class="o">=</span> <span class="nn">State</span><span class="p">.</span><span class="n">get_store</span> <span class="n">state</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="o">_</span> <span class="o">=</span> <span class="nn">Store</span><span class="p">.</span><span class="n">put</span> <span class="n">store</span> <span class="n">x</span> <span class="n">v</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">state&#39;</span> <span class="o">=</span> <span class="nn">State</span><span class="p">.</span><span class="n">set_store</span> <span class="n">state</span> <span class="n">store</span> <span class="k">in</span>
+    <span class="n">state&#39;</span>
+</pre></div>
+</div>
+<p>Note that variables are designated by their string names. Also note the usage of <code class="docutils literal notranslate"><span class="pre">Store.put</span></code>: stores have their own interface in the implementation which greatly simplify their usage. Setting a variable in the store is simply getting the store of the state, setting the variable to the correct value in the store and putting that new obtained store back in the state.</p>
+<p>States can be mutable to improve the performances, and therefore there is an <code class="docutils literal notranslate"><span class="pre">init</span></code> and a <code class="docutils literal notranslate"><span class="pre">copy</span></code> function.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">execute_action</span></code> function defined in the state interface corresponds only to the lifting of user-defined memory-model actions, given that all necessary actions to have a proper state are defined as functions of their own.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">execute_action</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">-&gt;</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="n">vt</span> <span class="kt">list</span> <span class="o">-&gt;</span> <span class="n">action_ret</span>
+</pre></div>
+</div>
+<p>Once again, actions are designated by their string names, and actions can return either a list of successful state or some errors that can be used for automatic compositional testing.</p>
+<p>Finally, there are a lot of different functions that do not correspond to any aspect of the state models presented in the paper such as <code class="docutils literal notranslate"><span class="pre">unify_assertion</span></code>, <code class="docutils literal notranslate"><span class="pre">produce_posts</span></code>, <code class="docutils literal notranslate"><span class="pre">apply_fixes</span></code>, etc. which are useful either for the verification mode or the automatic compositional testing mode of Gillian, and are out of scope for the Gillian PLDI2020 paper.</p>
+</section>
+<section id="allocators">
+<h2>Allocators<a class="headerlink" href="#allocators" title="Permalink to this heading">#</a></h2>
+<p>In the paper allocators have the following definition:</p>
+<blockquote>
+<div><p>An allocator <span class="math notranslate nohighlight">\(AL \in \mathbb{A}\mathbb{L}\)</span> is a triple <span class="math notranslate nohighlight">\(\langle|AL|, \mathsf Y, \mathsf{alloc}\rangle\)</span>, consisting of: <strong>(1)</strong> a set <span class="math notranslate nohighlight">\(|AL|\ni \xi\)</span> of allocation records; <strong>(2)</strong> a set <span class="math notranslate nohighlight">\(Y\)</span> of all values that are allowed to be allocated; and <strong>(3)</strong> an allocation function:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\mathsf{alloc}: |AL| \rightarrow \mathbb{N} \rightarrow \wp(\mathsf Y) \rightharpoonup |AL|\times V\]</div>
+</div>
+<p>pretty-printed as <span class="math notranslate nohighlight">\(\xi.\mathsf{alloc}(j)\rightharpoonup_{\mathsf Y}(\xi', y)\)</span>, which takes an allocation record <span class="math notranslate nohighlight">\(\xi\)</span>, a, allocation site <span class="math notranslate nohighlight">\(j\)</span>, and an allocation range <span class="math notranslate nohighlight">\(Y \subseteq \mathsf Y\)</span>, and returns a fresh value <span class="math notranslate nohighlight">\(y \in Y\)</span>, together with the appropriately updated allocation record <span class="math notranslate nohighlight">\(\xi'\)</span>.</p>
+<p>Intuitively, an allocation record maintains information about already allocated values. This apporach is complementary to <a class="reference external" href="https://doi.org/10.1007/978-3-540-78499-9_15">the free set approach</a>, where information is maintained about values that can still be allocated. An allocation site <span class="math notranslate nohighlight">\(j\)</span> is the program point associated with either the <span class="math notranslate nohighlight">\(\mathsf{uSym}_j\)</span> or the <span class="math notranslate nohighlight">\(\mathsf{iSym}_j\)</span> command.</p>
+</div></blockquote>
+<p>This could be interpreted in terms of OCaml module signature as:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="k">type</span> <span class="nc">Allocator</span> <span class="o">=</span> <span class="k">sig</span>
+  <span class="k">type</span> <span class="n">t</span>    <span class="c">(** Type of allocation records     *)</span>
+  <span class="k">type</span> <span class="n">us_t</span> <span class="c">(** Type of uninterpreted symbols **)</span>
+  <span class="k">type</span> <span class="n">is_t</span> <span class="c">(**  Type of interpreted symbols   *)</span>
+
+  <span class="k">val</span> <span class="n">alloc_us</span> <span class="o">:</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">int</span> <span class="o">-&gt;</span> <span class="n">t</span> <span class="o">*</span> <span class="n">us_t</span>
+  <span class="k">val</span> <span class="n">alloc_is</span> <span class="o">:</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">int</span> <span class="o">-&gt;</span> <span class="n">t</span> <span class="o">*</span> <span class="n">is_t</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>However, for efficiency, we chose this implementation:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Allocator.ml *)</span>
+<span class="k">module</span> <span class="k">type</span> <span class="nc">S</span> <span class="o">=</span> <span class="k">sig</span>
+  <span class="k">type</span> <span class="n">t</span>                   <span class="c">(** Type of value to allocate *)</span>
+
+  <span class="k">val</span> <span class="n">alloc</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">-&gt;</span> <span class="n">t</span>    <span class="c">(** Allocation function *)</span>
+  <span class="k">val</span> <span class="n">dealloc</span> <span class="o">:</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">unit</span>  <span class="c">(** Deallocation function *)</span>
+  <span class="k">val</span> <span class="n">eq</span> <span class="o">:</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">bool</span>  <span class="c">(** Equality of values to allocate *)</span>
+  <span class="k">val</span> <span class="n">reset</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">-&gt;</span> <span class="kt">unit</span> <span class="c">(** Reset this allocator *)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">reset</span></code> function is useful for bulk-testing. When running a new test, every allocator is reset.</p>
+<p>The Abstract location allocator (in <code class="docutils literal notranslate"><span class="pre">ALoc.ml</span></code>), which corresponds to uninterpreted symbols, are then initiated like this:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">include</span> <span class="nn">Allocators</span><span class="p">.</span><span class="nc">Make_with_prefix</span>
+          <span class="o">(</span><span class="nc">Basic</span> <span class="bp">()</span><span class="o">)</span>
+          <span class="o">(</span><span class="k">struct</span>
+            <span class="k">let</span> <span class="n">prefix</span> <span class="o">=</span> <span class="nn">Names</span><span class="p">.</span><span class="n">aloc_</span>
+          <span class="k">end</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">Make_with_prefix</span></code> is a functor that takes:</p>
+<ul class="simple">
+<li><p>An abstract Allocator <code class="docutils literal notranslate"><span class="pre">AL</span></code> that produces values which can be stringified.</p></li>
+<li><p>A string prefix</p></li>
+</ul>
+<p>and it returns an Allocator that allocates strings of the form <code class="docutils literal notranslate"><span class="pre">PREFIX_A</span></code> where <code class="docutils literal notranslate"><span class="pre">PREFIX</span></code> is the given prefix and <code class="docutils literal notranslate"><span class="pre">A</span></code> is a stringification of the allocated by <code class="docutils literal notranslate"><span class="pre">AL</span></code>.</p>
+<p>In this case, as the <code class="docutils literal notranslate"><span class="pre">AL</span></code> parameter, we use <code class="docutils literal notranslate"><span class="pre">Basic</span> <span class="pre">()</span></code> which instantiates an abstract allocator module that internally just allocates integers.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="gillian-part-2.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Gillian, Part II</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="gillian-part-1.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Gillian, Part I</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; Gillian Team @ Imperial College London
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Differences between Paper and Implementation</a><ul>
+<li><a class="reference internal" href="#the-gil-syntax">The GIL Syntax</a><ul>
+<li><a class="reference internal" href="#commands">Commands</a></li>
+<li><a class="reference internal" href="#procedures-and-programs">Procedures and programs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-memory-interfaces">The Memory Interfaces</a></li>
+<li><a class="reference internal" href="#the-state-model-interface">The State Model interface</a></li>
+<li><a class="reference internal" href="#allocators">Allocators</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>
