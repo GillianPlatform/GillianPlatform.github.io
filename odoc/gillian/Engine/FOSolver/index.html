@@ -6,7 +6,7 @@
   <span>?unification:bool <span class="arrow">&#45;&gt;</span></span>
   <span>?time:string <span class="arrow">&#45;&gt;</span></span>
   <span>?relevant_info:
-    <span>(<a href="../../Utils/Containers/SS/index.html#type-t">Utils.Containers.SS.t</a> * <a href="../../Utils/Containers/SS/index.html#type-t">Utils.Containers.SS.t</a> * <a href="../../Utils/Containers/SS/index.html#type-t">Utils.Containers.SS.t</a>)</span> <span class="arrow">&#45;&gt;</span></span>
+    <span>(<a href="../../Gillian/Utils/Containers/SS/index.html#type-t">Utils.Containers.SS.t</a> * <a href="../../Gillian/Utils/Containers/SS/index.html#type-t">Utils.Containers.SS.t</a> * <a href="../../Gillian/Utils/Containers/SS/index.html#type-t">Utils.Containers.SS.t</a>)</span> <span class="arrow">&#45;&gt;</span></span>
   <span><span><a href="../../Gillian/Gil_syntax/Formula/index.html#type-t">Gillian.Gil_syntax.Formula.t</a> list</span> <span class="arrow">&#45;&gt;</span></span>
   <span><a href="../TypEnv/index.html#type-t">TypEnv.t</a> <span class="arrow">&#45;&gt;</span></span>
   bool</span></code></div><div class="spec-doc"><p><code>check_satisfiability ?unification pfs gamma</code> checks whether or not the pure formulae <code>pfs</code> are satisfiable under the typing environment <code>gamma</code>. The <code>unification</code> flag should not be used by Gillian instantiation developers.</p></div></div><div class="odoc-spec"><div class="spec value anchored" id="val-sat"><a href="#val-sat" class="anchor"></a><code><span><span class="keyword">val</span> sat : 
@@ -16,7 +16,7 @@
   <span><span><a href="../../Gillian/Gil_syntax/Formula/index.html#type-t">Gillian.Gil_syntax.Formula.t</a> list</span> <span class="arrow">&#45;&gt;</span></span>
   bool</span></code></div><div class="spec-doc"><p>A different API for <code>check_satisfiability</code> better adapted for usage in memory models</p></div></div><div class="odoc-spec"><div class="spec value anchored" id="val-check_entailment"><a href="#val-check_entailment" class="anchor"></a><code><span><span class="keyword">val</span> check_entailment : 
   <span>?unification:bool <span class="arrow">&#45;&gt;</span></span>
-  <span><a href="../../Utils/Containers/SS/index.html#type-t">Utils.Containers.SS.t</a> <span class="arrow">&#45;&gt;</span></span>
+  <span><a href="../../Gillian/Utils/Containers/SS/index.html#type-t">Utils.Containers.SS.t</a> <span class="arrow">&#45;&gt;</span></span>
   <span><a href="../PFS/index.html#type-t">PFS.t</a> <span class="arrow">&#45;&gt;</span></span>
   <span><span><a href="../../Gillian/Gil_syntax/Formula/index.html#type-t">Gillian.Gil_syntax.Formula.t</a> list</span> <span class="arrow">&#45;&gt;</span></span>
   <span><a href="../TypEnv/index.html#type-t">TypEnv.t</a> <span class="arrow">&#45;&gt;</span></span>
