@@ -1,16 +1,16 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Gillian-JS" href="../js/index.html" /><link rel="prev" title="Folder Structure" href="folder-structure.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
-        <title>Symbolic Testing - Gillian master (15fb489 ) (2023/06/14 15:49) documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/fixes.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.2.4 and Furo 2023.08.19 -->
+        <title>Symbolic Testing - Gillian master (86aa850 ) (2023/08/29 11:44) documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d8449d71" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/fixes.css?v=93dd3e4f" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
     
 
@@ -132,8 +132,8 @@
     </div>
     <div class="header-center">
       <a href="../index.html"><div class="brand">Gillian master
- (15fb489
-) (2023/06/14 15:49) documentation</div></a>
+ (86aa850
+) (2023/08/29 11:44) documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -235,12 +235,12 @@
         </div>
         <article role="main">
           <section id="symbolic-testing">
-<h1>Symbolic Testing<a class="headerlink" href="#symbolic-testing" title="Permalink to this heading">#</a></h1>
+<h1>Symbolic Testing<a class="headerlink" href="#symbolic-testing" title="Link to this heading">#</a></h1>
 <section id="writing-symbolic-tests">
-<h2>Writing Symbolic Tests<a class="headerlink" href="#writing-symbolic-tests" title="Permalink to this heading">#</a></h2>
+<h2>Writing Symbolic Tests<a class="headerlink" href="#writing-symbolic-tests" title="Link to this heading">#</a></h2>
 <p>The whole-program symbolic testing aspect of Gillian-C works in a close way to <a class="reference external" href="https://klee.github.io">Klee</a>’s.</p>
 <section id="declaring-symbolic-variables">
-<h3>Declaring Symbolic Variables<a class="headerlink" href="#declaring-symbolic-variables" title="Permalink to this heading">#</a></h3>
+<h3>Declaring Symbolic Variables<a class="headerlink" href="#declaring-symbolic-variables" title="Link to this heading">#</a></h3>
 <p>In order to declare symbolic variables, we hijack the <code class="docutils literal notranslate"><span class="pre">__builtin_annot_intval</span></code> function of CompCert. An symbolic integer is declared in the following way:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">__builtin_annot_intval</span><span class="p">(</span><span class="s">&quot;symb_int&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
 </pre></div>
@@ -255,7 +255,7 @@
 </div>
 </section>
 <section id="assumptions-and-assertions">
-<h3>Assumptions and Assertions<a class="headerlink" href="#assumptions-and-assertions" title="Permalink to this heading">#</a></h3>
+<h3>Assumptions and Assertions<a class="headerlink" href="#assumptions-and-assertions" title="Link to this heading">#</a></h3>
 <p>For any <code class="docutils literal notranslate"><span class="pre">C</span></code> boolean expression <code class="docutils literal notranslate"><span class="pre">e</span></code>, it is possible to write:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">ASSUME</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
 <span class="n">ASSERT</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
@@ -270,9 +270,9 @@ A serialized C integer is a list of the form <code class="docutils literal notra
 </section>
 </section>
 <section id="symbolic-testing-of-collections-c">
-<h2>Symbolic Testing of Collections-C<a class="headerlink" href="#symbolic-testing-of-collections-c" title="Permalink to this heading">#</a></h2>
+<h2>Symbolic Testing of Collections-C<a class="headerlink" href="#symbolic-testing-of-collections-c" title="Link to this heading">#</a></h2>
 <section id="fixes">
-<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this heading">#</a></h3>
+<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
 <p>Symbolically testing Collections-C let to the following bug-fixing pull requests. They fix previously unknown bugs and usage of undefined behaviours:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/srdja/Collections-C/pull/119">Fix buffer overflow</a> (bug)</p></li>
@@ -283,7 +283,7 @@ A serialized C integer is a list of the form <code class="docutils literal notra
 </ul>
 </section>
 <section id="reproducing-the-results">
-<h3>Reproducing the Results<a class="headerlink" href="#reproducing-the-results" title="Permalink to this heading">#</a></h3>
+<h3>Reproducing the Results<a class="headerlink" href="#reproducing-the-results" title="Link to this heading">#</a></h3>
 <p>For license reason, we do not include the Collections-C code in the Gillian repository.
 There is an <a class="reference external" href="https://github.com/GillianPlatform/collections-c-for-gillian">external repository</a> that contains the Collections-C code adapted to testing in Gillian-C and Klee.</p>
 <p>In order to clone it, simply run, from the Gillian folder:</p>
@@ -298,7 +298,7 @@ git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Gilli
 <li><p>Using a bash script that will call <code class="docutils literal notranslate"><span class="pre">gillian-c</span> <span class="pre">wpst</span></code> as many times as there are files to test, but supports parallel mode (this is the one we used for measures). (NOTE: since then, we removed the option for parallel mode, and plan of having a better implementation in the future)</p></li>
 </ul>
 <section id="using-bulk-wpst">
-<h4>Using bulk-wpst<a class="headerlink" href="#using-bulk-wpst" title="Permalink to this heading">#</a></h4>
+<h4>Using bulk-wpst<a class="headerlink" href="#using-bulk-wpst" title="Link to this heading">#</a></h4>
 <p>From the Gillian folder run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>esy<span class="w"> </span>x<span class="w"> </span>gillian-c<span class="w"> </span>bulk-wpst<span class="w"> </span>../collections-c/for-gillian
 </pre></div>
@@ -306,7 +306,7 @@ git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Gilli
 <p>You will see every test suites executing one by one. Two tests will fail, this is intended. They represent two of the bugs we’ve found and are explained <a class="reference external" href="#bug-tests">here</a>.</p>
 </section>
 <section id="using-the-bash-script">
-<h4>Using the bash script<a class="headerlink" href="#using-the-bash-script" title="Permalink to this heading">#</a></h4>
+<h4>Using the bash script<a class="headerlink" href="#using-the-bash-script" title="Link to this heading">#</a></h4>
 <p>From the Gillian folder, for each folder you want to test, use:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Gillian-C/scripts/testFolder.sh<span class="w"> </span>../collections-c/for-gillian/folder
 </pre></div>
@@ -318,12 +318,12 @@ git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Gilli
 </section>
 </section>
 <section id="the-array-test-remove-c-buffer-overflow-bug">
-<h3>The <code class="docutils literal notranslate"><span class="pre">array_test_remove.c</span></code> buffer overflow bug<a class="headerlink" href="#the-array-test-remove-c-buffer-overflow-bug" title="Permalink to this heading">#</a></h3>
+<h3>The <code class="docutils literal notranslate"><span class="pre">array_test_remove.c</span></code> buffer overflow bug<a class="headerlink" href="#the-array-test-remove-c-buffer-overflow-bug" title="Link to this heading">#</a></h3>
 <p>This test corresponds to this pull request: <a class="reference external" href="https://github.com/srdja/Collections-C/pull/119">Fix buffer overflow</a>.
 It is particularly interesting: the original test suite did not catch it. We thought that a concrete test with the right values would catch it, but it didn’t. The reason is that it overflowed but did not fail. It is therefore a <em>security issue</em>. However, our symbolic memory model cannot overflow, and the bug was caught.</p>
 </section>
 <section id="the-list-test-zipiteradd-c-flawed-test">
-<h3>The <code class="docutils literal notranslate"><span class="pre">list_test_zipIterAdd.c</span></code> flawed test<a class="headerlink" href="#the-list-test-zipiteradd-c-flawed-test" title="Permalink to this heading">#</a></h3>
+<h3>The <code class="docutils literal notranslate"><span class="pre">list_test_zipIterAdd.c</span></code> flawed test<a class="headerlink" href="#the-list-test-zipiteradd-c-flawed-test" title="Link to this heading">#</a></h3>
 <p>This test is also interesting but for different reasons. The code it is testing (the <code class="docutils literal notranslate"><span class="pre">list_zip_iter_add</span></code> function) does not contain any bug.
 However, the test itself did contain a bug but still passed. Here is why:</p>
 <p>The test added two elements (<code class="docutils literal notranslate"><span class="pre">&quot;h&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;i&quot;</span></code>) in two separate lists at the index 2. It then tested that the elements actually appeared at the second index of their respective lists, in the following way:</p>
@@ -426,9 +426,9 @@ However, the test itself did contain a bug but still passed. Here is why:</p>
       
     </aside>
   </div>
-</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/furo.js"></script>
+</div><script src="../_static/documentation_options.js?v=f28aa9a5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
 </html>

@@ -1,16 +1,16 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="./">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="The Gillian Debugger" href="debugger.html" /><link rel="prev" title="Installation" href="install.html" />
 
-    <link rel="shortcut icon" href="_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
-        <title>Developing Gillian - Gillian master (15fb489 ) (2023/06/14 15:49) documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
-    <link rel="stylesheet" type="text/css" href="_static/css/fixes.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="shortcut icon" href="_static/favicon.ico"/><!-- Generated with Sphinx 7.2.4 and Furo 2023.08.19 -->
+        <title>Developing Gillian - Gillian master (86aa850 ) (2023/08/29 11:44) documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d8449d71" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/css/fixes.css?v=93dd3e4f" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
     
     
 
@@ -132,8 +132,8 @@
     </div>
     <div class="header-center">
       <a href="index.html"><div class="brand">Gillian master
- (15fb489
-) (2023/06/14 15:49) documentation</div></a>
+ (86aa850
+) (2023/08/29 11:44) documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -235,9 +235,9 @@
         </div>
         <article role="main">
           <section id="developing-gillian">
-<h1>Developing Gillian<a class="headerlink" href="#developing-gillian" title="Permalink to this heading">#</a></h1>
+<h1>Developing Gillian<a class="headerlink" href="#developing-gillian" title="Link to this heading">#</a></h1>
 <section id="executing-a-command-in-the-test-environment">
-<h2>Executing a command in the test environment<a class="headerlink" href="#executing-a-command-in-the-test-environment" title="Permalink to this heading">#</a></h2>
+<h2>Executing a command in the test environment<a class="headerlink" href="#executing-a-command-in-the-test-environment" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">esy</span></code> lets you execute a command in a <a class="reference external" href="https://esy.sh/docs/en/environment.html#test-environment">test environment</a> where all built binaries and installed files are correctly added to your path. In particular, Gillian-JS, Gillian-C and wisl export specific environment variables that allow them to properly find their respective runtime files.</p>
 <p>To run any command under this environment:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>esy<span class="w"> </span>x<span class="w"> </span>&lt;command&gt;
@@ -255,7 +255,7 @@ esy<span class="w"> </span>x<span class="w"> </span>wisl<span class="w"> </span>
 </div>
 </section>
 <section id="rebuilding-after-modifications">
-<h2>Rebuilding after modifications<a class="headerlink" href="#rebuilding-after-modifications" title="Permalink to this heading">#</a></h2>
+<h2>Rebuilding after modifications<a class="headerlink" href="#rebuilding-after-modifications" title="Link to this heading">#</a></h2>
 <p>Since <code class="docutils literal notranslate"><span class="pre">esy</span></code> is our build system, running the <code class="docutils literal notranslate"><span class="pre">esy</span></code> command without any arguments will rebuild the project after modification.</p>
 <p>You can automatically rebuild on changes by running:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>esy<span class="w"> </span>watch
@@ -263,7 +263,7 @@ esy<span class="w"> </span>x<span class="w"> </span>wisl<span class="w"> </span>
 </div>
 </section>
 <section id="code-style">
-<h2>Code style<a class="headerlink" href="#code-style" title="Permalink to this heading">#</a></h2>
+<h2>Code style<a class="headerlink" href="#code-style" title="Link to this heading">#</a></h2>
 <p>You can automatically format the code by running:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>esy<span class="w"> </span>format
 </pre></div>
@@ -287,10 +287,10 @@ esy<span class="w"> </span>x<span class="w"> </span>wisl<span class="w"> </span>
 </div>
 </section>
 <section id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading">#</a></h2>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">#</a></h2>
 <p>Gillian’s documentation is built with <code class="code docutils literal notranslate"><span class="pre">sphinx</span></code>, with an API reference generated using <code class="code docutils literal notranslate"><span class="pre">odoc</span></code>.</p>
 <section id="building-documentation">
-<h3>Building Documentation<a class="headerlink" href="#building-documentation" title="Permalink to this heading">#</a></h3>
+<h3>Building Documentation<a class="headerlink" href="#building-documentation" title="Link to this heading">#</a></h3>
 <ol class="arabic">
 <li><p>Install the prerequisites</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>opam<span class="w"> </span>install<span class="w"> </span>odoc
@@ -306,7 +306,7 @@ pip<span class="w"> </span>install<span class="w"> </span>sphinx<span class="w">
 </ol>
 <p>After building, you’ll find the sphinx documentation at <code class="docutils literal notranslate"><span class="pre">_docs/sphinx</span></code>, and the API reference at <code class="docutils literal notranslate"><span class="pre">_docs/odoc</span></code>.</p>
 <section id="rebuild-on-change">
-<h4>Rebuild on change<a class="headerlink" href="#rebuild-on-change" title="Permalink to this heading">#</a></h4>
+<h4>Rebuild on change<a class="headerlink" href="#rebuild-on-change" title="Link to this heading">#</a></h4>
 <p>If you want to automatically rebuild on changes, take these additional steps.</p>
 <ol class="arabic">
 <li><p>Install (more) prerequisites:</p>
@@ -403,9 +403,9 @@ pip<span class="w"> </span>install<span class="w"> </span>sphinx-autobuild
       
     </aside>
   </div>
-</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
-    <script src="_static/scripts/furo.js"></script>
+</div><script src="_static/documentation_options.js?v=f28aa9a5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
 </html>

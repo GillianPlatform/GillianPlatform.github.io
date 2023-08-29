@@ -1,16 +1,16 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Symbolic Testing" href="symbolic-testing.html" /><link rel="prev" title="Folder Structure" href="folder-structure.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
-        <title>JS-2-GIL and Test262 - Gillian master (15fb489 ) (2023/06/14 15:49) documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/fixes.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.2.4 and Furo 2023.08.19 -->
+        <title>JS-2-GIL and Test262 - Gillian master (86aa850 ) (2023/08/29 11:44) documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d8449d71" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/fixes.css?v=93dd3e4f" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
     
 
@@ -132,8 +132,8 @@
     </div>
     <div class="header-center">
       <a href="../index.html"><div class="brand">Gillian master
- (15fb489
-) (2023/06/14 15:49) documentation</div></a>
+ (86aa850
+) (2023/08/29 11:44) documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -235,9 +235,9 @@
         </div>
         <article role="main">
           <section id="js-2-gil-and-test262">
-<h1>JS-2-GIL and Test262<a class="headerlink" href="#js-2-gil-and-test262" title="Permalink to this heading">#</a></h1>
+<h1>JS-2-GIL and Test262<a class="headerlink" href="#js-2-gil-and-test262" title="Link to this heading">#</a></h1>
 <section id="coverage-of-js-2-gil">
-<h2>Coverage of JS-2-GIL<a class="headerlink" href="#coverage-of-js-2-gil" title="Permalink to this heading">#</a></h2>
+<h2>Coverage of JS-2-GIL<a class="headerlink" href="#coverage-of-js-2-gil" title="Link to this heading">#</a></h2>
 <p>JS-2-GIL is a compiler from ECMAScript ES5 Strict to GIL. JS-2-GIL has broad coverage. It supports the entire core (chapters 8-14), with the exception of the <code class="docutils literal notranslate"><span class="pre">RegExp</span></code> literal, as well as all of the JavaScript built-in libraries except the following:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Date</span></code>, <code class="docutils literal notranslate"><span class="pre">RegExp</span></code>, <code class="docutils literal notranslate"><span class="pre">JSON</span></code></p></li>
@@ -249,7 +249,7 @@
 <p>Additionally, indirect <code class="docutils literal notranslate"><span class="pre">eval</span></code> is not supported, as it is meant to be executed as non-strict code. Furthermore, all <code class="docutils literal notranslate"><span class="pre">Function</span></code> constructor code runs as strict-mode code.</p>
 </section>
 <section id="correctness-of-js-2-gil">
-<h2>Correctness of JS-2-GIL<a class="headerlink" href="#correctness-of-js-2-gil" title="Permalink to this heading">#</a></h2>
+<h2>Correctness of JS-2-GIL<a class="headerlink" href="#correctness-of-js-2-gil" title="Link to this heading">#</a></h2>
 <p>The JS-2-GIL compiler can be split into two compilers: JS-2-JSIL, which compiles JavaScript to JSIL, the intermediate representation that we have used in <a class="reference internal" href="../publications/javert.html"><span class="doc">JaVerT</span></a> / <a class="reference internal" href="../publications/cosette.html"><span class="doc">Cosette</span></a> / <a class="reference internal" href="../publications/javert-2.html"><span class="doc">JaVerT 2.0</span></a>; and JSIL-2-GIL, the compiler from JSIL to GIL, the intermediate representation of Gillian.</p>
 <p>Previously, we have tested JS-2-JSIL against Test262, the JavaScript official test suite (specifically, <a class="reference external" href="https://github.com/tc39/test262/commit/91d06f">this commit from 2016/05/30</a>). As Test262 commit targets ES6, we had to identify the subset of tests that are appropriate for JS-2-JSIL, as explained in detail in <a class="reference internal" href="../publications/javert.html"><span class="doc">JaVerT</span></a>. We obtained 8797 applicable tests, of which JS-2-JSIL passes 100%.</p>
 <p>We have initially tested JS-2-GIL successfully on the same 8797 tests and reported this in the submitted version of the paper. However, these tests were not systematically categorised and we were not able to automate the testing process to our satisfaction using the bulk testing mechanism of Gillian. For this reason, we have chosen to work with the latest version of Test262, forked <a class="reference external" href="https://github.com/GillianPlatform/javert-test262">here</a>, where each test comes with a precise description of its intended outcome. For example, a test that is supposed to fail at parsing time with a JavaScript native syntax error will contain the following in its header:</p>
@@ -323,7 +323,7 @@
 </table>
 </div>
 <section id="explanation-table-columns">
-<h3>Explanation: Table Columns<a class="headerlink" href="#explanation-table-columns" title="Permalink to this heading">#</a></h3>
+<h3>Explanation: Table Columns<a class="headerlink" href="#explanation-table-columns" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Language</strong>: tests for the core language (chapters 8-14 of the <a class="reference external" href="https://www.ecma-international.org/ecma-262/5.1/">ECMAScript ES5 standard</a>).</p></li>
 <li><p><strong>Built-ins</strong>: tests for the built-in libraries (chapter 15 of the <a class="reference external" href="https://www.ecma-international.org/ecma-262/5.1/">ECMAScript ES5 standard</a>).</p></li>
@@ -331,7 +331,7 @@
 </ul>
 </section>
 <section id="explanation-table-rows">
-<h3>Explanation: Table Rows<a class="headerlink" href="#explanation-table-rows" title="Permalink to this heading">#</a></h3>
+<h3>Explanation: Table Rows<a class="headerlink" href="#explanation-table-rows" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Total tests</strong>: all tests.</p></li>
 <li><p><strong>Non-strict tests</strong> (filtered out): tests that should be run only in non-strict mode. They contain the <code class="docutils literal notranslate"><span class="pre">flags:</span> <span class="pre">[noStrict]</span></code> directive and are filtered out automatically by our bulk testing mechanism.</p></li>
@@ -346,7 +346,7 @@
 </ul>
 </section>
 <section id="explanation-failing-tests">
-<h3>Explanation: Failing Tests<a class="headerlink" href="#explanation-failing-tests" title="Permalink to this heading">#</a></h3>
+<h3>Explanation: Failing Tests<a class="headerlink" href="#explanation-failing-tests" title="Link to this heading">#</a></h3>
 <p>The following eight tests</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">test262/test/language/line-terminators/7.3-6.js</span></code></p></li>
@@ -361,7 +361,7 @@
 <p>fail due to a discrepancy between how Unicode characters are treated in JavaScript (either UCS-2 or UTF-16) and OCaml (sequences of bytes). One solution would be to move to strings provided by the <a class="reference external" href="http://camomile.sourceforge.net/">Camomile</a> library instead of the native OCaml strings.</p>
 </section>
 <section id="reproducing-the-results">
-<h3>Reproducing the Results<a class="headerlink" href="#reproducing-the-results" title="Permalink to this heading">#</a></h3>
+<h3>Reproducing the Results<a class="headerlink" href="#reproducing-the-results" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>Clone our <a class="reference external" href="https://github.com/GillianPlatform/javert-test262">forked Test262 repository</a> to a folder on your machine. Inside that folder, you can find the Test262 tests in the <code class="docutils literal notranslate"><span class="pre">test</span></code> subfolder. In particular, <code class="docutils literal notranslate"><span class="pre">test/language</span></code> contains the core language tests, whereas <code class="docutils literal notranslate"><span class="pre">test/built-ins</span></code> contains the tests for the built-in libraries.</p></li>
 <li><p>To run all of the tests, execute the following command inside your Gillian folder:</p></li>
@@ -390,7 +390,7 @@ esy<span class="w"> </span>x<span class="w"> </span>javert<span class="w"> </spa
 </ol>
 </section>
 <section id="detailed-per-folder-breakdown-language">
-<h3>Detailed Per-Folder Breakdown: Language<a class="headerlink" href="#detailed-per-folder-breakdown-language" title="Permalink to this heading">#</a></h3>
+<h3>Detailed Per-Folder Breakdown: Language<a class="headerlink" href="#detailed-per-folder-breakdown-language" title="Link to this heading">#</a></h3>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <thead>
@@ -654,7 +654,7 @@ esy<span class="w"> </span>x<span class="w"> </span>javert<span class="w"> </spa
 </div>
 </section>
 <section id="detailed-per-folder-breakdown-built-ins">
-<h3>Detailed Per-Folder Breakdown: Built-ins<a class="headerlink" href="#detailed-per-folder-breakdown-built-ins" title="Permalink to this heading">#</a></h3>
+<h3>Detailed Per-Folder Breakdown: Built-ins<a class="headerlink" href="#detailed-per-folder-breakdown-built-ins" title="Link to this heading">#</a></h3>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <thead>
@@ -1041,9 +1041,9 @@ esy<span class="w"> </span>x<span class="w"> </span>javert<span class="w"> </spa
       
     </aside>
   </div>
-</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/furo.js"></script>
+</div><script src="../_static/documentation_options.js?v=f28aa9a5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
 </html>

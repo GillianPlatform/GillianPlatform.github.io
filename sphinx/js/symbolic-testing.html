@@ -1,16 +1,16 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Publications" href="../publications/index.html" /><link rel="prev" title="JS-2-GIL and Test262" href="js2gil.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
-        <title>Symbolic Testing - Gillian master (15fb489 ) (2023/06/14 15:49) documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/fixes.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.2.4 and Furo 2023.08.19 -->
+        <title>Symbolic Testing - Gillian master (86aa850 ) (2023/08/29 11:44) documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d8449d71" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/fixes.css?v=93dd3e4f" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
     
 
@@ -132,8 +132,8 @@
     </div>
     <div class="header-center">
       <a href="../index.html"><div class="brand">Gillian master
- (15fb489
-) (2023/06/14 15:49) documentation</div></a>
+ (86aa850
+) (2023/08/29 11:44) documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -235,12 +235,12 @@
         </div>
         <article role="main">
           <section id="symbolic-testing">
-<h1>Symbolic Testing<a class="headerlink" href="#symbolic-testing" title="Permalink to this heading">#</a></h1>
+<h1>Symbolic Testing<a class="headerlink" href="#symbolic-testing" title="Link to this heading">#</a></h1>
 <section id="writing-symbolic-tests">
-<h2>Writing Symbolic Tests<a class="headerlink" href="#writing-symbolic-tests" title="Permalink to this heading">#</a></h2>
+<h2>Writing Symbolic Tests<a class="headerlink" href="#writing-symbolic-tests" title="Link to this heading">#</a></h2>
 <p>The whole-program symbolic testing module of Gillian-JS (codenamed Cosette) extends JavaScript with a mechanism for declaring symbolic variables and performing first-order reasoning on them.</p>
 <section id="declaring-symbolic-variables">
-<h3>Declaring Symbolic Variables<a class="headerlink" href="#declaring-symbolic-variables" title="Permalink to this heading">#</a></h3>
+<h3>Declaring Symbolic Variables<a class="headerlink" href="#declaring-symbolic-variables" title="Link to this heading">#</a></h3>
 <p>One can declare untyped symbolic variables, symbolic booleans, symbolic strings, and symbolic numbers as follows:</p>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">symb</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span><span class="w"> </span><span class="c1">// Untyped symbolic variable</span>
 
@@ -252,7 +252,7 @@
 <p>The single parameters provided to these functions indicate the name of the created symbol, or <em>logical variable</em>, that Cosette will further use in the reaasoning. Normally, we choose these to coincide with the JavaScript variables in which they are stored so that the outputs of the analysis are more readable.</p>
 </section>
 <section id="assumptions-and-assertions">
-<h3>Assumptions and Assertions<a class="headerlink" href="#assumptions-and-assertions" title="Permalink to this heading">#</a></h3>
+<h3>Assumptions and Assertions<a class="headerlink" href="#assumptions-and-assertions" title="Link to this heading">#</a></h3>
 <p>Cosette provides a mechanism for reasoning about the symbols, in the form of assumptions and assertions, as follows:</p>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">Assume</span><span class="p">(</span><span class="nx">B</span><span class="p">);</span><span class="w"> </span><span class="c1">// Assume that the boolean expression B holds</span>
 <span class="nx">Assert</span><span class="p">(</span><span class="nx">B</span><span class="p">);</span><span class="w"> </span><span class="c1">// Assert that the boolean expression B holds</span>
@@ -302,7 +302,7 @@ Failing Model:
 <p>which means that the assertion does not hold if <code class="docutils literal notranslate"><span class="pre">n1</span> <span class="pre">=</span> <span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">n2</span> <span class="pre">=</span> <span class="pre">1</span></code>. Here, variables prefixed by <code class="docutils literal notranslate"><span class="pre">#</span></code> denote logical variables; in this case, the parameters given to the <code class="docutils literal notranslate"><span class="pre">symb_number</span></code> function.</p>
 </section>
 <section id="semantics-of-operators">
-<h3>Semantics of Operators<a class="headerlink" href="#semantics-of-operators" title="Permalink to this heading">#</a></h3>
+<h3>Semantics of Operators<a class="headerlink" href="#semantics-of-operators" title="Link to this heading">#</a></h3>
 <p>Importantly, the semantics of all of the operators is deliberately <strong>NOT</strong> as in JavaScript. For example, comparison and numeric operators do not perform any implicit type coercions. If you want to use JavaScript comparison/numeric operators, say <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>, you can proceed as follows:</p>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">res_leq_n1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">n1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nx">res</span><span class="p">;</span>
 
@@ -311,7 +311,7 @@ Failing Model:
 </div>
 </section>
 <section id="typing-and-objects-in-symbolic-tests">
-<h3>Typing and Objects in Symbolic Tests<a class="headerlink" href="#typing-and-objects-in-symbolic-tests" title="Permalink to this heading">#</a></h3>
+<h3>Typing and Objects in Symbolic Tests<a class="headerlink" href="#typing-and-objects-in-symbolic-tests" title="Link to this heading">#</a></h3>
 <p>Since we do not (yet) perform lazy initialisation in symbolic execution, errors may occur if you attempt to reason about symbolic objects or untyped symbolic variables. This can be prevented as follows:</p>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">symb</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
 <span class="nx">Assume</span><span class="p">(</span><span class="nx">not</span><span class="w"> </span><span class="p">(</span><span class="nx">typeOf</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Obj</span><span class="p">));</span>
@@ -321,7 +321,7 @@ Failing Model:
 </section>
 </section>
 <section id="symbolic-testing-of-buckets-js">
-<h2>Symbolic Testing of Buckets.js<a class="headerlink" href="#symbolic-testing-of-buckets-js" title="Permalink to this heading">#</a></h2>
+<h2>Symbolic Testing of Buckets.js<a class="headerlink" href="#symbolic-testing-of-buckets-js" title="Link to this heading">#</a></h2>
 <p>We symbolically test Buckets.js, a real-world JavaScript data-structure library, with the goal of obtaining 100% line coverage. The results are presented in the table below, with each row containing:</p>
 <ul class="simple">
 <li><p>The name of the folder being tested, which also indicates the data structure in question</p></li>
@@ -330,7 +330,7 @@ Failing Model:
 <li><p>The total testing time (in seconds)</p></li>
 </ul>
 <section id="testing-results">
-<h3>Testing Results<a class="headerlink" href="#testing-results" title="Permalink to this heading">#</a></h3>
+<h3>Testing Results<a class="headerlink" href="#testing-results" title="Link to this heading">#</a></h3>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <thead>
@@ -407,7 +407,7 @@ Failing Model:
 <p>The results are 1.3% slower and the number of executed GIL commands is 0.1% greater than reported in the submitted version—we will update accordingly. This is due to minor changes to the JS-2-GIL compiler and the JS symbolic engine.</p>
 </section>
 <section id="reproducing-the-results">
-<h3>Reproducing the Results<a class="headerlink" href="#reproducing-the-results" title="Permalink to this heading">#</a></h3>
+<h3>Reproducing the Results<a class="headerlink" href="#reproducing-the-results" title="Link to this heading">#</a></h3>
 <p>Starting from the <code class="docutils literal notranslate"><span class="pre">Gillian</span></code> folder, execute the following:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>esy
 esy<span class="w"> </span>init:env
@@ -425,7 +425,7 @@ esy<span class="w"> </span>init:env
 <p><strong>Note</strong>: The times obtained when counting executed commands will be slower, due to the fact that the tests will be run in single-thread mode.</p>
 </section>
 <section id="detailed-per-folder-breakdown-buckets-js">
-<h3>Detailed Per-Folder Breakdown: Buckets.js<a class="headerlink" href="#detailed-per-folder-breakdown-buckets-js" title="Permalink to this heading">#</a></h3>
+<h3>Detailed Per-Folder Breakdown: Buckets.js<a class="headerlink" href="#detailed-per-folder-breakdown-buckets-js" title="Link to this heading">#</a></h3>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <thead>
@@ -837,7 +837,7 @@ esy<span class="w"> </span>init:env
 </div>
 </section>
 <section id="reproducing-the-buckets-js-bugs-found-by-publications-cosette-and-publications-javert-2">
-<h3>Reproducing the Buckets.js Bugs found by <a class="reference internal" href="../publications/cosette.html"><span class="doc">Cosette</span></a> and <a class="reference internal" href="../publications/javert-2.html"><span class="doc">JaVerT 2.0</span></a><a class="headerlink" href="#reproducing-the-buckets-js-bugs-found-by-publications-cosette-and-publications-javert-2" title="Permalink to this heading">#</a></h3>
+<h3>Reproducing the Buckets.js Bugs found by <a class="reference internal" href="../publications/cosette.html"><span class="doc">Cosette</span></a> and <a class="reference internal" href="../publications/javert-2.html"><span class="doc">JaVerT 2.0</span></a><a class="headerlink" href="#reproducing-the-buckets-js-bugs-found-by-publications-cosette-and-publications-javert-2" title="Link to this heading">#</a></h3>
 <p>Starting from the <code class="docutils literal notranslate"><span class="pre">Gillian</span></code> folder, execute the following:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>esy
 esy<span class="w"> </span>init:env
@@ -846,7 +846,7 @@ esy<span class="w"> </span>init:env
 </div>
 </section>
 <section id="publications-cosette-multi-dictionary-bug">
-<h3><a class="reference internal" href="../publications/cosette.html"><span class="doc">Cosette</span></a> Multi-Dictionary Bug<a class="headerlink" href="#publications-cosette-multi-dictionary-bug" title="Permalink to this heading">#</a></h3>
+<h3><a class="reference internal" href="../publications/cosette.html"><span class="doc">Cosette</span></a> Multi-Dictionary Bug<a class="headerlink" href="#publications-cosette-multi-dictionary-bug" title="Link to this heading">#</a></h3>
 <p>In order to reproduce the multi-dictionary bug reported by <a class="reference internal" href="../publications/cosette.html"><span class="doc">Cosette</span></a>, execute:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./testCosette.sh<span class="w"> </span>Examples/Cosette/Buckets/multidictionary/bug/multidictionary_bug.js
 </pre></div>
@@ -875,7 +875,7 @@ Failing Model:
 <p>The test puts two symbolic numbers, <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code> for the same symbolic key <code class="docutils literal notranslate"><span class="pre">s</span></code> into an empty multidictionary, then removes <code class="docutils literal notranslate"><span class="pre">x1</span></code>, and then removes <code class="docutils literal notranslate"><span class="pre">x2</span></code> and registers the value returned by <code class="docutils literal notranslate"><span class="pre">remove</span></code>. Then, it asserts that that value was <code class="docutils literal notranslate"><span class="pre">true</span></code> if the two keys were different, and <code class="docutils literal notranslate"><span class="pre">false</span></code> if the two keys were the same. What the failing model says is that, when the two keys are equal, the library, in fact, throws a native JavaScript error (indicated by the argument <code class="docutils literal notranslate"><span class="pre">False</span></code> of the failed assert).</p>
 </section>
 <section id="publications-javert-2-linked-list-bugs">
-<h3><a class="reference internal" href="../publications/javert-2.html"><span class="doc">JaVerT 2.0</span></a> Linked-List Bugs<a class="headerlink" href="#publications-javert-2-linked-list-bugs" title="Permalink to this heading">#</a></h3>
+<h3><a class="reference internal" href="../publications/javert-2.html"><span class="doc">JaVerT 2.0</span></a> Linked-List Bugs<a class="headerlink" href="#publications-javert-2-linked-list-bugs" title="Link to this heading">#</a></h3>
 <p>In order to reproduce the linked-list bugs reported by <a class="reference internal" href="../publications/javert-2.html"><span class="doc">JaVerT 2.0</span></a>, execute:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./testCosette.sh<span class="w"> </span>Examples/Cosette/Buckets/linkedlist/bug/linkedlist_bug_1.js
 ./testCosette.sh<span class="w"> </span>Examples/Cosette/Buckets/linkedlist/bug/linkedlist_bug_2.js
@@ -995,9 +995,9 @@ Failing Model:
       
     </aside>
   </div>
-</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/furo.js"></script>
+</div><script src="../_static/documentation_options.js?v=f28aa9a5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
 </html>
