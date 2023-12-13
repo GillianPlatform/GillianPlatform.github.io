@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Gillian-C" href="c/index.html" /><link rel="prev" title="Developing Gillian" href="develop.html" />
 
     <link rel="shortcut icon" href="_static/favicon.ico"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>The Gillian Debugger - Gillian master (5ac2402 ) (2023/12/06 18:27) documentation</title>
+        <title>The Gillian Debugger - Gillian master (7f62c89 ) (2023/12/13 00:02) documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d8449d71" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/css/fixes.css?v=93dd3e4f" />
@@ -132,8 +132,8 @@
     </div>
     <div class="header-center">
       <a href="index.html"><div class="brand">Gillian master
- (5ac2402
-) (2023/12/06 18:27) documentation</div></a>
+ (7f62c89
+) (2023/12/13 00:02) documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -247,6 +247,7 @@
 <p>The debugger is used via a custom VSCode extension, found under the <code class="docutils literal notranslate"><span class="pre">debugger-vscode-extension/</span></code> directory in the repo.</p>
 <p>To try out the debugger, follow these steps:</p>
 <ul>
+<li><p>Install <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=gillian.code-gillian">the base Gillian extension</a></p></li>
 <li><p>Make sure Gillian is built (see <a class="reference internal" href="install.html"><span class="doc">Installation</span></a>)</p></li>
 <li><p>cd into <code class="docutils literal notranslate"><span class="pre">debugger-vscode-extension/</span></code></p></li>
 <li><p>Run <code class="docutils literal notranslate"><span class="pre">yarn</span></code> to set up dependencies</p></li>
@@ -257,7 +258,7 @@
 <li><p>A new VSCode window should open in <code class="docutils literal notranslate"><span class="pre">debugger-vscode-extension/sampleWorkspace/</span></code>, with the extension installed</p></li>
 <li><p>In this window, open the workspace settings, and under the <em>Extensions &gt; Gillian Debugger</em> section:</p>
 <ul class="simple">
-<li><p>Set <em>Run mode</em> to <code class="docutils literal notranslate"><span class="pre">installed</span></code></p></li>
+<li><p>Make sure <em>Run mode</em> is set to <code class="docutils literal notranslate"><span class="pre">source</span></code></p></li>
 <li><p>Set <em>Source directory</em> to <code class="docutils literal notranslate"><span class="pre">${workspaceFolder}/../../</span></code></p></li>
 <li><p>If you want to disable automatic folding and unfolding of predicates, check <em>Use manual proof</em></p></li>
 </ul>
@@ -386,7 +387,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=af08c19b"></script>
+</div><script src="_static/documentation_options.js?v=551424f9"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>
