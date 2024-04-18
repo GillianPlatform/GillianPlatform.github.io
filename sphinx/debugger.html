@@ -5,8 +5,8 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Gillian-C" href="c/index.html" /><link rel="prev" title="Developing Gillian" href="develop.html" />
 
-    <link rel="shortcut icon" href="_static/favicon.ico"/><!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>The Gillian Debugger - Gillian master (5ab38ac ) (2024/03/31 17:36) documentation</title>
+    <link rel="shortcut icon" href="_static/favicon.ico"/><!-- Generated with Sphinx 7.3.6 and Furo 2024.01.29 -->
+        <title>The Gillian Debugger - Gillian master (f8c7f54 ) (2024/04/18 14:55) documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d8449d71" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/css/fixes.css?v=93dd3e4f" />
@@ -132,8 +132,8 @@
     </div>
     <div class="header-center">
       <a href="index.html"><div class="brand">Gillian master
- (5ab38ac
-) (2024/03/31 17:36) documentation</div></a>
+ (f8c7f54
+) (2024/04/18 14:55) documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -235,7 +235,7 @@
         </div>
         <article role="main">
           <section id="the-gillian-debugger">
-<h1>The Gillian Debugger<a class="headerlink" href="#the-gillian-debugger" title="Link to this heading">#</a></h1>
+<h1>The Gillian Debugger<a class="headerlink" href="#the-gillian-debugger" title="Link to this heading">¶</a></h1>
 <p>The Gillian debugger provides a custom interface for visualising symbolic execution and unification, via a bespoke VSCode extension.</p>
 <div class="admonition danger">
 <p class="admonition-title">Danger</p>
@@ -243,7 +243,7 @@
 <p>Feel free to <a class="reference external" href="https://github.com/GillianPlatform/Gillian/issues?q=label%3Adebugger%2Cdebug-ext+">report any issues or feature requests</a>.</p>
 </div>
 <section id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">¶</a></h2>
 <p>The debugger is used via a custom VSCode extension, found under the <code class="docutils literal notranslate"><span class="pre">debugger-vscode-extension/</span></code> directory in the repo.</p>
 <p>To try out the debugger, follow these steps:</p>
 <ul>
@@ -253,7 +253,8 @@
 <li><p>Run <code class="docutils literal notranslate"><span class="pre">yarn</span></code> to set up dependencies</p></li>
 <li><p>Run <code class="docutils literal notranslate"><span class="pre">yarn</span> <span class="pre">build</span></code> to build the extension (or <code class="docutils literal notranslate"><span class="pre">yarn</span> <span class="pre">watch</span></code> to rebuild automatically)</p></li>
 <li><p>In the <em>Run and debug</em> tab of VSCode, make sure <em>Debugger Extension</em> is selected from the dropdown, and click the green play button to start the extension</p>
-<a class="reference internal image-reference" href="_images/start_extension_button.png"><img alt="_images/start_extension_button.png" class="align-center" src="_images/start_extension_button.png" style="width: 175px;" /></a>
+<a class="reference internal image-reference" href="_images/start_extension_button.png"><img alt="_images/start_extension_button.png" class="align-center" src="_images/start_extension_button.png" style="width: 175px;" />
+</a>
 </li>
 <li><p>A new VSCode window should open in <code class="docutils literal notranslate"><span class="pre">debugger-vscode-extension/sampleWorkspace/</span></code>, with the extension installed</p></li>
 <li><p>In this window, open the workspace settings, and under the <em>Extensions &gt; Gillian Debugger</em> section:</p>
@@ -266,17 +267,20 @@
 </ul>
 </section>
 <section id="a-guided-tour">
-<h2>A Guided Tour<a class="headerlink" href="#a-guided-tour" title="Link to this heading">#</a></h2>
+<h2>A Guided Tour<a class="headerlink" href="#a-guided-tour" title="Link to this heading">¶</a></h2>
 <p>Let’s take it for a spin! Open <code class="docutils literal notranslate"><span class="pre">list_length_rec.wisl</span></code>, and click <em>Debug llen</em> to start the debugger.</p>
-<a class="reference internal image-reference" href="_images/llen_button.png"><img alt="_images/llen_button.png" class="align-center" src="_images/llen_button.png" style="width: 250px;" /></a>
+<a class="reference internal image-reference" href="_images/llen_button.png"><img alt="_images/llen_button.png" class="align-center" src="_images/llen_button.png" style="width: 250px;" />
+</a>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Make sure you aren’t running any <code class="docutils literal notranslate"><span class="pre">esy</span></code> processes (e.g. <code class="docutils literal notranslate"><span class="pre">esy</span> <span class="pre">watch</span></code>), as this may prevent the debugger from starting.</p>
 </div>
 <p>You should then be presented with a new panel showing the path of execution in a graph. Here you can see the current command in the highlighted node, and two subsequent commands yet to be executed.</p>
-<a class="reference internal image-reference" href="_images/init.png"><img alt="_images/init.png" class="align-center" src="_images/init.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/init.png"><img alt="_images/init.png" class="align-center" src="_images/init.png" style="width: 600px;" />
+</a>
 <p>In the left-hand panel, you can see the current state of symbolic execution.</p>
-<a class="reference internal image-reference" href="_images/state.png"><img alt="_images/state.png" class="align-center" src="_images/state.png" style="width: 250px;" /></a>
+<a class="reference internal image-reference" href="_images/state.png"><img alt="_images/state.png" class="align-center" src="_images/state.png" style="width: 250px;" />
+</a>
 <p>Each section of the state represents:</p>
 <ul class="simple">
 <li><p><strong>Store</strong>: The values of program variables</p></li>
@@ -290,14 +294,18 @@
 <p>Take care to remember that the <em>Memory</em> section may not tell the full story of the heap; some information may be ‘hidden’ in the definitions of <em>Predicates</em>.</p>
 </div>
 <p>Click on the play button under the <em>true</em> branch to execute the next command (in the true case of the if-else). Notice how our <em>Pure Formulae</em> have updated to show that we now know <code class="docutils literal notranslate"><span class="pre">#x</span></code> is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
-<a class="reference internal image-reference" href="_images/step.png"><img alt="_images/step.png" class="align-center" src="_images/step.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="_images/step.png"><img alt="_images/step.png" class="align-center" src="_images/step.png" style="width: 500px;" />
+</a>
 <p>Now, click the target button <a class="reference internal" href="_images/jump_button.png"><img alt="target-button" src="_images/jump_button.png" style="width: 25px;" /></a> on the first command to ‘jump’ back to it. Gillian stores the full trace of execution, so you can jump back and forth, and across branches, as you please.</p>
 <p>With the first command selected, click the <em>Continue</em> button in the standard debugger controls to fully execute the rest of the program. You should see execution complete with no errors, and all unifications succeeding - lucky us!</p>
-<a class="reference internal image-reference" href="_images/unify_badge.png"><img alt="_images/unify_badge.png" class="align-center" src="_images/unify_badge.png" style="width: 300px;" /></a>
+<a class="reference internal image-reference" href="_images/unify_badge.png"><img alt="_images/unify_badge.png" class="align-center" src="_images/unify_badge.png" style="width: 300px;" />
+</a>
 <p>You’ll know a unification has occurred when a <em>Unify</em> badge appears on the command node. In this case, the function is returning, so Gillian has unified with the post-condition. Let’s take a closer look; when a command with a unification is selected, click the <em>UNIFICATION</em> tab at the top to look into the unification process.</p>
-<a class="reference internal image-reference" href="_images/unify_tab.png"><img alt="_images/unify_tab.png" class="align-center" src="_images/unify_tab.png" style="width: 200px;" /></a>
+<a class="reference internal image-reference" href="_images/unify_tab.png"><img alt="_images/unify_tab.png" class="align-center" src="_images/unify_tab.png" style="width: 200px;" />
+</a>
 <p>In unification, Gillian attempts to match the state against a sequence of assertions (called a unification plan). Click the target button <a class="reference internal" href="_images/jump_button.png"><img alt="target-button" src="_images/jump_button.png" style="width: 25px;" /></a> on one of the assertions to see what’s been learned so far.</p>
-<a class="reference internal image-reference" href="_images/unify_view.png"><img alt="_images/unify_view.png" class="align-center" src="_images/unify_view.png" style="width: 350px;" /></a>
+<a class="reference internal image-reference" href="_images/unify_view.png"><img alt="_images/unify_view.png" class="align-center" src="_images/unify_view.png" style="width: 350px;" />
+</a>
 <p>If unification has failed, the offending assertion will be highligted in red.</p>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
@@ -305,7 +313,7 @@
 </div>
 </section>
 <section id="technical-details">
-<h2>Technical Details<a class="headerlink" href="#technical-details" title="Link to this heading">#</a></h2>
+<h2>Technical Details<a class="headerlink" href="#technical-details" title="Link to this heading">¶</a></h2>
 <p>The Gillian debugger started life as a strict follower of the Debug Adapter Protocol. However, the DAP was designed with concrete execution in mind, thus proving too restrictive for the non-linearity of symbolic execution. However, the exensibility of the DAP, together with the power of VSCode extensions, allowed us to transcend these restrictions with a custom interface (while, unfortunately, sacrificing near free-of-charge cross-IDE support).</p>
 <p>The Gillian debugger’s “stack” consists of:</p>
 <ul class="simple">
@@ -387,8 +395,8 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=e195fc29"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
+</div><script src="_static/documentation_options.js?v=c937f22f"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
