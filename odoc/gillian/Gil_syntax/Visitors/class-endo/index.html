@@ -67,6 +67,12 @@
       <span><span><span>(string * <span><a href="../../Type/index.html#type-t">Type.t</a> option</span>)</span> list</span> <span class="arrow">&#45;&gt;</span></span>
       <span><a href="../../Expr/index.html#type-t">Expr.t</a> <span class="arrow">&#45;&gt;</span></span>
       <a href="../../Expr/index.html#type-t">Expr.t</a>
+    ; visit_EForall : 
+      <span><span class="type-var">'c</span> <span class="arrow">&#45;&gt;</span></span>
+      <span><a href="../../Expr/index.html#type-t">Expr.t</a> <span class="arrow">&#45;&gt;</span></span>
+      <span><span><span>(string * <span><a href="../../Type/index.html#type-t">Type.t</a> option</span>)</span> list</span> <span class="arrow">&#45;&gt;</span></span>
+      <span><a href="../../Expr/index.html#type-t">Expr.t</a> <span class="arrow">&#45;&gt;</span></span>
+      <a href="../../Expr/index.html#type-t">Expr.t</a>
     ; visit_Emp : <span><span class="type-var">'c</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="../../Asrt/index.html#type-t">Asrt.t</a> <span class="arrow">&#45;&gt;</span></span> <a href="../../Asrt/index.html#type-t">Asrt.t</a>
     ; visit_Empty : <span><span class="type-var">'c</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="../../Literal/index.html#type-t">Literal.t</a> <span class="arrow">&#45;&gt;</span></span> <a href="../../Literal/index.html#type-t">Literal.t</a>
     ; visit_EmptyType : <span><span class="type-var">'c</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="../../Type/index.html#type-t">Type.t</a> <span class="arrow">&#45;&gt;</span></span> <a href="../../Type/index.html#type-t">Type.t</a>
@@ -297,6 +303,10 @@
   <span><span><a href="../../Expr/index.html#type-t">Expr.t</a> list</span> <span class="arrow">&#45;&gt;</span></span>
   <span><span><span class="type-var">'f</span> option</span> <span class="arrow">&#45;&gt;</span></span>
   <span><span class="type-var">'f</span> <a href="../../Cmd/index.html#type-t">Cmd.t</a></span></span></code></div></div><div class="odoc-spec"><div class="spec method anchored" id="method-visit_EList"><a href="#method-visit_EList" class="anchor"></a><code><span><span class="keyword">method</span> visit_EList : <span><span class="type-var">'c</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="../../Expr/index.html#type-t">Expr.t</a> <span class="arrow">&#45;&gt;</span></span> <span><span><a href="../../Expr/index.html#type-t">Expr.t</a> list</span> <span class="arrow">&#45;&gt;</span></span> <a href="../../Expr/index.html#type-t">Expr.t</a></span></code></div></div><div class="odoc-spec"><div class="spec method anchored" id="method-visit_ESet"><a href="#method-visit_ESet" class="anchor"></a><code><span><span class="keyword">method</span> visit_ESet : <span><span class="type-var">'c</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="../../Expr/index.html#type-t">Expr.t</a> <span class="arrow">&#45;&gt;</span></span> <span><span><a href="../../Expr/index.html#type-t">Expr.t</a> list</span> <span class="arrow">&#45;&gt;</span></span> <a href="../../Expr/index.html#type-t">Expr.t</a></span></code></div></div><div class="odoc-spec"><div class="spec method anchored" id="method-visit_Exists"><a href="#method-visit_Exists" class="anchor"></a><code><span><span class="keyword">method</span> visit_Exists : <span><span class="type-var">'c</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><a href="../../Expr/index.html#type-t">Expr.t</a> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><span>(string * <span><a href="../../Type/index.html#type-t">Type.t</a> option</span>)</span> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><a href="../../Expr/index.html#type-t">Expr.t</a> <span class="arrow">&#45;&gt;</span></span>
+  <a href="../../Expr/index.html#type-t">Expr.t</a></span></code></div></div><div class="odoc-spec"><div class="spec method anchored" id="method-visit_EForall"><a href="#method-visit_EForall" class="anchor"></a><code><span><span class="keyword">method</span> visit_EForall : <span><span class="type-var">'c</span> <span class="arrow">&#45;&gt;</span></span>
   <span><a href="../../Expr/index.html#type-t">Expr.t</a> <span class="arrow">&#45;&gt;</span></span>
   <span><span><span>(string * <span><a href="../../Type/index.html#type-t">Type.t</a> option</span>)</span> list</span> <span class="arrow">&#45;&gt;</span></span>
   <span><a href="../../Expr/index.html#type-t">Expr.t</a> <span class="arrow">&#45;&gt;</span></span>
