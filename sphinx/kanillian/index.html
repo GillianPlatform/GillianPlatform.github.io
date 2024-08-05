@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Symbolic Testing" href="symbolic-testing.html" /><link rel="prev" title="Gillian-C" href="index.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Publications" href="../publications/index.html" /><link rel="prev" title="Symbolic Testing" href="../js/symbolic-testing.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.4.7 and Furo 2024.07.18 -->
-        <title>Folder Structure - Gillian master (cff2c70 ) (2024/08/05 16:56) documentation</title>
+        <title>Kanillian (New Gillian-C) - Gillian master (cff2c70 ) (2024/08/05 16:56) documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d8449d71" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=613ab9ff" />
     <link rel="stylesheet" type="text/css" href="../_static/css/fixes.css?v=93dd3e4f" />
@@ -218,9 +218,9 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Instantiations</span></p>
 <ul class="current">
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Gillian-C</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Gillian-C</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Folder Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="symbolic-testing.html">Symbolic Testing</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../c/index.html">Gillian-C</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Gillian-C</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../c/folder-structure.html">Folder Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c/symbolic-testing.html">Symbolic Testing</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../js/index.html">Gillian-JS</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Gillian-JS</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -229,7 +229,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../js/symbolic-testing.html">Symbolic Testing</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../kanillian/index.html">Kanillian (New Gillian-C)</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Kanillian (New Gillian-C)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About Gillian</span></p>
 <ul>
@@ -265,7 +265,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../_sources/c/folder-structure.rst.txt" title="View this page">
+  <a class="muted-link" href="../_sources/kanillian/index.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -285,38 +285,18 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="folder-structure">
-<h1>Folder Structure<a class="headerlink" href="#folder-structure" title="Link to this heading">¶</a></h1>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Folders marked with (❌PLDI20) are out of scope of the PLDI 2020 Gillian Paper.</p>
+          <section id="kanillian-new-gillian-c">
+<h1>Kanillian (New Gillian-C)<a class="headerlink" href="#kanillian-new-gillian-c" title="Link to this heading">¶</a></h1>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>Kanillian is currently in development and unstable.</p>
 </div>
-<ul class="simple">
-<li><p><strong>Gillian-C</strong></p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">bin</span></code>: The Gillian-C binary</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">environment</span></code>: Execution environment, not part of the repository, created using <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">c-init-env</span></code>. It contains useful scripts for testing Gillian-C, and examples are copied in it so that they can be safely modified.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">examples</span></code>: Various examples</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">concrete</span></code>: Small data-structure examples for concrete execution</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">symbolic</span></code>: Small data-structure examples for symbolic testing</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">klee</span></code>: Same small data-structure examples - as in <code class="docutils literal notranslate"><span class="pre">symbolic</span></code> - but written for use with Klee</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">verification</span></code>: Small data-structure examples for verification mode (❌PLDI20)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">act</span></code>: Small data-structure examples for Automatic Compositional Testing mode (❌PLDI20)</p></li>
-</ul>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">lib</span></code>: The core of Gillian-C</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gilgen.ml/mli</span></code>: Compiler from C to GIL</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gil_logic_gen.ml</span></code>, <code class="docutils literal notranslate"><span class="pre">annot_lexer.mll</span></code>, <code class="docutils literal notranslate"><span class="pre">annot_parser.mly</span></code>, <code class="docutils literal notranslate"><span class="pre">cLogic.ml</span></code>: Utils for handling a small annotation language for C (❌PLDI20)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">valueTranslation.ml/mli</span></code>: Serialisation and deserialisation of CompCert values into GIL values</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">semantics.ml/mli</span></code>: Symbolic Memory model and Concrete memory model</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cRunner.ml</span></code>, <code class="docutils literal notranslate"><span class="pre">sRunner.ml</span></code>: Configuration for the symbolic and concrete bulk testers (<code class="docutils literal notranslate"><span class="pre">gillian-c</span> <span class="pre">bulk-wpst</span></code> and <code class="docutils literal notranslate"><span class="pre">gillian-c</span> <span class="pre">bulk-exec</span></code>)</p></li>
-<li><p>Other files: Utils such as name generators or configuration flags</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">runtime</span></code>: Implementation of the internals and part of the C standard lib in GIL</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">scripts</span></code>: Various scripts for setting up the environment and executing analyses</p></li>
-</ul>
-</li>
-</ul>
+<p>Kanillian is a new instantiation of Gillian to the C language (or more precisely, CBMC’s <a class="reference external" href="https://diffblue.github.io/cbmc/group__goto-programs.html">GOTO-C</a>). It can be found in the <code class="docutils literal notranslate"><span class="pre">kanillian</span></code> folder of the repository.</p>
+<p>Kanillian requires CBMC to be present on your path.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Kanillian is currently built to work with CBMC version 5.14.3 - newer versions are known to cause problems.</p>
+</div>
 </section>
 
         </article>
@@ -324,23 +304,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="symbolic-testing.html">
+          <a class="next-page" href="../publications/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Symbolic Testing</div>
+                <div class="title">Publications</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="index.html">
+          <a class="prev-page" href="../js/symbolic-testing.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Gillian-C</div>
+                <div class="title">Symbolic Testing</div>
                 
               </div>
             </a>
