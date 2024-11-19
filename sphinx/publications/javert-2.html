@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Gillian, Part I" href="gillian-part-1.html" /><link rel="prev" title="JaVerT" href="javert.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Cosette" href="cosette.html" /><link rel="prev" title="Gillian, Part I" href="gillian-part-1.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>JaVerT 2.0 - Gillian documentation</title>
+        <title>JaVerT 2.0 - Gillian</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d8449d71" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/css/fixes.css?v=93dd3e4f" />
@@ -174,7 +174,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">Gillian documentation</div></a>
+      <a href="../index.html"><div class="brand">Gillian</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -233,11 +233,14 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference external" href="/odoc#http://">API reference</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Publications</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Publications</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cse1.html">Compositional Symbolic Execution, Part I</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp.html">Matching Plans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugger.html">Symbolic Debugging with Gillian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gillian-part-2.html">Gillian, Part II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gillian-part-1.html">Gillian, Part I</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">JaVerT 2.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cosette.html">Cosette</a></li>
 <li class="toctree-l2"><a class="reference internal" href="javert.html">JaVerT</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">JaVerT 2.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gillian-part-1.html">Gillian, Part I</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gillian-part-2.html">Gillian, Part II</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">Copyright and License</a></li>
@@ -289,22 +292,24 @@
 <p>José Fragoso Santos
 Petar Maksimović
 Gabriela Sampaio
-Philippa Gardner
-Abstract
-We propose a novel, unified approach to the development of compositional symbolic execution tools, bridging the gap between classical symbolic execution and compositional program reasoning based on separation logic. Using this approach, we build JaVerT 2.0, a symbolic analysis tool for JavaScript that follows the language semantics without simplifications. JaVerT 2.0 supports whole-program symbolic testing, verification, and, for the first time, automatic compositional testing based on bi-abduction. The meta-theory underpinning JaVerT 2.0 is developed modularly, streamlining the proofs and informing the implementation. Our explicit treatment of symbolic execution errors allows us to give meaningful feedback to the developer during wholeprogram symbolic testing and guides the inference of resource of the bi-abductive execution. We evaluate the performance of JaVerT 2.0 on a number of JavaScript data-structure libraries, demonstrating: the scalability of our whole-program symbolic testing; an improvement over the state-of-the-art in JavaScript verification; and the feasibility of automatic compositional testing for JavaScript.</p>
+Philippa Gardner</p>
+</section>
+<section id="abstract">
+<h2>Abstract<a class="headerlink" href="#abstract" title="Link to this heading">¶</a></h2>
+<p>We propose a novel, unified approach to the development of compositional symbolic execution tools, bridging the gap between classical symbolic execution and compositional program reasoning based on separation logic. Using this approach, we build JaVerT 2.0, a symbolic analysis tool for JavaScript that follows the language semantics without simplifications. JaVerT 2.0 supports whole-program symbolic testing, verification, and, for the first time, automatic compositional testing based on bi-abduction. The meta-theory underpinning JaVerT 2.0 is developed modularly, streamlining the proofs and informing the implementation. Our explicit treatment of symbolic execution errors allows us to give meaningful feedback to the developer during wholeprogram symbolic testing and guides the inference of resource of the bi-abductive execution. We evaluate the performance of JaVerT 2.0 on a number of JavaScript data-structure libraries, demonstrating: the scalability of our whole-program symbolic testing; an improvement over the state-of-the-art in JavaScript verification; and the feasibility of automatic compositional testing for JavaScript.</p>
 </section>
 <section id="venue">
 <h2>Venue<a class="headerlink" href="#venue" title="Link to this heading">¶</a></h2>
-<p>PACMPL 3 (POPL)</p>
+<p>Symposium on Principles of Programming Languages (POPL)</p>
 </section>
-<section id="publication-date">
-<h2>Publication Date<a class="headerlink" href="#publication-date" title="Link to this heading">¶</a></h2>
+<section id="year">
+<h2>Year<a class="headerlink" href="#year" title="Link to this heading">¶</a></h2>
 <p>2019</p>
 </section>
-<section id="identifiers">
-<h2>Identifiers<a class="headerlink" href="#identifiers" title="Link to this heading">¶</a></h2>
+<section id="doi">
+<h2>DOI<a class="headerlink" href="#doi" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>doi:<a class="reference external" href="https://dl.acm.org/doi/10.1145/3290379">10.1145/3290379</a></p></li>
+<li><p>doi:<a class="reference external" href="https://doi.org/10.1145/3290379">10.1145/3290379</a></p></li>
 </ul>
 </section>
 </section>
@@ -314,23 +319,23 @@ We propose a novel, unified approach to the development of compositional symboli
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="gillian-part-1.html">
+          <a class="next-page" href="cosette.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Gillian, Part I</div>
+                <div class="title">Cosette</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="javert.html">
+          <a class="prev-page" href="gillian-part-1.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">JaVerT</div>
+                <div class="title">Gillian, Part I</div>
                 
               </div>
             </a>
@@ -366,9 +371,10 @@ We propose a novel, unified approach to the development of compositional symboli
             <ul>
 <li><a class="reference internal" href="#">JaVerT 2.0</a><ul>
 <li><a class="reference internal" href="#authors">Authors</a></li>
+<li><a class="reference internal" href="#abstract">Abstract</a></li>
 <li><a class="reference internal" href="#venue">Venue</a></li>
-<li><a class="reference internal" href="#publication-date">Publication Date</a></li>
-<li><a class="reference internal" href="#identifiers">Identifiers</a></li>
+<li><a class="reference internal" href="#year">Year</a></li>
+<li><a class="reference internal" href="#doi">DOI</a></li>
 </ul>
 </li>
 </ul>
@@ -380,7 +386,7 @@ We propose a novel, unified approach to the development of compositional symboli
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=528f4af8"></script>
+</div><script src="../_static/documentation_options.js?v=ada37caf"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
