@@ -339,81 +339,63 @@ $ code gillian-lab
 </section>
 <section id="proof-tactics">
 <h2>Proof tactics<a class="headerlink" href="#proof-tactics" title="Link to this heading">¶</a></h2>
-<div class="line-block">
-<div class="line"><strong>Folding &amp; unfolding predicates</strong></div>
-<div class="line">You can fold a predicate with:</div>
-<div class="line-block">
-<div class="line"><code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">fold</span> <span class="pre">pred_name(param1,</span> <span class="pre">...</span> <span class="pre">paramN)</span> <span class="pre">]]</span></code></div>
+<p><strong>Folding &amp; unfolding predicates.</strong>
+You can fold a predicate with:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[[ fold pred_name(param1, ..., paramN) ]]
+</pre></div>
 </div>
-<div class="line">And similarly unfold a predicate with:</div>
-<div class="line-block">
-<div class="line"><code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">unfold</span> <span class="pre">pred_name(param1,</span> <span class="pre">...</span> <span class="pre">paramN)</span> <span class="pre">]]</span></code></div>
+<p>And similarly unfold a predicate with:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[[ unfold pred_name(param1, ..., paramN) ]]
+</pre></div>
 </div>
+<p><strong>Applying lemmas.</strong>
+A number of lemmas are provided for you; you can apply them like so:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[[ apply lemma_name(param1, ..., paramN) ]]
+</pre></div>
 </div>
-<div class="line-block">
-<div class="line"><strong>Applying lemmas</strong></div>
-<div class="line">A number of lemmas are provided for you; you can apply them like so:</div>
-<div class="line-block">
-<div class="line"><code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">apply</span> <span class="pre">lemma_name(param1,</span> <span class="pre">...</span> <span class="pre">paramN)</span> <span class="pre">]]</span></code></div>
+<p><strong>Logical assertions.</strong>
+You can assert a logical condition with:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[[ assert someCondition ]]
+</pre></div>
 </div>
+<p>Some proofs will require you to use <code class="docutils literal notranslate"><span class="pre">assert</span></code> to bind variables. For example, let's imagine that you need to apply a lemma, and one of the parameters is the value contained in a cell at the address in variable <code class="docutils literal notranslate"><span class="pre">t</span></code>, i.e. your state contains <code class="docutils literal notranslate"><span class="pre">t</span> <span class="pre">-&gt;</span> <span class="pre">?</span></code>, and you want to apply <code class="docutils literal notranslate"><span class="pre">some_lemma(t,</span> <span class="pre">?)</span></code>. The problem is, you do not have any program or logical variable available that contains the right value to use as the second parameter. One solution would be to use a program variable:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>v := [t];
+[[ apply some_lemma(t, v) ]];
+</pre></div>
 </div>
-<div class="line-block">
-<div class="line"><strong>Logical assertions</strong></div>
-<div class="line">You can assert a logical condition with:</div>
-<div class="line-block">
-<div class="line"><code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">assert</span> <span class="pre">someCondition</span> <span class="pre">]]</span></code></div>
+<p>However, modifying the program for the sake of the proof is against the spirit of things! That's when <code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">{bind:</span> <span class="pre">..}</span></code> comes in:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[[ assert {bind: #v} (t -&gt; #v) ]];
+[[ apply some_lemma(t, #v) ]];
+</pre></div>
 </div>
-<div class="line">Some proofs will require you to use <code class="docutils literal notranslate"><span class="pre">assert</span></code> to bind variables. For example, let's imagine that you need to apply a lemma, and one of the parameters is the value contained in a cell at the address in variable <code class="docutils literal notranslate"><span class="pre">t</span></code>, i.e. your state contains <code class="docutils literal notranslate"><span class="pre">t</span> <span class="pre">-&gt;</span> <span class="pre">?</span></code>, and you want to apply <code class="docutils literal notranslate"><span class="pre">some_lemma(t,</span> <span class="pre">?)</span></code>. The problem is, you do not have any program or logical variable available that contains the right value to use as the second parameter. One solution would be to use a program variable:</div>
-<div class="line-block">
-<div class="line"><code class="docutils literal notranslate"><span class="pre">v</span> <span class="pre">:=</span> <span class="pre">[t];</span></code></div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">apply</span> <span class="pre">some_lemma(t,</span> <span class="pre">v)</span> <span class="pre">]];</span></code></div>
+<p><strong>Conditionally applying tactics.</strong>
+You can use if/else in a logical context, like so:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[[ if (condition) { ... } { ... } ]]
+</pre></div>
 </div>
-<div class="line">However, modifying the program for the sake of the proof is against the spirit of things! That's when <code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">{bind:</span> <span class="pre">..}</span></code> comes in:</div>
-<div class="line-block">
-<div class="line"><code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">assert</span> <span class="pre">{bind:</span> <span class="pre">#v}</span> <span class="pre">(t</span> <span class="pre">-&gt;</span> <span class="pre">#v)</span> <span class="pre">]];</span></code></div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">apply</span> <span class="pre">some_lemma(t,</span> <span class="pre">#v)</span> <span class="pre">]];</span></code></div>
-</div>
-</div>
-<div class="line-block">
-<div class="line"><strong>Conditionally applying tactics</strong></div>
-<div class="line">You can use if/else in a logical context, like so:</div>
-<div class="line-block">
-<div class="line"><code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">if</span> <span class="pre">(condition)</span> <span class="pre">{</span> <span class="pre">..</span> <span class="pre">}</span> <span class="pre">{</span> <span class="pre">..</span> <span class="pre">}</span> <span class="pre">]]</span></code></div>
-</div>
-</div>
-<div class="line-block">
-<div class="line"><strong>Loop invariants</strong></div>
-<div class="line">Loop invariants are provided for you where necessary. They are declared like so:</div>
-<div class="line-block">
-<div class="line"><code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">invariant</span> <span class="pre">{bind:</span> <span class="pre">#x,</span> <span class="pre">#y}</span> <span class="pre">P(#x,</span> <span class="pre">#y)</span> <span class="pre">]]</span></code></div>
-</div>
+<p><strong>Loop invariants.</strong>
+Loop invariants are provided for you where necessary. They are declared like so:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[[ invariant {bind: #x, #y} P(#x, #y) ]]
+</pre></div>
 </div>
 </section>
 <section id="common-issues">
 <h2>Common issues<a class="headerlink" href="#common-issues" title="Link to this heading">¶</a></h2>
-<section id="syntax">
-<h3>Syntax<a class="headerlink" href="#syntax" title="Link to this heading">¶</a></h3>
-<p>The while language syntax can be a bit tricky:</p>
+<p><strong>Syntax.</strong>
+The while language syntax can be a bit tricky:</p>
 <ul class="simple">
 <li><p>Put everything in parentheses! Operator precedence may be unpredictable.</p></li>
 <li><p>There is a semi-colon <em>between</em> each command inside a block, but <em>not at the end</em> (e.g. the last statement in an if-else block).</p></li>
 <li><p>Logical commands are surrounded by <code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">..</span> <span class="pre">]]</span></code>.</p></li>
 </ul>
-</section>
-<section id="automatic-unfolding-in-preconditions">
-<h3>Automatic unfolding in preconditions<a class="headerlink" href="#automatic-unfolding-in-preconditions" title="Link to this heading">¶</a></h3>
-<p>Even in manual mode, Gillian will automatically unfold any predicate in the precondition of a function if it is not recursive.</p>
+<p><strong>Automatic unfolding in preconditions.</strong>
+Even in manual mode, Gillian will automatically unfold any predicate in the precondition of a function if it is not recursive.</p>
 <p>In particular, the <code class="docutils literal notranslate"><span class="pre">dlist</span></code> predicate gets unfolded into its <code class="docutils literal notranslate"><span class="pre">dlseg</span></code> definition automatically.</p>
-</section>
-<section id="folding-a-list-with-one-element">
-<h3>Folding a list with one element<a class="headerlink" href="#folding-a-list-with-one-element" title="Link to this heading">¶</a></h3>
-<div class="line-block">
-<div class="line">You may be having trouble trying to fold <code class="docutils literal notranslate"><span class="pre">SLL</span></code> with a single value, i.e. <code class="docutils literal notranslate"><span class="pre">SLL(x,</span> <span class="pre">[v])</span></code>. This can go wrong because Gillian can't find the base case, <code class="docutils literal notranslate"><span class="pre">SLL(null,</span> <span class="pre">[])</span></code>. Since the base case doesn't require any resources from your state, you're free to fold it from nothing, like so:</div>
-<div class="line-block">
-<div class="line"><code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">fold</span> <span class="pre">SLL(null,</span> <span class="pre">[])</span> <span class="pre">]];</span></code></div>
+<p><strong>Folding a list with one element.</strong>
+You may be having trouble trying to fold <code class="docutils literal notranslate"><span class="pre">SLL</span></code> with a single value, i.e. <code class="docutils literal notranslate"><span class="pre">SLL(x,</span> <span class="pre">[v])</span></code>. This can go wrong because Gillian can't find the base case, <code class="docutils literal notranslate"><span class="pre">SLL(null,</span> <span class="pre">[])</span></code>. Since the base case doesn't require any resources from your state, you're free to fold it from nothing, like so:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[[ fold SLL(null, []) ]];
+</pre></div>
 </div>
-</div>
-</section>
 </section>
 </section>
 
@@ -475,12 +457,7 @@ $ code gillian-lab
 <li><a class="reference internal" href="#">Initial Lab</a><ul>
 <li><a class="reference internal" href="#getting-started">Getting started</a></li>
 <li><a class="reference internal" href="#proof-tactics">Proof tactics</a></li>
-<li><a class="reference internal" href="#common-issues">Common issues</a><ul>
-<li><a class="reference internal" href="#syntax">Syntax</a></li>
-<li><a class="reference internal" href="#automatic-unfolding-in-preconditions">Automatic unfolding in preconditions</a></li>
-<li><a class="reference internal" href="#folding-a-list-with-one-element">Folding a list with one element</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#common-issues">Common issues</a></li>
 </ul>
 </li>
 </ul>
@@ -492,7 +469,7 @@ $ code gillian-lab
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=d929fda7"></script>
+</div><script src="../_static/documentation_options.js?v=fa411d09"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
