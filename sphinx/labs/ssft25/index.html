@@ -311,43 +311,73 @@
 </div>
 <p>Welcome to the Gillian lab at SSFT 2025!</p>
 <p>This lab take the Separation Logic and Compositional Symbolic Execution theory you've seen in the lectures, and recontextualise it with a semi-automatic verification tool built with Gillian.</p>
-<section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<div class="admonition-installation-instructions admonition">
+<p class="admonition-title"><strong>Installation instructions</strong></p>
 <p>See <a class="reference internal" href="install.html"><span class="doc">here</span></a> for installation instructions.</p>
 <p>We recommend you follow these ahead of time, as installing the Gillian container can take a while.</p>
-</section>
-<section id="general-notes">
-<h2>General notes<a class="headerlink" href="#general-notes" title="Link to this heading">¶</a></h2>
+</div>
+<section id="lecture-1-compositional-software-verification">
+<h2>Lecture 1: Compositional Software Verification<a class="headerlink" href="#lecture-1-compositional-software-verification" title="Link to this heading">¶</a></h2>
+<p>This lecture covers:</p>
 <ul class="simple">
-<li><p>If you get a <code class="code docutils literal notranslate"><span class="pre">SIGPIPE</span></code> or <code class="code docutils literal notranslate"><span class="pre">&quot;Broken</span> <span class="pre">pipe&quot;</span></code> error, try making a small change to your code and trying again.</p></li>
-<li><p>If Gillian seems stuck or unresponsive, try opening the Command Palette with (<code class="code docutils literal notranslate"><span class="pre">F1</span></code> or <code class="code docutils literal notranslate"><span class="pre">Ctrl+Shift+P</span></code> by default) and running the <em>&quot;Reload window&quot;</em> command</p></li>
+<li><p>Separation logic</p></li>
+<li><p>Specification and verification of sequential programs for mutating data structures</p></li>
+<li><p>Tools inspired by separation logic, based on compositional symbolic execution</p></li>
 </ul>
+<p><em>Slides coming soon...</em></p>
 </section>
-<section id="session-1">
-<h2>Session 1<a class="headerlink" href="#session-1" title="Link to this heading">¶</a></h2>
-<p>This session focuses on introductory exercises to familiarise yourself with Gillian and its Compositional Symbolic Execution -based verification.</p>
-<p>These exercises consist of singly-linked-list algorithms that aim to demonstrate:</p>
+<section id="lab-session-1-an-introduction-to-gillian">
+<h2>Lab Session 1: An introduction to Gillian<a class="headerlink" href="#lab-session-1-an-introduction-to-gillian" title="Link to this heading">¶</a></h2>
+<p>These exercises are in the <code class="docutils literal notranslate"><span class="pre">lab1</span></code> directory of the lab repository. They include list algorithms to demonstrate:</p>
 <ul class="simple">
 <li><p>Folding and unfolding predicates</p></li>
-<li><p>Compositinally calling functions</p></li>
 <li><p>Applying proof tactics and lemmas</p></li>
+<li><p>Calling functions compositionally</p></li>
 <li><p>Loop invariants</p></li>
-<li><p>Strengthening specifications</p></li>
 </ul>
-<p>These exercises are in the <code class="code docutils literal notranslate"><span class="pre">lab1</span></code> directory of the lab repository.</p>
-<p>If you have time left over, try your hand at exercises A-D from <code class="code docutils literal notranslate"><span class="pre">lab2</span></code>.</p>
+<p>If you have time, check out exercises A-D from the <code class="docutils literal notranslate"><span class="pre">lab2</span></code> directory for some examples with different data structures.</p>
 </section>
-<section id="session-2">
-<h2>Session 2<a class="headerlink" href="#session-2" title="Link to this heading">¶</a></h2>
-<p>The second session will apply what you've learned in session 1 to some more complicated exercises.</p>
-<p>This includes:</p>
+<section id="lecture-2-compositional-symbolic-execution">
+<h2>Lecture 2: Compositional Symbolic Execution<a class="headerlink" href="#lecture-2-compositional-symbolic-execution" title="Link to this heading">¶</a></h2>
+<p>This lecture covers:</p>
 <ul class="simple">
-<li><p>Verifying algorithms on different data structures, including sets, doubly-linked lists, and binary search trees</p></li>
-<li><p>Writing a complex predicate for a well-bracketed property</p></li>
-<li><p>Verifying algorithms ported from the real-world <a class="reference external" href="https://github.com/srdja/Collections-C">Collections-C</a> library.</p></li>
-<li><p>A harder verification for a loop invariant</p></li>
+<li><dl class="simple">
+<dt>Theoretical foundations - Compositional Symbolic Execution (CSE) and bi-abduction</dt><dd><ul>
+<li><p>CSE for a simple C-like state</p></li>
+<li><p>State-parametric CSE</p></li>
+<li><p>Functional compositionality</p></li>
 </ul>
-<p>These exercises are in the <code class="code docutils literal notranslate"><span class="pre">lab2</span></code> directory of the lab repository.</p>
+</dd>
+</dl>
+</li>
+<li><p>State combinators for CSE</p></li>
+</ul>
+<p><em>Slides coming soon...</em></p>
+</section>
+<section id="lab-session-2-further-experience-with-gillian">
+<h2>Lab session 2: Further experience with Gillian<a class="headerlink" href="#lab-session-2-further-experience-with-gillian" title="Link to this heading">¶</a></h2>
+<p>These exercises are in the <code class="docutils literal notranslate"><span class="pre">lab1</span></code> directory of the lab repository. They include:</p>
+<ul class="simple">
+<li><p>Some fun, harder examples of data-structure algorithms</p></li>
+<li><p>List algorithms ported from the real-world <a class="reference external" href="https://github.com/srdja/Collections-C">Collections-C library</a></p></li>
+<li><p>A much harder iterative list algorithm</p></li>
+</ul>
+<p>Feel free to tackle these in any order, and refer back to the Lab 1 exercises if you need a refresher.</p>
+</section>
+<section id="misc-lab-notes">
+<h2>Misc. lab notes<a class="headerlink" href="#misc-lab-notes" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>The language server highlights compilation errors (and other unexpect problems) in red, and verification falures in blue.</p></li>
+<li><p>The debugger supports breakpoints! This can be handy when restarting the debugger after making changes to your code; assign breakpoints to the relevant lines and click the <em>Continue</em> button <a class="reference internal" href="../../_images/continue_button.png"><img alt="continue_button" src="../../_images/continue_button.png" style="height: 1.2em;" /></a>.</p></li>
+<li><dl class="simple">
+<dt>If you get a <code class="code docutils literal notranslate"><span class="pre">SIGPIPE</span></code> or <code class="code docutils literal notranslate"><span class="pre">&quot;Broken</span> <span class="pre">pipe&quot;</span></code> error, try making a small change to your code and trying again.</dt><dd><ul>
+<li><p><em>Note from Nat: I have *absolutely no idea* why this happens. Even with a repro, it disappears if I try to track it down 🙃</em></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>If Gillian seems stuck or unresponsive, try opening the Command Palette with (<code class="code docutils literal notranslate"><span class="pre">F1</span></code> or <code class="code docutils literal notranslate"><span class="pre">Ctrl+Shift+P</span></code> by default) and running the <em>&quot;Reload window&quot;</em> command.</p></li>
+</ul>
 </section>
 </section>
 
@@ -407,10 +437,11 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">SSFT 2025</a><ul>
-<li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#general-notes">General notes</a></li>
-<li><a class="reference internal" href="#session-1">Session 1</a></li>
-<li><a class="reference internal" href="#session-2">Session 2</a></li>
+<li><a class="reference internal" href="#lecture-1-compositional-software-verification">Lecture 1: Compositional Software Verification</a></li>
+<li><a class="reference internal" href="#lab-session-1-an-introduction-to-gillian">Lab Session 1: An introduction to Gillian</a></li>
+<li><a class="reference internal" href="#lecture-2-compositional-symbolic-execution">Lecture 2: Compositional Symbolic Execution</a></li>
+<li><a class="reference internal" href="#lab-session-2-further-experience-with-gillian">Lab session 2: Further experience with Gillian</a></li>
+<li><a class="reference internal" href="#misc-lab-notes">Misc. lab notes</a></li>
 </ul>
 </li>
 </ul>
@@ -422,7 +453,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=559233da"></script>
+</div><script src="../../_static/documentation_options.js?v=3ec2a596"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
