@@ -4,22 +4,21 @@ layout: home
 
 hero:
   name: "The Gillian Project"
-  text: "Documentation for the Gillian verification platform"
-  tagline: My great project tagline
+  tagline: Documentation for the Gillian verification platform
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: What is Gillian?
+      link: /intro
     - theme: alt
-      text: API Examples
-      link: /api-examples
-
-features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
----
+      text: Instantiations
+      link: /instantiations/
+    - theme: alt
+      text: Labs & tutorials
+      link: /labs/
+    - theme: alt
+      text: Publications
+      link: /publications/
+    - theme: alt
+      text: GitHub
+      link: "https://github.com/GillianPlatform/Gillian"
 

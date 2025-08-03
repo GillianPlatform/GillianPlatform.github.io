@@ -9,3 +9,5 @@
 - [(2019) JaVerT 2.0](./javert2)
 - [(2018) Cosette](./cosette)
 - [(2018) JaVerT](./javert)
+
+[Other Gillian-related publications](/other-publications)

@@ -16,12 +16,13 @@ export default defineConfig({
 
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'Guide', link: '/intro' },
     ],
 
     sidebar: [
       {
         items: [
+          { text: 'Introduction', link: '/intro' },
           { text: 'Installing for Development', link: '/dev-install' },
           { text: 'Developing Gillian', link: '/develop'},
           {
@@ -36,6 +37,8 @@ export default defineConfig({
       },
       {
         text: 'Instantiations',
+        link: '/instantiations/',
+        collapsed: false,
         items: [
           { text: 'WISL', link: '/instantiations/wisl' },
           {
