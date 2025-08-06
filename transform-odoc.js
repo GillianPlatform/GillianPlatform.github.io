@@ -1,3 +1,8 @@
+/* 
+ * This is an incredibly bodgy script that takes odoc's HTML-fragment JSON
+ * output and munges it into a form that Vitepress will accept.
+ */
+
 const fs = require("fs");
 const path = require("path");
 
@@ -15,27 +20,51 @@ function traverseDirectory(baseSourceDir, ext, f, acc) {
 }
 
 const codeTagPattern = /<code(?:\s.*?)?>(.*)<\/code>/g;
-const tagPattern = /<\/?.+?>/g
+const tagPattern = /<\/?.+?>/g;
+/*
+ * Transforms the content of a heading, where:
+ * - <code> tags are converted to backticks for code formatting
+ * - All other HTML tags are stripped out
+ */
 const transformHeaderContent = content =>
   content
     .replace(codeTagPattern, (_, c) => '`' + c + '`')
     .replace(tagPattern, '');
 
+/*
+ * Transforms a HTML header (e.g. <h1>...</h1>) into nice markdown.
+ * - Odoc allows empty headings, so we use a zero-width space to maintain it in
+ *   that case
+ * - If the heading has an ID, it is maintained using the {#some-id} syntax
+ */
 const transformHeader = (old, level, content, id) => {
   const newContent = transformHeaderContent(content) || '&ZeroWidthSpace;';
   const pre = '#'.repeat(parseInt(level));
   const anchor = id ? ` {#${id}}` : '';
   return `\n\n${pre} ${newContent}${anchor}\n\n`;
-}
+};
 
 const hIdPattern = /<h(\d).+?id="(.*?)".*?>(.*?)<\/h\1>/g;
 const hPattern = /<h(\d)>(.*?)<\/h\1>/g;
+/*
+ * A wrapper for transformHeader() that handles the case where the heading does
+ * or does not have an id property.
+ */
 const transformH = content =>
   content
     .replace(hIdPattern, (pre, n, id, c) => transformHeader(pre, n, c, id))
     .replace(hPattern, (pre, n, c) => transformHeader(pre, n, c));
 
 const specialMdCharsPattern = /[\(\)*\[\\\]`_{}]/g;
+/*
+ * Escapes a whole bunch of things in "plain-text" content i.e. not part of an
+ * HTML tag
+ * - Various Markdown-related characters are coverted to the relevant HTML
+ *   escape sequence; Vite fails otherwise
+ * - Odoc intentionally uses whitespace (specifically, newlines and leading
+ *   whitespace), but Vitepress clobbers it; to counter this, newlines get a
+ *   <br/> and leading spaces are convert to &nbsp;
+ */
 const charSubst = {
   "(": "&#40;",
   ")": "&#41;",
@@ -55,8 +84,11 @@ const transformBetweenTags = content =>
     .replace(newlinePattern, (_, s) =>
       "\n<br>" + "&nbsp;".repeat(s.length));
 
-const betweenTagsPattern = /(>)(.*?)(<)/gs
+const betweenTagsPattern = /(>)(.*?)(<)/gs;
 const emptyLinePattern = /\n\s*\n/g;
+/*
+ * Delegates transformations for non-heading HTML
+ */
 const transformHtml = content => {
   content = content
     .replace(emptyLinePattern, "\n&ZeroWidthSpace;\n")
@@ -67,13 +99,21 @@ const transformHtml = content => {
   return content;
 };
 
-const hEndPattern = /<\/h\d>$/
+const hEndPattern = /<\/h\d>$/;
+/*
+ * Transforms based on whether the "section" is a heading or not
+ */
 const transformSection = section =>
   section.match(hEndPattern) ?
     transformH(section) :
-    transformHtml(section)
+    transformHtml(section);
 
-const hSepPattern = /\s*(?=<h\d)|(?<=<\/h\d>)\s*/g
+const hSepPattern = /\s*(?=<h\d)|(?<=<\/h\d>)\s*/g;
+/*
+ * Because of how we escape things, we need to treat headings differently from
+ * everything else; here, we split headings from non-headings and transform
+ * them accordingly.
+ */
 const transformContent = content =>
   content
     .split(hSepPattern)
@@ -86,6 +126,11 @@ const makeBreadcrumb = ({ name, href }) => {
 };
 
 const breadcrumbSep = " » ";
+/*
+ * Renders the breadcrumb information provided by odoc to HTML.
+ * Currently we're only generating the "gillian" docs, so we skip the first
+ * breadcrumb odoc makes for the top-level index.
+ */
 const makeBreadcrumbs = breadcrumbs => {
   breadcrumbs = breadcrumbs.slice(1);
   if (breadcrumbs.length <= 1)
@@ -106,8 +151,8 @@ function transformFile(sourceDir, baseTargetDir, ext, filename, pathParts) {
 
   const targetFile = filename.slice(0, -ext.length) + '.md';
   const targetPath = path.join(targetDir, targetFile);
-  const breadcrumbs_ = makeBreadcrumbs(breadcrumbs)
-  const targetContent = transformContent(makeBreadcrumbs(breadcrumbs) + header + content);
+  const breadcrumbsHtml = makeBreadcrumbs(breadcrumbs);
+  const targetContent = transformContent(breadcrumbsHtml + header + content);
 
   fs.writeFileSync(targetPath, targetContent);
 }
