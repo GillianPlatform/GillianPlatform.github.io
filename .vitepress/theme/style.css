@@ -2,3 +2,63 @@
   --vp-nav-logo-height: 36px;
 }
 
+.odoc-breadcrumbs {
+  margin-bottom: 24px;
+  opacity: 0.75;
+}
+
+.odoc-breadcrumbs:hover {
+  opacity: 1;
+}
+
+.odoc-spec {
+  margin: 24px 0;
+  border-radius: 4px;
+  overflow: clip;
+  border: 1px solid var(--vp-code-bg);
+}
+
+.odoc-spec code {
+  padding: 0 !important;
+  background: none !important;
+  white-space: pre-wrap;
+}
+
+.odoc-spec .spec {
+  font-family: var(--vp-font-family-mono);
+  padding: 3px 6px;
+  background-color: var(--vp-code-bg);
+}
+
+.odoc-spec .spec > ol {
+  margin: 0;
+}
+
+.odoc-spec .spec > ol > li {
+  list-style-type: none;
+}
+
+.odoc-spec .def-doc {
+  border-radius: 4px;
+  background-color: var(--vp-c-bg);
+  padding: 3px 6px;
+  margin: 0 30px;
+  font-family: var(--vp-font-family-base);
+}
+
+.odoc-spec .def-doc p {
+  margin: 0;
+}
+
+.odoc-spec .comment-delim {
+  display: none;
+}
+
+.odoc-spec .spec-doc p {
+  margin: 0 8px;
+}
+
+.odoc-include > details > :not(summary) {
+  margin-left: 24px;
+}
+

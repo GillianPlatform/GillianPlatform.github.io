@@ -10,15 +10,13 @@ hero:
       text: What is Gillian?
       link: /intro
     - theme: alt
-      text: Instantiations
-      link: /instantiations/
-    - theme: alt
       text: Labs & tutorials
       link: /labs/
     - theme: alt
-      text: Publications
-      link: /publications/
+      text: API reference
+      link: /api/
     - theme: alt
       text: GitHub
       link: "https://github.com/GillianPlatform/Gillian"
+---
 

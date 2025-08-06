@@ -32,7 +32,8 @@ export default defineConfig({
             items: [
               { text: 'SSFT 2025', link: '/labs/ssft25/' }
             ]
-          }
+          },
+          { text: 'API Reference', link: '/api/' },
         ],
       },
       {
