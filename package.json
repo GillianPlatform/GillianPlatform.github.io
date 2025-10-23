@@ -14,5 +14,8 @@
     "markdown-it-mathjax3": "^4.3.2",
     "vitepress": "^1.6.3",
     "vue": "^3.5.15"
+  },
+  "dependencies": {
+    "@catppuccin/vitepress": "^0.1.2"
   }
 }
