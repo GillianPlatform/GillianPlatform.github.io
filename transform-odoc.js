@@ -6,6 +6,14 @@
 const fs = require("fs");
 const path = require("path");
 
+const rootPreamble = `
+---
+title: API Reference
+order: 5
+---
+`;
+const defaultPreamble = ``;
+
 function traverseDirectory(baseSourceDir, ext, f, acc) {
   const pathAcc = acc || [];
   const sourceDir = path.join(baseSourceDir, ...pathAcc);
@@ -149,12 +157,17 @@ function transformFile(sourceDir, baseTargetDir, ext, filename, pathParts) {
   const targetDir = path.join(baseTargetDir, ...pathParts);
   fs.mkdirSync(targetDir, { recursive: true });
 
-  const targetFile = filename.slice(0, -ext.length) + '.md';
+  const targetBasename = filename.slice(0, -ext.length);
+  const isRootIndex = pathParts.length === 0 && targetBasename === 'index';
+  const targetPreamble = isRootIndex ? rootPreamble : defaultPreamble;
+
+  const targetFile = targetBasename + '.md';
   const targetPath = path.join(targetDir, targetFile);
   const breadcrumbsHtml = makeBreadcrumbs(breadcrumbs);
-  const targetContent = transformContent(breadcrumbsHtml + header + content);
+  const targetContentInner = transformContent(breadcrumbsHtml + header + content);
+  const targetContent = targetPreamble + "\n" + targetContentInner;
 
-  fs.writeFileSync(targetPath, targetContent);
+  fs.writeFileSync(targetPath, targetContent.trim());
 }
 
 function transformAll(sourceDir, targetDir, ext) {

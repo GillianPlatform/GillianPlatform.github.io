@@ -1,3 +1,8 @@
+---
+title: Introduction
+order: 0
+---
+
 # What is Gillian?
 
 **Gillian** is a framework for reasoning about program correctness and incorrectness, based on [Compositional Symbolic Execution](/publications/cse1.md) and inspired by ideas from [Separation Logic](https://en.wikipedia.org/wiki/Separation_logic).

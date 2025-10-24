@@ -1,3 +1,7 @@
+---
+order: 6
+---
+
 # Publications
 
 - [(2025) Gillian-Rust](./rust.md)

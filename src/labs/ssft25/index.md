@@ -2,7 +2,7 @@
 
 Welcome to the Gillian lab at SSFT 2025!
 
-This lab take the Separation Logic and Compositional Symbolic Execution theory you've seen in the lectures, and re-contextualise it with a semi-automatic verification tool built with Gillian.
+This lab takes the Separation Logic and Compositional Symbolic Execution theory you've seen in the lectures, and re-contextualise it with a semi-automatic verification tool built with Gillian.
 
 ## Installation instructions
 Before you start, please install the following:

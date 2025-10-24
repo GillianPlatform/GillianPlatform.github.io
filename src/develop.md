@@ -1,3 +1,7 @@
+---
+order: 2
+---
+
 # Developing Gillian
 
 ## Executing a command in the test environment

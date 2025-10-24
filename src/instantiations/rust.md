@@ -1,3 +1,7 @@
+---
+order: 4
+---
+
 # Gillian-Rust
 
 In ongoing work, we are developing a Gillian instantiation for Rust.

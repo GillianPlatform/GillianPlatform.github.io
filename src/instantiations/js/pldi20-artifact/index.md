@@ -1,3 +1,7 @@
+---
+order: 1
+---
+
 # PLDI 2020 Artifact Documentation
 
 This is the documentation for the Gillian-JS aspect of the ['Gillian, Part I' PLDI 2020 submission](/publications/gillian1/) artifact.

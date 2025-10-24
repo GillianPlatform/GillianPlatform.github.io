@@ -1,4 +1,8 @@
-# Installing for development
+---
+order: 1
+---
+
+# Installing for Development
 
 1. Install prerequisites
    

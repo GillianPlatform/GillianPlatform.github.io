@@ -13,8 +13,8 @@ hero:
       text: Labs & tutorials
       link: /labs/
     - theme: alt
-      text: API reference
-      link: /api/
+      text: Publications
+      link: /publications/
     - theme: alt
       text: GitHub
       link: "https://github.com/GillianPlatform/Gillian"

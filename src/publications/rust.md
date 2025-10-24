@@ -1,5 +1,6 @@
 ---
 title: Gillian-Rust (2025)
+order: 91
 ---
 
 # A Hybrid Approach to Semi-automated Rust Verification
