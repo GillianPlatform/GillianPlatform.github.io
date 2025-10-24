@@ -4,7 +4,8 @@ order: 6
 
 # Publications
 
-- [(2025) Gillian-Rust](./rust.md)
+- [(2025) Compositional Symbolic Execution, Part II](./cse2)
+- [(2025) Gillian-Rust](./rust)
 - [(2024) Matching Plans](./mp)
 - [(2024) Compositional Symbolic Execution, Part I](./cse1)
 - [(2023) Symbolic Debugging with Gillian](./debugging)

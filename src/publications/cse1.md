@@ -6,7 +6,8 @@ order: 93
 # Compositional Symbolic Execution for Correctness and Incorrectness Reasoning
 
 Published at ECOOP 2024 \
-DOI: [10.4230/LIPIcs.ECOOP.2024.25](https://doi.org/10.4230/LIPIcs.ECOOP.2024.25)
+DOI: [10.4230/LIPIcs.ECOOP.2024.25](https://doi.org/10.4230/LIPIcs.ECOOP.2024.25) \
+Artifact: [10.5281/zenodo.11053788](https://doi.org/10.5281/zenodo.11053788)
 
 ## Authors
 - Andreas Lööw
