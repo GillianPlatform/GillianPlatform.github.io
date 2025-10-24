@@ -6,6 +6,16 @@ import { generateSidebar } from 'vitepress-sidebar';
  *  - Customise expanded/collapsed menus 
  *  - 'Re-pack' the top-level items to emphasise particular groups */
 
+const vitepressSidebarOptions = {
+  documentRootPath: '/src',
+  useTitleFromFrontmatter: true,
+  useTitleFromFileHeading: true,
+  useFolderTitleFromIndexFile: true,
+  useFolderLinkFromIndexFile: true,
+  sortMenusByFrontmatterOrder: true,
+  frontmatterOrderDefaultValue: Infinity,
+  collapsed: true,
+};
 const expanded = [ "/labs/", "/instantiations/" ];
 const mainGroups = [ "/instantiations/" ];
 const truncated = [ "/api/" ];
@@ -50,21 +60,9 @@ function repackSidebar(items) {
   return sidebar;
 }
 
-const rawSidebar = generateSidebar({
-  documentRootPath: '/src',
-  useTitleFromFrontmatter: true,
-  useTitleFromFileHeading: true,
-  useFolderTitleFromIndexFile: true,
-  useFolderLinkFromIndexFile: true,
-  sortMenusByFrontmatterOrder: true,
-  frontmatterOrderDefaultValue: Infinity,
-  collapsed: true,
-});
-
+const rawSidebar = generateSidebar(vitepressSidebarOptions);
 transformSidebarItems(rawSidebar, 0);
 const sidebar = repackSidebar(rawSidebar);
-
-console.log(JSON.stringify(sidebar, null, 2));
 export default sidebar;
 
 
