@@ -23,6 +23,9 @@ jobs:
         path: ./.vitepress/dist
   deploy:
     if: github.ref_name == github.event.repository.default_branch
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
