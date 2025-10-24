@@ -6,6 +6,9 @@ export default defineConfig({
   title: 'The Gillian Project',
   description: 'Documentation for the Gillian verification platform',
   srcDir: './src',
+  head: [
+    ['link', { rel: 'icon', href: '/favicon.ico' }],
+  ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: {
