@@ -18,11 +18,6 @@ export default defineConfig({
     },
     siteTitle: false,
 
-    nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Intro', link: '/intro' },
-    ],
-
     sidebar,
 
     socialLinks: [
