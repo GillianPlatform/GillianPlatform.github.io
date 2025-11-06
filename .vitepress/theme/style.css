@@ -1,6 +1,30 @@
 :root {
   --vp-nav-logo-height: 36px;
+  --vp-c-brand-alt-1: #d20f39;
+  --vp-c-brand-alt-2: rgb(187, 13, 51);
+  --vp-c-brand-alt-3: #d20f39;
+
+  --vp-home-hero-name-color: var(--vp-c-brand-alt-1);
 }
+
+.dark {
+  --vp-c-brand-alt-1: #f38ba8;
+  --vp-c-brand-alt-2: rgb(241, 115, 151);
+  --vp-c-brand-alt-3: #f38ba8;
+}
+
+.pager,
+.header-anchor,
+.vp-doc :not(pre, h1, h2, h3, h4, h5, h6) > code,
+.VPSidebar
+{
+  --vp-c-brand-1: var(--vp-c-brand-alt-1);
+  --vp-c-brand-2: var(--vp-c-brand-alt-2);
+  --vp-c-brand-3: var(--vp-c-brand-alt-3);
+}
+
+
+/* ===== API reference ===== */
 
 .odoc-breadcrumbs {
   margin-bottom: 24px;
