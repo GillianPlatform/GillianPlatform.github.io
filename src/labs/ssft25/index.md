@@ -1,4 +1,8 @@
-# SSFT 2025
+# SSFT 2025 @ SRI International
+
+::: info Note
+*This lab took place at the Fourteenth [Summer School on Formal Techniques](https://ssft-sri.github.io) at [SRI International](https://sri.com/) in May 2025.*
+:::
 
 Welcome to the Gillian lab at SSFT 2025!
 
@@ -31,14 +35,12 @@ Once that's done, follow these steps:
 
 ## Lecture 1: Compositional Software Verification
 
+[Main slides](/docs/ssft25-cse.pdf) • [WISL slides](/docs/ssft25-wisl.pdf)
+
 This lecture covers:
 - Separation logic
 - Specification and verification of sequential programs for mutating data structures
 - Tools inspired by separation logic, based on compositional symbolic execution
-
-:download:`Main slides </_static/docs/cse-ssft25-lecture1.pdf>`
-
-:download:`WISL slides </_static/docs/cse-ssft25-wisl.pdf>`
 
 ## Lab Session 1: An introduction to Gillian
 
