@@ -6,7 +6,7 @@ order: 99
 # JaVerT: JavaScript Verification Toolchain
 
 Published at POPL 2018 \
-DOI: [10.1145/3236950.3236956](https://doi.org/10.1145/3236950.3236956)
+DOI: [10.1145/3158138](https://doi.org/10.1145/3158138)
 
 ## Authors
 - José Fragoso Santos
