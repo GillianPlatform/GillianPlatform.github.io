@@ -1,4 +1,4 @@
-import { DefaultTheme, defineConfig } from 'vitepress';
+import { defineConfig } from 'vitepress';
 import sidebar from './sidebar.mts';
 
 // https://vitepress.dev/reference/site-config

@@ -10,7 +10,7 @@ hero:
       text: What is Gillian?
       link: /intro
     - theme: alt
-      text: Labs & tutorials
+      text: Labs, Lectures & Tutorials
       link: /labs/
     - theme: alt
       text: Publications

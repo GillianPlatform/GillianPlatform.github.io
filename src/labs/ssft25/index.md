@@ -5,7 +5,7 @@ order: 99
 # SSFT 2025 @ SRI International
 
 ::: info Note
-*This lab took place at the Fourteenth [Summer School on Formal Techniques](https://ssft-sri.github.io) at [SRI International](https://sri.com/) in May 2025.*
+*This lab took place at the [Fourteenth Summer School on Formal Techniques](https://ssft-sri.github.io/old/2025/) at [SRI International](https://sri.com/) in May 2025.*
 :::
 
 Welcome to the Gillian lab at SSFT 2025!
@@ -21,9 +21,10 @@ Before you start, please install the following:
 
 Once that's done, follow these steps:
 
-1. Clone the lab repository.
+1. Clone the lab repository and open it in VSCode.
    ```bash
    git clone https://github.com/GillianPlatform/gillian-lab.git --branch SSFT25
+   code gillian-lab
    ```
 
 2. If necessary, select *Yes, I trust the authors*.
