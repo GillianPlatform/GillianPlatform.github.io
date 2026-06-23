@@ -65,7 +65,7 @@ To get set up, follow these instructions:
 
 ### Technical notes
 - The language server highlights compilation errors (and other unexpected problems) in red, and verification failures in blue.
-- The debugger supports breakpoints! This can be handy when restarting the debugger after making changes to your code; assign breakpoints to the relevant lines and click the *Continue* button <img src="./continue_button.png" style="display: inline-block; width: 1.75em; vertical-align: middle" />.
+- The debugger supports breakpoints! This can be handy when restarting the debugger after making changes to your code; assign breakpoints to the relevant lines and click the *Continue* button <img src="/img/continue_button.png" style="display: inline-block; width: 1.75em; vertical-align: middle" />.
 - If you get a `SIGPIPE` or `"Broken pipe"` error, try making a small change to your code and trying again.
    - *Note from Nat: I have **\*absolutely no idea\*** why this happens. Even with a repro, it disappears if I try to track it down 🙃*
 - If Gillian seems stuck or unresponsive, or if the WISL language server fails to start, try opening the Command Palette with (`F1` or `Ctrl+Shift+P` by default) and running the *"Reload window"* command.
