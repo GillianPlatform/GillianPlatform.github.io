@@ -8,67 +8,38 @@ order: 97
 <!-- *These lectures took place at the [Oregon Programming Languages Summer School](https://www.cs.uoregon.edu/research/summerschool/summer26/) at [University of Oregon](https://www.uoregon.edu/) in June 2026.* -->
 <!-- ::: -->
 
-## Lectures
-### Lecture 1: An Introduction to Separation Logic
-This lecture covers:
+## Lecture 1: Separation Logic
 - An introduction to Separation Logic, a modern Hoare logic
 - The specification and verification of heap-manipulating programs
-- An overview of verification and bug-finding tools based on Compositional Symbolic Execution
-- A taster of verifying WHILE programs with Gillian
+- Tools for verification and true bug detection, based on compositional symbolic execution
 
-### Lecture 2: Core Compositional Symbolic Execution
-This lecture covers:
-- Transitioning from Separation Logic to Compositional Symbolic Execution
+### Exercises
+- [Simple assertions](/docs/oplss26/assertions-answers.pdf)
+- [List concatenation](/docs/oplss26/listconc-answers.pdf)
+
+### Resources
+- [Separation Logic proof rules](/docs/oplss26/SL_rules.pdf)
+- Gillian taster video
+
+## Lecture 2: From Separation Logic to Compositional Symbolic Execution
+- Experience with Separation Logic
 - Core Compositional Symbolic Execution
-- Automatic whole-program symbolic analysis and true bug detection
+- Automatic whole-program symbolic analysis and bug detection
 
-### Lecture 3: Compositional Symbolic Execution
-This lecture covers:
-- The foundations of Compositional Symbolic Execution
-- An exploration of different memory models, including:
-  - Linear heap
-  - Simple block/offset memory (similar to C)
-  - Dynamic objects (similar to JavaScript)
-- Verified function specifications
+### Exercises
+- Collections-C singly-linked lists
 
-### Lecture 4: The Gillian Framework
-This lecture includes:
-- A full introduction to Gillian, a CSE-based framework for program verification and bug-finding
-- A deeper demonstration of WHILE verification with Gillian
-- Our full-scale C memory model
-- A demonstration of C verification with Gillian
-- A discussion on the future of Compositional Symbolic Execution and Gillian
+## Lecture 3: Compositional Symbolic Execution
+- Compositional symbolic execution, parametric on the state
+- Semi-automatic verification of function specifications
 
-## Gillian Lab Exercises
+### Resources
+- [The Gillian Lab](./gillian-lab)
 
-We invite you to try out our Gillian lab exercises.
-
-To get set up, follow these instructions:
-
-1. Clone the lab repository and open it in VSCode.
-   ```bash
-   git clone https://github.com/GillianPlatform/gillian-lab.git --branch OPLSS_26
-   code gillian-lab
-   ```
-
-2. If necessary, select *Yes, I trust the authors*.
-   ![](/img/trust_authors.png)
-
-3. Launch the dev container by clicking *"Reopen in Container"* on the popup.
-   ![](/img/reopen_in_container.png)
-
-   - If you cannot find the popup, open the Command Palette (`F1` or `Ctrl+Shift+P` by default) and select *"Dev Containers: Open Folder in Container..."* and select the `gillian-lab` folder.
-     ![](/img/open_folder_in_container.png)
-
-4. Open an exercise file (such as `0a_intro_auto.wisl`); you should see blue underlines that signify verification errors.
-   ![](/img/lsp_example.png)
-
-### Technical notes
-- The language server highlights compilation errors (and other unexpected problems) in red, and verification failures in blue.
-- The debugger supports breakpoints! This can be handy when restarting the debugger after making changes to your code; assign breakpoints to the relevant lines and click the *Continue* button <img src="/img/continue_button.png" style="display: inline-block; width: 1.75em; vertical-align: middle" />.
-- If you get a `SIGPIPE` or `"Broken pipe"` error, try making a small change to your code and trying again.
-   - *Note from Nat: I have **\*absolutely no idea\*** why this happens. Even with a repro, it disappears if I try to track it down 🙃*
-- If Gillian seems stuck or unresponsive, or if the WISL language server fails to start, try opening the Command Palette with (`F1` or `Ctrl+Shift+P` by default) and running the *"Reload window"* command.
+## Lecture 4: Semi-automatic Verification and Automatic Bug Detection
+- An introduction to the Gillian platform
+- Gillian-While with simple block-offset memory model
+- Gillian-C with full-scale C memory
 
 ## References
 
