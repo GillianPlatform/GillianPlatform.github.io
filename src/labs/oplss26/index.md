@@ -21,7 +21,7 @@ order: 97
 ### Resources
 - [Lecture slides](/docs/oplss26/Lecture1.pdf)
 - [Separation Logic proof rules](/docs/oplss26/SL_rules.pdf)
-- Gillian taster video
+- [Gillian taster video](https://imperiallondon-my.sharepoint.com/:v:/g/personal/sp1123_ic_ac_uk/IQDN0WnV1O7OT4FTOSjqKYn9AXpc0QOV0BxiiSaIo1ipCkw?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=0U5LlM)
 
 ### References
 - [Separation Logic: A Logic for Shared Mutable Data Structures](https://www.computer.org/csdl/proceedings-article/lics/2002/14830055/12OmNxYbSXN) (John Reynolds, LICS 2002)
