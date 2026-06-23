@@ -11,7 +11,7 @@ To get set up, follow these instructions:
 
 1. Clone the lab repository and open it in VSCode.
    ```bash
-   git clone https://github.com/GillianPlatform/gillian-lab.git --branch OPLSS_26
+   git clone https://github.com/GillianPlatform/gillian-lab.git --branch OPLSS26
    code gillian-lab
    ```
 

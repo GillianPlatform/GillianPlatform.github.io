@@ -40,7 +40,7 @@ Once that's done, follow these steps:
 
 ## Lecture 1: Compositional Software Verification
 
-[Main slides](/docs/ssft25-cse.pdf) • [WISL slides](/docs/ssft25-wisl.pdf)
+[Main slides](/docs/ssft25/cse.pdf) • [WISL slides](/docs/ssft25/wisl.pdf)
 
 This lecture covers:
 - Separation logic
