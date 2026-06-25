@@ -35,7 +35,8 @@ order: 97
 - [Collections-C singly-linked lists](/docs/oplss26/cc_sll_exercise.pdf)
 
 ### Resources
-- [Lecture slides](/docs/oplss26/Lecture2.pdf)
+- Lecture slides coming soon
+<!-- - [Lecture slides](/docs/oplss26/Lecture2.pdf) -->
 
 ### References
 - [Incorrectness logic](https://dl.acm.org/doi/10.1145/3371078) (Peter O'Hearn, POPL 2020)
@@ -47,7 +48,8 @@ order: 97
 - Semi-automatic verification of function specifications
 
 ### Resources
-- [Lecture slides](/docs/oplss26/Lecture3.pdf)
+- Lecture slides coming soon
+<!-- - [Lecture slides](/docs/oplss26/Lecture3.pdf) -->
 
 ### References
 - [Compositional Symbolic Execution for the Next 700 Memory Models](https://vtss.doc.ic.ac.uk/publications/Loow2025Compositional.html) (Andreas Lööw et. al., OOPSLA 2025)
@@ -58,7 +60,8 @@ order: 97
 - Gillian-C with full-scale C memory
 
 ### Resources
-- [Lecture slides](/docs/oplss26/Lecture4.pdf)
+- Lecture slides coming soon
+<!-- - [Lecture slides](/docs/oplss26/Lecture4.pdf) -->
 - [The Gillian lab](./gillian-lab)
 
 ### References
