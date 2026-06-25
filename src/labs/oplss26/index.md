@@ -32,7 +32,7 @@ order: 97
 - Automatic whole-program symbolic analysis and bug detection
 
 ### Exercises
-- Collections-C singly-linked lists
+- [Collections-C singly-linked lists](/docs/oplss26/cc_sll_exercise.pdf)
 
 ### Resources
 - [Lecture slides](/docs/oplss26/Lecture2.pdf)
