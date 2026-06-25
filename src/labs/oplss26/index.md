@@ -35,8 +35,7 @@ order: 97
 - [Collections-C singly-linked lists](/docs/oplss26/cc_sll_exercise.pdf)
 
 ### Resources
-- Lecture slides coming soon
-<!-- - [Lecture slides](/docs/oplss26/Lecture2.pdf) -->
+- [Lecture slides](/docs/oplss26/Lecture2.pdf)
 
 ### References
 - [Incorrectness logic](https://dl.acm.org/doi/10.1145/3371078) (Peter O'Hearn, POPL 2020)
@@ -48,7 +47,7 @@ order: 97
 - Semi-automatic verification of function specifications
 
 ### Resources
-- Lecture slides coming soon
+- *Lecture slides coming soon*
 <!-- - [Lecture slides](/docs/oplss26/Lecture3.pdf) -->
 
 ### References
@@ -60,7 +59,7 @@ order: 97
 - Gillian-C with full-scale C memory
 
 ### Resources
-- Lecture slides coming soon
+- *Lecture slides coming soon*
 <!-- - [Lecture slides](/docs/oplss26/Lecture4.pdf) -->
 - [The Gillian lab](./gillian-lab)
 
