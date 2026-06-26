@@ -47,8 +47,7 @@ order: 97
 - Semi-automatic verification of function specifications
 
 ### Resources
-- *Lecture slides coming soon*
-<!-- - [Lecture slides](/docs/oplss26/Lecture3.pdf) -->
+- [Lecture slides](/docs/oplss26/Lecture3.pdf)
 
 ### References
 - [Compositional Symbolic Execution for the Next 700 Memory Models](https://vtss.doc.ic.ac.uk/publications/Loow2025Compositional.html) (Andreas Lööw et. al., OOPSLA 2025)
