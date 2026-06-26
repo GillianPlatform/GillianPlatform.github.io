@@ -60,6 +60,7 @@ order: 97
 ### Resources
 - *Lecture slides coming soon*
 <!-- - [Lecture slides](/docs/oplss26/Lecture4.pdf) -->
+- [Gillian-While demo](https://youtu.be/l-XsFW-l29s)
 - [The Gillian lab](./gillian-lab)
 
 ### References
