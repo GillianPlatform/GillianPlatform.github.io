@@ -58,8 +58,7 @@ order: 97
 - Gillian-C with full-scale C memory
 
 ### Resources
-- *Lecture slides coming soon*
-<!-- - [Lecture slides](/docs/oplss26/Lecture4.pdf) -->
+- [Lecture slides](/docs/oplss26/Lecture4.pdf)
 - [Gillian-While demo](https://youtu.be/3lLeZB_91L4)
 - [Gillian-C demo](https://youtu.be/zsJLskHjmG0)
 - [The Gillian lab](./gillian-lab)
