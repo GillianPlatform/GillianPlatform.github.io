@@ -35,8 +35,7 @@ order: 96
 - An introduction to the Gillian Platform
 
 ### Resources
-<!-- - [Lecture slides](/docs/standv26/Lecture2.pdf) -->
-- Lecture slides (to come)
+- [Lecture slides](/docs/standv26/Lecture2.pdf)
 - [Gillian-While demo](https://youtu.be/3lLeZB_91L4)
 - [Gillian-C demo](https://youtu.be/zsJLskHjmG0)
 
