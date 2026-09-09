@@ -4,9 +4,9 @@ order: 97
 
 # OPLSS 2026 @ University of Oregon
 
-<!-- ::: info Note -->
-<!-- *These lectures took place at the [Oregon Programming Languages Summer School](https://www.cs.uoregon.edu/research/summerschool/summer26/) at [University of Oregon](https://www.uoregon.edu/) in June 2026.* -->
-<!-- ::: -->
+::: info Note
+*These lectures took place at the [Oregon Programming Languages Summer School](https://www.cs.uoregon.edu/research/summerschool/summer26/) at [University of Oregon](https://www.uoregon.edu/) in June 2026.*
+:::
 
 ## Lecture 1: Separation Logic
 - An introduction to Separation Logic, a modern Hoare logic
