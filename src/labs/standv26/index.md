@@ -18,8 +18,7 @@ order: 96
 - [List concatenation](/docs/standv26/listconc-answers.pdf)
 
 ### Resources
-<!-- - [Lecture slides](/docs/standv26/Lecture1.pdf) -->
-- Lecture slides (to come)
+- [Lecture slides](/docs/standv26/Lecture1.pdf)
 - [Separation Logic proof rules](/docs/standv26/SL_rules.pdf)
 - [Gillian taster video](https://youtu.be/5TTBX4ecZkk)
 
